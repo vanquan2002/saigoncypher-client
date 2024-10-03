@@ -25,7 +25,7 @@ const RelatedProducts = ({ productId }) => {
         </div>
       ) : error ? (
         <div className="mt-10">
-          <Message>{error}</Message>
+          <Message error={error} />
         </div>
       ) : (
         <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">

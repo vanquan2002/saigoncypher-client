@@ -12,12 +12,12 @@ const SearchLayout = ({ result }) => {
 
   const submitHandle = (e) => {
     e.preventDefault();
+    toggleIsBarRight("");
     if (keyword.trim()) {
       navigate(`/products/search/${keyword}`);
     } else {
       navigate(`/products`);
     }
-    toggleIsBarRight("");
   };
 
   useEffect(() => {

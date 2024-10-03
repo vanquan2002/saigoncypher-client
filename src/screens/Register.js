@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import SearchLayout from "../components/layoutNavBarComponents/SearchLayout";
 import CartLayout from "../components/layoutNavBarComponents/CartLayout";
 import MenuLayout from "../components/layoutNavBarComponents/MenuLayout";
@@ -9,6 +9,13 @@ import Contents from "../components/registerComponents/Contents";
 
 const Register = () => {
   const { isBarRight, toggleIsBarRight } = useContext(AppContext);
+
+  useEffect(() => {
+    document.body.style.overflow = isBarRight ? "hidden" : "auto";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isBarRight]);
 
   return (
     <div>

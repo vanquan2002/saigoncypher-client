@@ -5,18 +5,36 @@ import MenuLayout from "../components/layoutNavBarComponents/MenuLayout";
 import SearchLayout from "../components/layoutNavBarComponents/SearchLayout";
 import Contents from "./../components/productsComponents/Contents";
 import Breadcrumbs from "../components/Breadcrumbs";
-import { useContext } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import { AppContext } from "../AppContext";
+import { useParams } from "react-router";
 
 const ProductsScreen = () => {
   const { isBarRight, toggleIsBarRight } = useContext(AppContext);
+  const { keyword } = useParams();
+  const namePages = [
+    { name: "Trang chủ", url: "/" },
+    { name: "Tất cả sản phẩm", url: "/products" },
+  ];
+
+  const updatedPages = useMemo(() => {
+    if (keyword) {
+      return [...namePages, { name: `${keyword}`, url: "" }];
+    }
+    return namePages;
+  }, [keyword]);
+
+  useEffect(() => {
+    document.body.style.overflow = isBarRight ? "hidden" : "auto";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isBarRight]);
 
   return (
     <div>
       <Header />
-      <Breadcrumbs
-        pageDescription={{ name: "Tất cả sản phẩm", url: "products" }}
-      />
+      <Breadcrumbs namePages={updatedPages} />
       <Contents />
       <Footer />
 

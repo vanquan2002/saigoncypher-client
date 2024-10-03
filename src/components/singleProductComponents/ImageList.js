@@ -47,24 +47,22 @@ const ImageList = ({ images }) => {
         }}
       >
         <div ref={containerRef} className="h-[550px] overflow-hidden">
-          <div className="">
-            {images?.map((item, i) => (
-              <a
-                data-fancybox="gallery"
-                className="flex flex-col items-start"
-                href={item.image}
-                ref={(element) => (imgsRefs.current[i] = element)}
-                key={i}
-              >
-                <img
-                  src={item.image}
-                  className="object-cover w-full h-[550px]"
-                  alt={`Hình ảnh của ${item.description}`}
-                  title={item.description}
-                />
-              </a>
-            ))}
-          </div>
+          {images?.map((item, i) => (
+            <a
+              data-fancybox="gallery"
+              className="flex flex-col items-start"
+              href={item.image}
+              ref={(element) => (imgsRefs.current[i] = element)}
+              key={i}
+            >
+              <img
+                src={item.image}
+                className="object-cover w-full h-[550px]"
+                alt={`Hình ảnh của ${item.description}`}
+                title={item.description}
+              />
+            </a>
+          ))}
         </div>
       </Fancybox>
 

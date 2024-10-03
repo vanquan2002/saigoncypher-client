@@ -27,7 +27,7 @@ const Contents = () => {
         </div>
       ) : error ? (
         <div className="mt-10">
-          <Message>{error}</Message>
+          <Message error={error} />
         </div>
       ) : (
         <div>

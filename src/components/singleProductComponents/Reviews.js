@@ -34,6 +34,10 @@ const Reviews = ({ product }) => {
       toggleIsMassage("comment");
     }
   };
+  const resetReview = () => {
+    setRating(5);
+    setComment("");
+  };
 
   useEffect(() => {
     if (success) {
@@ -51,8 +55,16 @@ const Reviews = ({ product }) => {
   return (
     <div className="mt-40">
       <h6 className="uppercase font-medium">Đánh giá sản phẩm này</h6>
-      {loading && <Loading />}
-      {error && <Message>{error}</Message>}
+      {loading && (
+        <div className="mt-5">
+          <Loading loading={loading} />
+        </div>
+      )}
+      {error && (
+        <div className="mt-5">
+          <Message error={error} />
+        </div>
+      )}
       {userInfo ? (
         <div className="flex flex-col mt-5">
           <div className="flex items-center gap-3">
@@ -66,12 +78,8 @@ const Reviews = ({ product }) => {
               </span>
             ) : null}
           </div>
-
-          <form
-            onSubmit={(e) => submitReviewHandle(e)}
-            className="relative w-full mt-4"
-          >
-            <div className="relative w-full">
+          <form onSubmit={(e) => submitReviewHandle(e)}>
+            <div className="relative w-full mt-4">
               <textarea
                 onChange={(e) => setComment(e.target.value)}
                 className="peer h-full min-h-[100px] w-full resize-none border border-black border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-black placeholder-shown:border-t-black focus:border-2 focus:border-black focus:border-t-transparent focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"
@@ -85,14 +93,14 @@ const Reviews = ({ product }) => {
 
             <div className="flex w-full justify-end gap-3 mt-2">
               <button
-                className="uppercase text-[13px] font-medium text-black border border-black px-4 py-[6px] hover:text-opacity-60"
+                className="uppercase text-xs md:text-[13px] font-medium text-black border border-black px-3 md:px-4 py-[6px] hover:text-opacity-60"
                 type="button"
-                onClick={() => setComment("")}
+                onClick={() => resetReview()}
               >
                 Hủy
               </button>
               <button
-                className="uppercase text-[13px] font-medium bg-black text-white px-4 py-[6px] hover:text-opacity-60"
+                className="uppercase text-xs md:text-[13px] font-medium bg-black text-white px-3 md:px-4 py-[6px] hover:text-opacity-60"
                 disabled={loading}
                 type="submit"
               >
@@ -125,16 +133,18 @@ const Reviews = ({ product }) => {
               <div className="h-10 min-w-10 text-white bg-black rounded-full flex justify-center items-center mt-2">
                 {review.name.substring(0, 2)}
               </div>
-              <div className="flex flex-col gap-1">
-                <p className="font-medium line-clamp-1 overflow-hidden">
-                  {review.name}
-                </p>
+              <div className="flex flex-col gap-1 w-full">
+                <div className="flex justify-between items-center">
+                  <p className="font-medium line-clamp-1 overflow-hidden">
+                    {review.name}
+                  </p>
+                  <span className="text-[13px] text-gray-800">
+                    {moment(review.createdAt).calendar()}
+                  </span>
+                </div>
                 <RatingIconReadonly rating={review.rating} />
                 <span className="mt-2 italic text-gray-800">
                   {review.comment}
-                </span>
-                <span className="text-[13px] text-gray-800 font-light">
-                  {moment(review.createdAt).calendar()}
                 </span>
               </div>
             </div>

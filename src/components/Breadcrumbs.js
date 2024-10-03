@@ -1,51 +1,36 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const Breadcrumbs = ({ pageDescription }) => {
+const Breadcrumbs = ({ namePages }) => {
   const navigate = useNavigate();
-  const { keyword } = useParams();
-
-  const isLastElement = !keyword;
 
   return (
-    <div className="mt-10 pl-5 md:pl-20 flex gap-2 uppercase">
-      <span
-        onClick={() => navigate("/")}
-        className="text-sm text-gray-400 font-medium cursor-pointer hover:underline"
-      >
-        Trang chủ
-      </span>
-
-      {pageDescription && (
-        <>
-          <span
-            className={`text-sm font-medium ${
-              isLastElement ? "" : "text-gray-400"
-            }`}
-          >
-            {"//"}
-          </span>
-          <span
-            onClick={
-              isLastElement ? null : () => navigate(`/${pageDescription.url}`)
+    <div className="mt-10 pl-5 md:pl-20 flex uppercase">
+      {namePages.map((item, i) => (
+        <div className="flex items-center" key={i}>
+          <p
+            onClick={() =>
+              namePages.length - 1 !== i && navigate(`${item.url}`)
             }
-            className={`text-sm ${
-              isLastElement
-                ? "font-semibold"
-                : "font-medium text-gray-400 cursor-pointer hover:underline"
-            }`}
+            className={`${
+              namePages.length - 1 !== i
+                ? "text-gray-500 cursor-pointer hover:underline"
+                : "font-semibold text-black "
+            } text-sm font-medium `}
           >
-            {pageDescription.name}
-          </span>
-        </>
-      )}
-
-      {keyword && (
-        <>
-          <span className="text-sm font-medium">{"//"}</span>
-          <span className="text-sm font-semibold">{keyword}</span>
-        </>
-      )}
+            {item.name}
+          </p>
+          {namePages.length - 1 !== i && (
+            <span
+              className={`${
+                namePages.length - 2 !== i ? "text-gray-500 " : "text-black "
+              } px-1 text-sm font-semibold`}
+            >
+              {"//"}
+            </span>
+          )}
+        </div>
+      ))}
     </div>
   );
 };

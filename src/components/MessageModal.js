@@ -1,10 +1,10 @@
-import React, { useLayoutEffect, useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { AppContext } from "../AppContext";
 
 const MessageModal = ({ message }) => {
   const { isMassage, toggleIsMassage } = useContext(AppContext);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     document.body.style.overflow = isMassage ? "hidden" : "auto";
     return () => {
       document.body.style.overflow = "auto";
@@ -24,13 +24,13 @@ const MessageModal = ({ message }) => {
         onClick={(e) => e.stopPropagation()}
         className="bg-white border border-black"
       >
-        <div className="flex flex-col gap-2 justify-center w-64 min-h-1 p-3 border-b border-black">
+        <div className="flex flex-col gap-2 justify-center w-72 min-h-1 p-5 border-b border-black">
           <span className="uppercase font-medium">Thông báo</span>
           <span className="uppercase text-xs">{message}</span>
         </div>
         <button
           onClick={() => toggleIsMassage("")}
-          className="flex justify-center items-center w-64 min-h-1 p-2 text-center"
+          className="flex justify-center items-center w-72 min-h-1 p-[10px] text-center"
         >
           <span className="uppercase text-xs text-black hover:text-opacity-60">
             Đóng

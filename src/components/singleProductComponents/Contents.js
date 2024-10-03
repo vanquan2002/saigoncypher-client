@@ -14,6 +14,7 @@ import MessageModal from "../MessageModal";
 import { AppContext } from "../../AppContext";
 import Reviews from "./Reviews";
 import RelatedProducts from "./RelatedProducts";
+import { FaStar } from "react-icons/fa";
 
 const Contents = () => {
   const { id } = useParams();
@@ -53,11 +54,15 @@ const Contents = () => {
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
+    setSize("");
+    setQty(1);
     dispatch(detailsProduct(id));
   }, [id]);
 
   useEffect(() => {
     if (success) {
+      setSize("");
+      setQty(1);
       toggleIsBarRight("cart");
     }
   }, [success]);
@@ -70,7 +75,7 @@ const Contents = () => {
         </div>
       ) : error ? (
         <div className="mt-10">
-          <Message>{error}</Message>
+          <Message error={error} />
         </div>
       ) : (
         <div>
@@ -79,31 +84,41 @@ const Contents = () => {
               <ImageList images={product.images} />
             </div>
 
-            <div className="w-full lg:w-3/5">
-              <div className="flex justify-between gap-3">
-                <h5 className="uppercase line-clamp-2">{product.name}</h5>
+            <div className="flex flex-col gap-[10px] w-full lg:w-3/5">
+              <h5 className="uppercase line-clamp-2">{product.name}</h5>
+              <div className="flex items-center gap-5 mt-[2px]">
+                <div className="px-4 py-2 font-medium opacity-80 bg-gray-100">
+                  <p>{formatCurrency(product.price)}</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1">
+                    <FaStar className="text-yellow-400" />
+                    <span>{product.rating}</span>
+                  </div>
+                  <span>{"|"}</span>
+                  <span>{product.numReviews} đánh giá</span>
+                </div>
               </div>
-              <p className="mt-[2px]">{formatCurrency(product.price)}</p>
-              <div className="mt-3 md:mt-5 grid grid-cols-3">
+              <div className="grid grid-cols-3 mt-4">
                 <p className="uppercase col-span-1">Màu:</p>
                 <p className="col-span-2">{product.color}</p>
               </div>
-              <div className="mt-3 md:mt-5 grid grid-cols-3">
+              <div className="grid grid-cols-3">
                 <p className="col-span-1 uppercase">Mô tả:</p>
-                <div className="col-span-2">{product.description}</div>
+                <p className="col-span-2">{product.description}</p>
               </div>
-              <div className="mt-3 md:mt-5 grid grid-cols-3">
-                <p className="col-span-1 uppercase">Đánh giá:</p>
-                <div className="col-span-2 flex items-center gap-3">
-                  <RatingIconReadonly rating={product.rating} />
-                  <p className="">
-                    {"("}
-                    {product.numReviews} đánh giá{")"}
-                  </p>
-                </div>
+              <div className="grid grid-cols-3">
+                <p className="col-span-1 uppercase">Chính sách:</p>
+                <p className="col-span-2">Đổi trả miễn phí trong 7 ngày</p>
+              </div>
+              <div className="grid grid-cols-3">
+                <p className="col-span-1 uppercase">Vận chuyển:</p>
+                <p className="col-span-2">
+                  Giao hàng trong vòng 1 - 2 ngày tại TP. Hồ Chí Minh
+                </p>
               </div>
 
-              <div className="mt-10">
+              <div className="mt-8">
                 <div className="grid grid-cols-2 gap-3">
                   {product.sizes?.map((item, i) => (
                     <button
@@ -169,7 +184,6 @@ const Contents = () => {
           </div>
 
           <Reviews product={product} />
-
           <RelatedProducts productId={id} />
         </div>
       )}

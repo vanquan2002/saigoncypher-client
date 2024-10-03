@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import SearchLayout from "../components/layoutNavBarComponents/SearchLayout";
 import CartLayout from "../components/layoutNavBarComponents/CartLayout";
 import MenuLayout from "../components/layoutNavBarComponents/MenuLayout";
@@ -10,11 +10,23 @@ import { AppContext } from "../AppContext";
 
 const SingleProductScreen = () => {
   const { isBarRight, toggleIsBarRight } = useContext(AppContext);
+  const namePages = [
+    { name: "Trang chủ", url: "/" },
+    { name: "Tất cả sản phẩm", url: "/products" },
+    { name: "Thông tin sản phẩm", url: "" },
+  ];
+
+  useEffect(() => {
+    document.body.style.overflow = isBarRight ? "hidden" : "auto";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isBarRight]);
 
   return (
     <div>
       <Header />
-      <Breadcrumbs pageDescription={{ name: "Thông tin sản phẩm", url: "" }} />
+      <Breadcrumbs namePages={namePages} />
       <Contents />
       <Footer />
 

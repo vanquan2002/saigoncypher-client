@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Footer from "../components/Footer";
 import Contents from "../components/homeComponents/Contents";
 import Header from "../components/headerComponents/Header";
@@ -9,6 +9,13 @@ import MenuLayout from "../components/layoutNavBarComponents/MenuLayout";
 
 export default function HomeScreen() {
   const { isBarRight, toggleIsBarRight } = useContext(AppContext);
+
+  useEffect(() => {
+    document.body.style.overflow = isBarRight ? "hidden" : "auto";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isBarRight]);
 
   return (
     <div>
