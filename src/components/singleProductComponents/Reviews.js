@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -9,6 +9,7 @@ import {
 import Loading from "./../loadingError/Loading";
 import Message from "./../loadingError/Error";
 import moment from "moment";
+import "moment/locale/vi";
 import { PRODUCT_CREATE_REVIEW_RESET } from "../../redux/constants/ProductConstants";
 import RatingIconChange from "./RatingIconChange";
 import RatingIconReadonly from "./RatingIconReadonly";
@@ -16,9 +17,11 @@ import MessageModal from "../MessageModal";
 import { AppContext } from "../../AppContext";
 
 const Reviews = ({ product }) => {
+  moment.locale("vi");
   const desc = ["Tệ", "Không tốt", "Bình thường", "Tốt", "Tuyệt vời"];
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const commentRefs = useRef([]);
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
   const userLogin = useSelector((state) => state.userLogin);
@@ -26,6 +29,10 @@ const Reviews = ({ product }) => {
   const productCreateReview = useSelector((state) => state.productCreateReview);
   const { loading, success, error } = productCreateReview;
   const { isMassage, toggleIsMassage } = useContext(AppContext);
+  const [isOverflowing, setIsOverflowing] = useState({});
+  const [isCommentMore, setIsCommentMore] = useState(null);
+  console.log(isCommentMore);
+
   const submitReviewHandle = (e) => {
     e.preventDefault();
     if (comment) {
@@ -51,6 +58,28 @@ const Reviews = ({ product }) => {
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
     }
   }, [success, product]);
+
+  useEffect(() => {
+    commentRefs.current.forEach((descriptionElement, index) => {
+      if (descriptionElement) {
+        const lineHeight = parseFloat(
+          window.getComputedStyle(descriptionElement).lineHeight
+        );
+        const maxHeight = lineHeight * 3;
+        const resizeObserver = new ResizeObserver(() => {
+          setIsOverflowing((prev) => ({
+            ...prev,
+            [index]: descriptionElement.scrollHeight > maxHeight,
+          }));
+        });
+        resizeObserver.observe(descriptionElement);
+
+        return () => {
+          resizeObserver.disconnect();
+        };
+      }
+    });
+  }, [product]);
 
   return (
     <div className="mt-40">
@@ -124,7 +153,7 @@ const Reviews = ({ product }) => {
         </p>
       )}
 
-      <div className="mt-16 flex flex-col gap-12">
+      <div className="bg-gray-50 mt-16 p-5 flex flex-col gap-12">
         {product.reviews.length === 0 ? (
           <p className="text-sm text-gray-700">Chưa có đánh giá nào{"!"}</p>
         ) : (
@@ -139,13 +168,32 @@ const Reviews = ({ product }) => {
                     {review.name}
                   </p>
                   <span className="text-[13px] text-gray-800">
-                    {moment(review.createdAt).calendar()}
+                    {moment(review.createdAt).startOf("hour").fromNow()}
                   </span>
                 </div>
                 <RatingIconReadonly rating={review.rating} />
-                <span className="mt-2 italic text-gray-800">
-                  {review.comment}
-                </span>
+                <div className="flex flex-col items-start col-span-2">
+                  <p
+                    ref={(el) => (commentRefs.current[i] = el)}
+                    className={` ${
+                      isCommentMore === i ? "line-clamp-none" : "line-clamp-3"
+                    }`}
+                  >
+                    {review.comment}
+                  </p>
+
+                  {isOverflowing[i] && (
+                    <button
+                      className="relative inline-block bg-clip-text text-transparent bg-gradient-to-b from-gray-900 to-gray-500"
+                      onClick={() =>
+                        setIsCommentMore(isCommentMore === i ? null : i)
+                      }
+                    >
+                      {isCommentMore === i ? "Rút gọn" : "Xem thêm"}
+                      <span className="absolute left-0 right-0 bottom-[1.5px] h-[1.5px] bg-gray-400"></span>
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           ))
