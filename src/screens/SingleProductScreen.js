@@ -9,19 +9,30 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import { AppContext } from "../AppContext";
 
 const SingleProductScreen = () => {
-  const { isBarRight, toggleIsBarRight } = useContext(AppContext);
+  const { isBarRight, toggleIsBarRight, isCartModal, toggleIsCartModal } =
+    useContext(AppContext);
   const namePages = [
     { name: "Trang chủ", url: "/" },
     { name: "Tất cả sản phẩm", url: "/products" },
     { name: "Thông tin sản phẩm", url: "" },
   ];
 
+  const resetBarRight = () => {
+    if (isBarRight) {
+      toggleIsBarRight("");
+    }
+    if (isCartModal) {
+      toggleIsCartModal();
+    }
+  };
+
   useEffect(() => {
-    document.body.style.overflow = isBarRight ? "hidden" : "auto";
+    document.body.style.overflow =
+      isBarRight || isCartModal ? "hidden" : "auto";
     return () => {
       document.body.style.overflow = "auto";
     };
-  }, [isBarRight]);
+  }, [isBarRight, isCartModal]);
 
   return (
     <div>
@@ -32,16 +43,23 @@ const SingleProductScreen = () => {
 
       <div
         className={`fixed z-20 top-0 left-0 h-screen w-screen bg-black bg-opacity-50 duration-300 ${
-          isBarRight
+          isBarRight || isCartModal
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
         }`}
-        onClick={() => toggleIsBarRight("")}
+        onClick={() => resetBarRight()}
       ></div>
 
       <CartLayout result={isBarRight === "cart"} />
       <SearchLayout result={isBarRight === "search"} />
       <MenuLayout result={isBarRight === "menu"} />
+
+      <button
+        onClick={() => toggleIsCartModal()}
+        className={`md:hidden fixed z-10 left-0 bottom-0 h-14 w-screen bg-black flex justify-center items-center`}
+      >
+        <span className="text-white uppercase">Thêm vào giỏ</span>
+      </button>
     </div>
   );
 };

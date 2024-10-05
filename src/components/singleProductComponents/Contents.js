@@ -28,7 +28,7 @@ const Contents = () => {
   const [size, setSize] = useState("");
   const [isOverflowing, setIsOverflowing] = useState(false);
   const [isDescriptionMore, setIsDescriptionMore] = useState(false);
-  const { isMassage, toggleIsMassage, toggleIsBarRight } =
+  const { isMassage, toggleIsMassage, toggleIsBarRight, isCartModal } =
     useContext(AppContext);
 
   const increment = () => {
@@ -47,7 +47,8 @@ const Contents = () => {
   const addToCartHandle = () => {
     if (size && qty) {
       dispatch(addToCart(id, qty, size));
-    } else if (!size) {
+    }
+    if (!size) {
       toggleIsMassage("size");
     } else if (qty === 0) {
       dispatch(addToCart(id, 1, size));
@@ -74,18 +75,12 @@ const Contents = () => {
   useEffect(() => {
     const descriptionElement = descriptionRef.current;
     if (descriptionElement) {
-      const lineHeight = parseFloat(
-        window.getComputedStyle(descriptionElement).lineHeight
-      );
-      const maxHeight = lineHeight * 3;
-      const resizeObserver = new ResizeObserver(() => {
-        setIsOverflowing(descriptionElement.scrollHeight > maxHeight);
-      });
-      resizeObserver.observe(descriptionElement);
-
-      return () => {
-        resizeObserver.disconnect();
-      };
+      const computedStyle = window.getComputedStyle(descriptionElement);
+      const lineHeight = parseFloat(computedStyle.lineHeight);
+      const totalHeight = descriptionElement.scrollHeight;
+      const lines = Math.round(totalHeight / lineHeight);
+      const isOverflowing = lines > 3;
+      setIsOverflowing(isOverflowing);
     }
   }, [product]);
 
@@ -101,7 +96,7 @@ const Contents = () => {
         </div>
       ) : (
         <div>
-          <div className="mt-10 flex flex-col md:flex-row gap-10 md:gap-5 lg:gap-20 ">
+          <div className="mt-10 flex flex-col lg:flex-row gap-10 lg:gap-20">
             <div className="w-full lg:w-2/5">
               <ImageList images={product.images} />
             </div>
@@ -122,11 +117,11 @@ const Contents = () => {
                 </div>
               </div>
               <div className="grid grid-cols-3 mt-4">
-                <p className="col-span-1">Màu:</p>
+                <p className="col-span-1 text-gray-500">Màu:</p>
                 <p className="col-span-2">{product.color}</p>
               </div>
               <div className="grid grid-cols-3">
-                <p className="col-span-1">Mô tả:</p>
+                <p className="col-span-1 text-gray-500">Mô tả:</p>
                 <div className="flex flex-col items-start col-span-2">
                   <p
                     ref={descriptionRef}
@@ -148,17 +143,21 @@ const Contents = () => {
                 </div>
               </div>
               <div className="grid grid-cols-3">
-                <p className="col-span-1">Chính sách:</p>
+                <p className="col-span-1 text-gray-500">Chính sách:</p>
                 <p className="col-span-2">Đổi trả miễn phí trong 7 ngày</p>
               </div>
               <div className="grid grid-cols-3">
-                <p className="col-span-1">Vận chuyển:</p>
+                <p className="col-span-1 text-gray-500">Vận chuyển:</p>
                 <p className="col-span-2">
                   Giao hàng trong vòng 1 - 2 ngày tại TP. Hồ Chí Minh
                 </p>
               </div>
 
-              <div className="mt-8">
+              <div
+                className={`${
+                  isCartModal ? "block z-30" : "hidden"
+                } md:block mt-8 bg-white w-full fixed left-0 bottom-0 md:static`}
+              >
                 <div className="grid grid-cols-2 gap-3">
                   {product.sizes?.map((item, i) => (
                     <button

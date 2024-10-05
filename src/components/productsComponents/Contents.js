@@ -32,7 +32,7 @@ const Contents = () => {
         </div>
       ) : (
         <div>
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+          <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-10">
             {products.slice(0, 8).map((product, i) => (
               <div className="" key={i}>
                 <img

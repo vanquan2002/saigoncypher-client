@@ -31,7 +31,6 @@ const Reviews = ({ product }) => {
   const { isMassage, toggleIsMassage } = useContext(AppContext);
   const [isOverflowing, setIsOverflowing] = useState({});
   const [isCommentMore, setIsCommentMore] = useState(null);
-  console.log(isCommentMore);
 
   const submitReviewHandle = (e) => {
     e.preventDefault();
@@ -62,21 +61,15 @@ const Reviews = ({ product }) => {
   useEffect(() => {
     commentRefs.current.forEach((descriptionElement, index) => {
       if (descriptionElement) {
-        const lineHeight = parseFloat(
-          window.getComputedStyle(descriptionElement).lineHeight
-        );
-        const maxHeight = lineHeight * 3;
-        const resizeObserver = new ResizeObserver(() => {
-          setIsOverflowing((prev) => ({
-            ...prev,
-            [index]: descriptionElement.scrollHeight > maxHeight,
-          }));
-        });
-        resizeObserver.observe(descriptionElement);
-
-        return () => {
-          resizeObserver.disconnect();
-        };
+        const computedStyle = window.getComputedStyle(descriptionElement);
+        const lineHeight = parseFloat(computedStyle.lineHeight);
+        const totalHeight = descriptionElement.scrollHeight;
+        const lines = Math.round(totalHeight / lineHeight);
+        const isOverflowing = lines > 3;
+        setIsOverflowing((prev) => ({
+          ...prev,
+          [index]: isOverflowing,
+        }));
       }
     });
   }, [product]);
@@ -172,10 +165,10 @@ const Reviews = ({ product }) => {
                   </span>
                 </div>
                 <RatingIconReadonly rating={review.rating} />
-                <div className="flex flex-col items-start col-span-2">
+                <div className="flex flex-col items-start col-span-2 mt-1">
                   <p
                     ref={(el) => (commentRefs.current[i] = el)}
-                    className={` ${
+                    className={`italic text-[15px] ${
                       isCommentMore === i ? "line-clamp-none" : "line-clamp-3"
                     }`}
                   >
@@ -184,7 +177,7 @@ const Reviews = ({ product }) => {
 
                   {isOverflowing[i] && (
                     <button
-                      className="relative inline-block bg-clip-text text-transparent bg-gradient-to-b from-gray-900 to-gray-500"
+                      className="relative text-[15px] bg-clip-text text-transparent bg-gradient-to-b from-gray-900 to-gray-500"
                       onClick={() =>
                         setIsCommentMore(isCommentMore === i ? null : i)
                       }

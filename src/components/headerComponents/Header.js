@@ -18,7 +18,7 @@ const Header = () => {
     <div
       className={`z-10 sticky top-0 left-0 backdrop-blur-sm bg-whitePrimary/30`}
     >
-      <div className="flex justify-between items-center md:min-h-16 min-h-12 px-5 sticky top-0 ">
+      <div className="flex justify-between items-center h-12 md:h-16 px-5 sticky top-0 ">
         <div className="flex items-center">
           <p
             className="text-base uppercase font-bold cursor-pointer"

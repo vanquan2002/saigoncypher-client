@@ -5,9 +5,11 @@ export const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const [isBarRight, setIsBarRight] = useState("");
   const [isMassage, setIsMassage] = useState("");
+  const [isCartModal, setIsCartModal] = useState(false);
 
   const toggleIsBarRight = (text) => setIsBarRight(text);
   const toggleIsMassage = (text) => setIsMassage(text);
+  const toggleIsCartModal = () => setIsCartModal((prev) => !prev);
 
   return (
     <AppContext.Provider
@@ -16,6 +18,8 @@ export const AppProvider = ({ children }) => {
         toggleIsBarRight,
         isMassage,
         toggleIsMassage,
+        isCartModal,
+        toggleIsCartModal,
       }}
     >
       {children}

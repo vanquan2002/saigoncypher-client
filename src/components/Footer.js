@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="p-5 md:p-20 mt-72 flex flex-col gap-20">
+    <div className="p-5 md:p-20 mt-40 lg:mt-72 flex flex-col gap-20">
       <div className="flex gap-8 uppercase">
         <p className="text-xs font-medium hover:underline cursor-pointer">
           Facebook
