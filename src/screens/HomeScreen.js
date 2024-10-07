@@ -6,6 +6,7 @@ import CartLayout from "../components/layoutNavBarComponents/CartLayout";
 import { AppContext } from "../AppContext";
 import SearchLayout from "../components/layoutNavBarComponents/SearchLayout";
 import MenuLayout from "../components/layoutNavBarComponents/MenuLayout";
+import { Helmet } from "react-helmet";
 
 export default function HomeScreen() {
   const { isBarRight, toggleIsBarRight } = useContext(AppContext);
@@ -19,6 +20,18 @@ export default function HomeScreen() {
 
   return (
     <div>
+      <Helmet>
+        <title>Saigonsimple - Trang chủ</title>
+        <meta
+          name="description"
+          content="Khám phá cửa hàng áo thun thời trang trực tuyến Saigonsimple, mang phong cách đơn giản mà hiện đại. Chúng tôi cung cấp các mẫu áo chất lượng, thiết kế tinh tế, phù hợp với mọi dịp. Tham gia cùng chúng tôi để tạo nên phong cách riêng biệt của bạn!"
+        />
+        <meta
+          name="keywords"
+          content="áo thun, áo thun nam, áo thun nữ, áo thun thời trang, saigonsimple, thời trang sài gòn"
+        />
+      </Helmet>
+
       <Header />
       <Contents />
       <Footer />

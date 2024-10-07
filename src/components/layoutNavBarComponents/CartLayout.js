@@ -123,7 +123,7 @@ const CartLayout = ({ result }) => {
         </div>
 
         <div className="bg-white sticky bottom-0 left-0 w-full">
-          <div className="flex items-center justify-between px-5">
+          <div className="flex items-center justify-between px-5 pt-3 pb-1">
             <p className="uppercase text-sm">Tổng tiền: </p>
             <p className="text-base font-medium ">{formatCurrency(total)}</p>
           </div>

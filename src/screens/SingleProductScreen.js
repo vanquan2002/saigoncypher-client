@@ -7,6 +7,7 @@ import Header from "./../components/headerComponents/Header";
 import Contents from "../components/singleProductComponents/Contents";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { AppContext } from "../AppContext";
+import { Helmet } from "react-helmet";
 
 const SingleProductScreen = () => {
   const { isBarRight, toggleIsBarRight, isCartModal, toggleIsCartModal } =
@@ -36,6 +37,18 @@ const SingleProductScreen = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Saigonsimple - Thông tin sản phẩm</title>
+        <meta
+          name="description"
+          content="Saigonsimple - Cửa hàng áo thun thời trang với phong cách đơn giản."
+        />
+        <meta
+          name="keywords"
+          content="áo thun, thời trang, saigon, sài gòn, simple, đơn giản, saigonsimple"
+        />
+      </Helmet>
+
       <Header />
       <Breadcrumbs namePages={namePages} />
       <Contents />

@@ -66,21 +66,20 @@ const ImageList = ({ images }) => {
         </div>
       </Fancybox>
 
-      <div className="absolute bottom-0 right-0 w-9 flex flex-col justify-end">
+      <div className="absolute bottom-0 right-0 w-9 flex gap-1 flex-col justify-end mr-3 mb-3">
         {images?.map((item, i) => (
-          <div key={i} className="mt-1">
-            <button
-              className="flex justify-center items-center hover:bg-black hover:bg-opacity-5"
-              onClick={() => wheelImgsWhenClickHandle(i)}
-            >
-              <img
-                src={item.image}
-                className="w-full"
-                alt={`Hình ảnh của ${item.description}`}
-                title={item.description}
-              />
-            </button>
-          </div>
+          <button
+            key={i}
+            className="flex justify-center items-center "
+            onClick={() => wheelImgsWhenClickHandle(i)}
+          >
+            <img
+              src={item.image}
+              className="w-full shadow-sm"
+              alt={`Hình ảnh của ${item.description}`}
+              title={item.description}
+            />
+          </button>
         ))}
       </div>
     </div>

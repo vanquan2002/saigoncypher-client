@@ -8,6 +8,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import { useContext, useEffect, useMemo } from "react";
 import { AppContext } from "../AppContext";
 import { useParams } from "react-router";
+import { Helmet } from "react-helmet";
 
 const ProductsScreen = () => {
   const { isBarRight, toggleIsBarRight } = useContext(AppContext);
@@ -33,6 +34,18 @@ const ProductsScreen = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Saigonsimple - Tất cả sản phẩm</title>
+        <meta
+          name="description"
+          content="Saigonsimple - Cửa hàng áo thun thời trang với phong cách đơn giản."
+        />
+        <meta
+          name="keywords"
+          content="áo thun, thời trang, saigon, sài gòn, simple, đơn giản, saigonsimple"
+        />
+      </Helmet>
+
       <Header />
       <Breadcrumbs namePages={updatedPages} />
       <Contents />

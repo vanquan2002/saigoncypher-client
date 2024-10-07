@@ -15,6 +15,7 @@ import Reviews from "./Reviews";
 import RelatedProducts from "./RelatedProducts";
 import { FaStar } from "react-icons/fa";
 import { GoDotFill } from "react-icons/go";
+import { PiWarningCircleLight } from "react-icons/pi";
 
 const Contents = () => {
   const { id } = useParams();
@@ -28,8 +29,14 @@ const Contents = () => {
   const [size, setSize] = useState("");
   const [isOverflowing, setIsOverflowing] = useState(false);
   const [isDescriptionMore, setIsDescriptionMore] = useState(false);
-  const { isMassage, toggleIsMassage, toggleIsBarRight, isCartModal } =
-    useContext(AppContext);
+  const [isSelectSize, setIsSelectSize] = useState(false);
+  const {
+    isMassage,
+    toggleIsMassage,
+    toggleIsBarRight,
+    isCartModal,
+    toggleIsCartModal,
+  } = useContext(AppContext);
 
   const increment = () => {
     setQty(qty + 1);
@@ -48,11 +55,16 @@ const Contents = () => {
     if (size && qty) {
       dispatch(addToCart(id, qty, size));
     }
-    if (!size) {
-      toggleIsMassage("size");
-    } else if (qty === 0) {
+    if (size && qty === 0) {
       dispatch(addToCart(id, 1, size));
       setQty(1);
+    }
+    if (!size) {
+      if (window.innerWidth < 768) {
+        setIsSelectSize(true);
+      } else {
+        toggleIsMassage("size");
+      }
     }
   };
 
@@ -60,6 +72,7 @@ const Contents = () => {
     window.scrollTo({ top: 0 });
     setSize("");
     setQty(1);
+    setIsSelectSize(false);
     setIsDescriptionMore(false);
     dispatch(detailsProduct(id));
   }, [id]);
@@ -69,6 +82,9 @@ const Contents = () => {
       setSize("");
       setQty(1);
       toggleIsBarRight("cart");
+      if (window.innerWidth < 768) {
+        toggleIsCartModal();
+      }
     }
   }, [success]);
 
@@ -83,6 +99,12 @@ const Contents = () => {
       setIsOverflowing(isOverflowing);
     }
   }, [product]);
+
+  useEffect(() => {
+    if (size) {
+      setIsSelectSize(false);
+    }
+  }, [size]);
 
   return (
     <div className="px-5 md:px-20">
@@ -155,7 +177,7 @@ const Contents = () => {
 
               <div
                 className={`${
-                  isCartModal ? "block z-30" : "hidden"
+                  isCartModal ? "block z-30 p-5" : "hidden"
                 } md:block mt-8 bg-white w-full fixed left-0 bottom-0 md:static`}
               >
                 <div className="grid grid-cols-2 gap-3">
@@ -163,7 +185,7 @@ const Contents = () => {
                     <button
                       key={i}
                       onClick={() => setSize(item.size)}
-                      className={`cursor-pointer border-[1px] border-black flex items-center justify-center h-10 ${
+                      className={`cursor-pointer border border-black flex items-center justify-center h-10 ${
                         item.size === size
                           ? "bg-black text-white"
                           : "text-black hover:bg-gray-100"
@@ -174,9 +196,19 @@ const Contents = () => {
                   ))}
                 </div>
 
-                <p className="cursor-pointer underline text-[13px] mt-2">
-                  Hướng dẫn chọn size
-                </p>
+                <div className="mt-2">
+                  {isSelectSize && (
+                    <div className="flex items-center gap-1">
+                      <PiWarningCircleLight className="text-red-500" />
+                      <span className="md:hidden text-[13px] text-red-600">
+                        Qúy khách chưa chọn size!
+                      </span>
+                    </div>
+                  )}
+                  <span className="cursor-pointer underline text-[13px]">
+                    Hướng dẫn chọn size
+                  </span>
+                </div>
 
                 <div className="flex items-end justify-between mt-10">
                   <p className="text-sm">Chọn hoặc nhập số lượng</p>
@@ -207,9 +239,9 @@ const Contents = () => {
                 </div>
 
                 <button
-                  className={`w-full h-14 mt-5 duration-300 cursor-pointer flex justify-center items-center border border-black hover:text-opacity-60 ${
+                  className={`w-full h-14 mt-5 duration-300 flex justify-center items-center border border-black hover:text-opacity-60 ${
                     size ? "bg-black text-white" : "text-black"
-                  } `}
+                  }`}
                   onClick={() => addToCartHandle()}
                 >
                   {loadingAddCart ? (
