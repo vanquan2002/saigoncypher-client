@@ -19,11 +19,11 @@ const Header = () => {
     >
       <Link
         to="/"
-        aria-label="Tên thương hiệu của Saigonsimple. Đi đến trang chủ"
-        title="Truy cập trang chủ Saigonsimple"
+        aria-label="Tên thương hiệu của Saigoncypher. Đi đến trang chủ"
+        title="Truy cập trang chủ Saigoncypher"
         className="md:text-lg uppercase font-bold cursor-pointer"
       >
-        Saigonsimple
+        Saigoncypher
       </Link>
       <nav className="flex justify-between items-center gap-4 md:gap-5">
         {userInfo ? (

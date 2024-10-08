@@ -20,7 +20,7 @@ const Contents = () => {
     <main className="px-2 md:px-20">
       <h1 className="font-black my-52 text-4xl md:text-5xl lg:text-7xl text-center uppercase">
         Áo thun thời trang
-        <span className="inline-block">Saigonsimple</span>
+        <span className="inline-block">Saigoncypher</span>
       </h1>
       {loading ? (
         <div className="mt-10">

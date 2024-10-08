@@ -38,14 +38,14 @@ const SingleProductScreen = () => {
   return (
     <div>
       <Helmet>
-        <title>Saigonsimple - Thông tin sản phẩm</title>
+        <title>Saigoncypher - Thông tin sản phẩm</title>
         <meta
           name="description"
-          content="Saigonsimple - Cửa hàng áo thun thời trang với phong cách đơn giản."
+          content="Saigoncypher - Cửa hàng áo thun thời trang với phong cách đơn giản."
         />
         <meta
           name="keywords"
-          content="áo thun, thời trang, saigon, sài gòn, simple, đơn giản, saigonsimple"
+          content="áo thun, thời trang, saigon, sài gòn, simple, đơn giản, saigoncypher"
         />
       </Helmet>
 
