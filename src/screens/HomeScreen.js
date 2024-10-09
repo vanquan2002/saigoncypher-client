@@ -7,6 +7,7 @@ import { AppContext } from "../AppContext";
 import SearchLayout from "../components/layoutNavBarComponents/SearchLayout";
 import MenuLayout from "../components/layoutNavBarComponents/MenuLayout";
 import { Helmet } from "react-helmet";
+import Banner from "../components/homeComponents/Banner";
 
 export default function HomeScreen() {
   const { isBarRight, toggleIsBarRight } = useContext(AppContext);
@@ -33,6 +34,7 @@ export default function HomeScreen() {
       </Helmet>
 
       <Header />
+      <Banner />
       <Contents />
       <Footer />
 

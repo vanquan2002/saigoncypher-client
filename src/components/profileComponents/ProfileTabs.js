@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import Toast from "../loadingError/Toast";
 import Message from "./../loadingError/Error";
 import Loading from "./../loadingError/Loading";
 import { toast } from "react-toastify";
@@ -52,7 +51,6 @@ const ProfileTabs = () => {
 
   return (
     <div>
-      <Toast />
       {error && <Message variant="alert-danger">{error}</Message>}
       {loading && <Loading />}
       {updateLoading && <Loading />}

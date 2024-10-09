@@ -1,19 +1,20 @@
 import React from "react";
+import { TbNorthStar } from "react-icons/tb";
 
-const Banner = ({ positions }) => {
+const Banner = () => {
   return (
-    <div className="">
-      {positions === "top" ? (
-        <div className="w-full min-h-0 flex justify-center">
-          <span className="text-[6rem] md:text-[8rem] lg:text-[11rem] text-darkPrimary uppercase font-bold relative md:mt-7 py-28">
-            Cypher
-            <span className="absolute left-0 bottom-[55%]">Saigon</span>
-            <span className="absolute right-0 top-[55%]">Store</span>
-          </span>
-        </div>
-      ) : (
-        <div></div>
-      )}
+    <div className="h-screen flex flex-col items-center justify-center gap-24">
+      <TbNorthStar className="text-3xl md:text-6xl lg:text-8xl" />
+      <h1 className="flex flex-col items-center font-black text-3xl md:text-6xl lg:text-8xl uppercase">
+        Saigoncypher
+        <span className="text-base font-medium">
+          Đơn giản nhưng chẳng đơn điệu
+        </span>
+        <span className="text-base font-medium">
+          Định hình phong cách riêng
+        </span>
+      </h1>
+      <TbNorthStar className="text-3xl md:text-6xl lg:text-8xl" />
     </div>
   );
 };

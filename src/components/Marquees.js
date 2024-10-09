@@ -1,16 +1,17 @@
-import Marquee from "react-fast-marquee";
-
-const Marquees = () => {
+const Marquees = ({ contentText }) => {
   return (
-    <div className="">
-      <Marquee className="bg-darkPrimary overflow-hidden text-whitePrimary font-semibold uppercase">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos,
-          atque voluptatibus dolore, cumque nisi quisquam neque quia deleniti
-          facere incidunt impedit assumenda magni quas optio suscipit culpa ad
-          rerum illo.
-        </p>
-      </Marquee>
+    <div className="bg-black relative flex overflow-x-hidden">
+      <div className="animate-marquee">
+        <span className="text-xl font-medium text-white mx-8 uppercase whitespace-nowrap">
+          {contentText}
+        </span>
+      </div>
+
+      <div className="absolute top-0 animate-marquee2">
+        <span className="text-xl font-medium text-white mx-8 uppercase whitespace-nowrap">
+          {contentText}
+        </span>
+      </div>
     </div>
   );
 };

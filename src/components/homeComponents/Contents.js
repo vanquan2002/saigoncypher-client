@@ -5,6 +5,8 @@ import Message from "../loadingError/Error";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { useDispatch, useSelector } from "react-redux";
 import { listProduct } from "./../../redux/actions/ProductActions";
+import { LiaStarSolid } from "react-icons/lia";
+import { LiaStar } from "react-icons/lia";
 
 const Contents = () => {
   const dispatch = useDispatch();
@@ -17,11 +19,7 @@ const Contents = () => {
   }, []);
 
   return (
-    <main className="px-2 md:px-20">
-      <h1 className="font-black my-52 text-4xl md:text-5xl lg:text-7xl text-center uppercase">
-        Áo thun thời trang
-        <span className="inline-block">Saigoncypher</span>
-      </h1>
+    <main className="mt-20 px-2 md:px-20">
       {loading ? (
         <div className="mt-10">
           <Loading loading={loading} />
@@ -31,47 +29,53 @@ const Contents = () => {
           <Message error={error} />
         </div>
       ) : (
-        <div>
-          <section>
-            <h2 className="text-center uppercase">Sản phẩm mới nhất</h2>
-            <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-5 lg:gap-10">
-              {products.slice(0, 8).map((product, i) => (
-                <div key={i}>
+        <section>
+          <h2 className="text-center uppercase text-xl md:text-3xl font-medium">
+            Sản phẩm mới nhất
+          </h2>
+          <ul className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-5 lg:gap-10">
+            {products.slice(0, 8).map((product, i) => (
+              <li key={i}>
+                <Link to={`/products/${product._id}/detail`}>
+                  <img
+                    className="w-full cursor-pointer"
+                    src={product.thumbImage}
+                    alt={`Hình ảnh của sản phẩm ${product.name}`}
+                    title={`Nhấp vào để xem chi tiết về ${product.name}`}
+                  />
+                </Link>
+                <div className="mt-1 px-1 md:px-0">
                   <Link to={`/products/${product._id}/detail`}>
-                    <img
-                      className="w-full cursor-pointer"
-                      src={product.thumbImage}
-                      alt={`Hình ảnh của sản phẩm ${product.name}`}
-                      title={`Nhấp vào để xem chi tiết về ${product.name}`}
-                    />
+                    <h3 className="cursor-pointer uppercase line-clamp-1 hover:underline text-xs md:text-sm font-medium">
+                      {product.name}
+                    </h3>
                   </Link>
-                  <div className="mt-1">
-                    <Link
-                      to={`/products/${product._id}/detail`}
-                      className="cursor-pointer uppercase line-clamp-1 hover:underline text-xs md:text-sm font-medium"
-                    >
-                      <h3>{product.name}</h3>
-                    </Link>
-                    <span className="bg-black text-sm text-white px-2 py-1">
+                  <div className="flex justify-between items-center ">
+                    <p className="font-medium text-xs md:text-sm">
                       {formatCurrency(product.price)}
-                    </span>
+                    </p>
+                    <div className="flex items-center gap-1">
+                      <LiaStarSolid className="text-xs md:text-sm" />
+                      <span className="text-xs md:text-sm">
+                        {product.rating}
+                        {"/5"}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          </section>
-
-          <div className="flex justify-center mt-10 md:mt-20">
+              </li>
+            ))}
+          </ul>
+          <div className="flex justify-center mt-10">
             <Link
               to="/products"
-              aria-label="Đi đến trang tất cả sản phẩm"
-              title="Truy cập trang tất cả sản phẩm"
-              className="cursor-pointer hover:underline font-semibold text-sm"
+              aria-label="Truy cập trang tất cả sản phẩm"
+              className="cursor-pointer hover:underline font-medium text-xs md:text-sm uppercase"
             >
               {"["} Xem tất cả sản phẩm {"]"}
             </Link>
           </div>
-        </div>
+        </section>
       )}
     </main>
   );
