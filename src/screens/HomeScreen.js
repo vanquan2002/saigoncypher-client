@@ -22,7 +22,7 @@ export default function HomeScreen() {
   return (
     <div>
       <Helmet>
-        <title>SAIGONCYPHER | STORE T-SHIRT VIETNAM</title>
+        <title>SaigonCypher | T-Shirt Store VietNam</title>
         <meta
           name="description"
           content="Cửa hàng trực tuyến Saigoncypher, mang phong cách đơn giản mà hiện đại. Chúng tôi cung cấp các mẫu áo chất lượng, thiết kế tinh tế, phù hợp với mọi dịp. Cùng chúng tôi tạo nên phong cách riêng biệt của bạn!"

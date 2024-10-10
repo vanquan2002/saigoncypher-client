@@ -1,72 +1,112 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
+  const socials = [
+    {
+      name: "Facebook",
+      link: "https://www.facebook.com/",
+    },
+    {
+      name: "Tiktok",
+      link: "tiktok.com",
+    },
+    {
+      name: "Threads",
+      link: "threads.com",
+    },
+  ];
+  const others = [
+    {
+      name: "Giới thiệu về chúng tôi",
+      link: "/",
+    },
+    {
+      name: "Điều khoản dịch vụ",
+      link: "/",
+    },
+    {
+      name: "Chính sách bảo mật",
+      link: "/",
+    },
+    {
+      name: "Đổi, trả hàng và hoàn tiền",
+      link: "/",
+    },
+    {
+      name: "Đóng góp ý tưởng - ý kiến",
+      link: "/",
+    },
+  ];
+
   return (
-    <div className="p-5 md:p-20 mt-40 lg:mt-72 flex flex-col gap-20">
-      <div className="flex gap-8 uppercase">
-        <p className="text-xs font-medium hover:underline cursor-pointer">
-          Facebook
-        </p>
-        <p className="text-xs font-medium hover:underline cursor-pointer">
-          Tiktok
-        </p>
-        <p className="text-xs font-medium hover:underline cursor-pointer">
-          Threads
-        </p>
-      </div>
+    <footer>
+      <div className="px-2 md:px-20 mt-72 mb-10 md:mb-20 flex flex-col gap-40">
+        <div className="flex justify-center gap-6 md:gap-8">
+          {socials.map((item, i) => (
+            <a
+              key={i}
+              target="_blank"
+              rel="noopener noreferrer"
+              href={`${item.link}`}
+              aria-label={`Đi đến trang ${item.name}`}
+              className="uppercase text-xs md:text-sm hover:underline cursor-pointer"
+            >
+              {item.name}
+            </a>
+          ))}
+        </div>
 
-      <div className="uppercase">
-        <p className="text-sm font-medium">Hotline</p>
-        <p className="text-4xl md:text-5xl mt-2 font-semibold">0905260448</p>
-        <p className="text-[11px] mt-2">
-          Online Từ Thứ 2 đến Chúa Nhật, Từ 9am đến 6pm
-        </p>
-        <div>
-          <span className="text-[11px]">Email: </span>
-          <span className="text-[11px] hover:underline cursor-pointer">
-            SUPPORT@SAIGONCYPHER.COM
+        <div className="flex gap-2 flex-col">
+          <div className="uppercase text-xs md:text-sm text-center">
+            <span>Hotline:</span>
+            <a
+              aria-label="Truy cập số điện thoại của SaigonCypher: 0905260554"
+              href="tel:0905260554"
+              className="hover:underline cursor-pointer ml-1"
+            >
+              0905260554
+            </a>
+          </div>
+          <span className="uppercase text-xs md:text-sm text-center">
+            Online từ Thứ 2 - Chúa Nhật, Từ 7am - 8pm
           </span>
+          <div className="uppercase text-xs md:text-sm text-center">
+            <span>Email:</span>
+            <a
+              aria-label="Truy cập email của SaigonCypher: saigoncyphersupport@gmail.com"
+              href="mailto:saigoncyphersupport@gmail.com"
+              className="hover:underline cursor-pointer ml-1"
+            >
+              saigoncyphersupport@gmail.com
+            </a>
+          </div>
+        </div>
+
+        <div className="flex justify-center flex-wrap gap-x-6 md:gap-x-8 gap-y-1 md:gap-y-2">
+          {others.map((item, i) => (
+            <Link
+              key={i}
+              to={item.link}
+              target="_blank"
+              aria-label={`Đi đến trang ${item.name}`}
+              className="uppercase text-xs md:text-sm hover:underline cursor-pointer"
+            >
+              {item.name}
+            </Link>
+          ))}
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-8 md:gap-20 uppercase">
-        <div>
-          <p className="text-sm font-semibold">Trợ giúp</p>
-          <div className="mt-2">
-            <p className="text-xs mt-1 hover:underline cursor-pointer">
-              Tài khoản của tôi
-            </p>
-            <p className="text-xs mt-1 hover:underline cursor-pointer">
-              Đổi, trả hàng và hoàn tiền
-            </p>
-          </div>
-        </div>
-
-        <div>
-          <p className="text-sm font-semibold">Chính sách</p>
-          <div className="mt-2">
-            <p className="text-xs mt-1 hover:underline cursor-pointer">
-              Chính sách bảo mật thông tin
-            </p>
-            <p className="text-xs mt-1 hover:underline cursor-pointer">
-              Chính sách vận chuyển, giao hàng
-            </p>
-          </div>
-        </div>
-
-        <div>
-          <p className="text-sm font-semibold">Hộ kinh doanh</p>
-          <div className="mt-2">
-            <p className="text-xs mt-1 hover:underline cursor-pointer">
-              Giới thiệu về chúng tôi
-            </p>
-            <p className="text-xs mt-1 hover:underline cursor-pointer">
-              Đóng góp ý tưởng - ý kiến
-            </p>
-          </div>
-        </div>
+      <div className="bg-black flex flex-wrap justify-center py-[6px] gap-x-2">
+        <span className="text-xs md:text-sm text-white text-center">
+          Copyright @ 2024 by SaigonCypher. All rights reserved.
+        </span>
+        <span className="text-xs md:text-sm text-white text-center">
+          Design by Pham Van Quan
+        </span>
       </div>
-    </div>
+    </footer>
   );
 };
 
