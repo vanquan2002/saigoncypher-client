@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/actions/UserActions";
@@ -10,17 +10,55 @@ const MenuLayout = ({ result }) => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  const { toggleIsBarRight } = useContext(AppContext);
+  const { isBarRight, toggleIsBarRight } = useContext(AppContext);
+  const location = useLocation();
+  const socials = [
+    {
+      name: "Facebook",
+      link: "https://www.facebook.com/",
+    },
+    {
+      name: "Tiktok",
+      link: "tiktok.com",
+    },
+    {
+      name: "Threads",
+      link: "threads.com",
+    },
+  ];
+  const others = [
+    {
+      name: "Giới thiệu về chúng tôi",
+      link: "/",
+    },
+    {
+      name: "Điều khoản dịch vụ",
+      link: "/",
+    },
+    {
+      name: "Chính sách bảo mật",
+      link: "/",
+    },
+    {
+      name: "Đổi, trả hàng và hoàn tiền",
+      link: "/",
+    },
+    {
+      name: "Đóng góp ý tưởng - ý kiến",
+      link: "/",
+    },
+  ];
 
   const logoutHandle = () => {
     dispatch(logout());
-    toggleIsBarRight("");
+    navigate("/login");
   };
 
-  const navigateHandle = (result) => {
-    navigate(`/${result}`);
-    toggleIsBarRight("");
-  };
+  useEffect(() => {
+    if (isBarRight === "menu") {
+      toggleIsBarRight("");
+    }
+  }, [location]);
 
   return (
     <div
@@ -38,71 +76,79 @@ const MenuLayout = ({ result }) => {
       <div className="px-5 h-full flex flex-col justify-between">
         <div>
           {userInfo ? (
-            <div className="mt-6 text-sm">
-              <div className="flex justify-between items-center border-b pb-2 border-black">
-                <span className="w-2/5">Xin chào:</span>
-                <span className="w-3/5 text-right line-clamp-1">
+            <div className="mt-6 flex flex-col items-start gap-3">
+              <div className="w-full flex justify-between items-center">
+                <span className="text-sm uppercase w-2/5">Xin chào:</span>
+                <span className="text-sm uppercase w-3/5 text-right line-clamp-1">
                   {userInfo.name}
                 </span>
               </div>
-              <div className="flex flex-col items-start mt-3">
+              <div className="w-full border-t border-black"></div>
+              <div className="flex flex-col gap-1 md:gap-2">
                 <Link
                   to="/profile"
                   aria-label="Đi đến trang thông tin tài khoản cá nhân"
-                  className="hover:underline"
+                  className="text-sm uppercase hover:underline"
                 >
                   Tài khoản
                 </Link>
                 <button
                   onClick={() => logoutHandle()}
-                  className="hover:underline"
+                  aria-label="Đăng xuất tài khoản"
+                  className="text-sm uppercase hover:underline"
                 >
                   Đăng xuất
                 </button>
               </div>
             </div>
           ) : (
-            <div className="mt-6 text-sm">
-              <p
-                className="hover:underline cursor-pointer"
-                onClick={() => navigateHandle("login")}
+            <div className="mt-6 flex flex-col items-start gap-1 md:gap-2">
+              <Link
+                to="/login"
+                aria-label="Đi đến trang đăng nhập tài khoản"
+                className="text-sm uppercase hover:underline"
               >
                 Đăng nhập
-              </p>
-              <p
-                className="hover:underline cursor-pointer"
-                onClick={() => navigateHandle("register")}
+              </Link>
+              <Link
+                to="/register"
+                aria-label="Đi đến trang đăng kí tài khoản"
+                className="text-sm uppercase hover:underline "
               >
                 Đăng kí
-              </p>
+              </Link>
             </div>
           )}
         </div>
 
         <div>
-          <div className="flex flex-col items-start text-[13px] mt-10">
-            <p className="hover:underline cursor-pointer">Tài khoản của tôi</p>
-            <p className="hover:underline cursor-pointer">
-              Đổi, trả hàng và hoàn tiền
-            </p>
-            <p className="hover:underline cursor-pointer">
-              Chính sách bảo mật thông tin
-            </p>
-            <p className="hover:underline cursor-pointer">
-              Chính sách vận chuyển, giao hàng
-            </p>
-            <p className="hover:underline cursor-pointer">
-              Giới thiệu về chúng tôi
-            </p>
-            <p className="hover:underline cursor-pointer">
-              Đóng góp ý tưởng - ý kiến
-            </p>
+          <div className="flex flex-col gap-1 md:gap-2">
+            {others.map((item, i) => (
+              <Link
+                key={i}
+                to={item.link}
+                target="_blank"
+                aria-label={`Đi đến trang ${item.name}`}
+                className="uppercase text-sm hover:underline cursor-pointer"
+              >
+                {item.name}
+              </Link>
+            ))}
           </div>
 
-          <div className="flex gap-6 text-[13px] mb-5 mt-10">
-            <p className="hover:underline cursor-pointer">Facebook</p>
-            <p className="hover:underline cursor-pointer">Tiktok</p>
-            <p className="hover:underline cursor-pointer">Threads</p>
+          <div className="flex gap-6 md:gap-8 mb-5 mt-20">
+            {socials.map((item, i) => (
+              <a
+                key={i}
+                target="_blank"
+                rel="noopener noreferrer"
+                href={`${item.link}`}
+                aria-label={`Đi đến trang ${item.name}`}
+                className="uppercase text-sm hover:underline cursor-pointer"
+              >
+                {item.name}
+              </a>
+            ))}
           </div>
         </div>
       </div>

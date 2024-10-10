@@ -48,7 +48,7 @@ const CartLayout = ({ result }) => {
 
       <section className="flex justify-center items-start overflow-auto h-full scrollbar-none ">
         {cartItems.length === 0 ? (
-          <span className="text-gray-500 mt-40">Chưa có sản phẩm nào cả!</span>
+          <span className="text-gray-500 mt-20">Chưa có sản phẩm nào cả!</span>
         ) : (
           <div className="mb-72 w-full">
             {cartItems.map((item, i) => (
@@ -111,9 +111,7 @@ const CartLayout = ({ result }) => {
       <div className="bg-white sticky bottom-0 left-0 w-full">
         <div className="flex items-center justify-between px-5 pt-4 pb-2">
           <span className="uppercase text-sm">Tổng tiền: </span>
-          <span className="text-base font-medium ">
-            {formatCurrency(total)}
-          </span>
+          <span className="font-semibold">{formatCurrency(total)}</span>
         </div>
         <div className="flex items-center justify-between">
           <Link

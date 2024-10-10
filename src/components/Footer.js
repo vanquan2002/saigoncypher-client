@@ -50,7 +50,7 @@ const Footer = () => {
               rel="noopener noreferrer"
               href={`${item.link}`}
               aria-label={`Đi đến trang ${item.name}`}
-              className="uppercase text-xs md:text-sm hover:underline cursor-pointer"
+              className="uppercase text-sm hover:underline cursor-pointer"
             >
               {item.name}
             </a>
@@ -58,7 +58,7 @@ const Footer = () => {
         </div>
 
         <div className="flex gap-2 flex-col">
-          <div className="uppercase text-xs md:text-sm text-center">
+          <div className="uppercase text-sm text-center">
             <span>Hotline:</span>
             <a
               aria-label="Truy cập số điện thoại của SaigonCypher: 0905260554"
@@ -68,10 +68,10 @@ const Footer = () => {
               0905260554
             </a>
           </div>
-          <span className="uppercase text-xs md:text-sm text-center">
+          <span className="uppercase text-sm text-center">
             Online từ Thứ 2 - Chúa Nhật, Từ 7am - 8pm
           </span>
-          <div className="uppercase text-xs md:text-sm text-center">
+          <div className="uppercase text-sm text-center">
             <span>Email:</span>
             <a
               aria-label="Truy cập email của SaigonCypher: saigoncyphersupport@gmail.com"
@@ -90,7 +90,7 @@ const Footer = () => {
               to={item.link}
               target="_blank"
               aria-label={`Đi đến trang ${item.name}`}
-              className="uppercase text-xs md:text-sm hover:underline cursor-pointer"
+              className="uppercase text-sm hover:underline cursor-pointer"
             >
               {item.name}
             </Link>
@@ -99,10 +99,10 @@ const Footer = () => {
       </div>
 
       <div className="bg-black flex flex-wrap justify-center py-[6px] gap-x-2">
-        <span className="text-xs md:text-sm text-white text-center">
+        <span className="text-sm text-white text-center">
           Copyright @ 2024 by SaigonCypher. All rights reserved.
         </span>
-        <span className="text-xs md:text-sm text-white text-center">
+        <span className="text-sm text-white text-center">
           Design by Pham Van Quan
         </span>
       </div>

@@ -34,7 +34,7 @@ const Header = () => {
               aria-label={`${
                 userInfo ? `Thông tin của ${userInfo.name}` : "Chưa đăng nhập"
               }`}
-              className="text-[13px] font-medium uppercase hidden md:block"
+              className="text-sm font-medium uppercase hidden md:block"
             >
               {userInfo ? <>Hi, {userInfo.name}</> : <>Chưa đăng nhập</>}
             </Link>
@@ -46,7 +46,7 @@ const Header = () => {
               className="flex justify-center items-center"
             >
               <RiSearchLine className="text-[1.3rem] md:hidden" />
-              <span className="text-[13px] font-medium uppercase hidden md:block">
+              <span className="text-sm font-medium uppercase hidden md:block">
                 Tìm kiếm
               </span>
             </button>
@@ -58,7 +58,7 @@ const Header = () => {
               aria-label="Giỏ hàng"
             >
               <MdOutlineShoppingBag className="text-[1.3rem] md:hidden" />
-              <span className="text-[13px] font-medium uppercase hidden md:block">
+              <span className="text-sm font-medium uppercase hidden md:block">
                 Giỏ hàng {"("}
                 {cartItems.length}
                 {")"}
@@ -75,7 +75,7 @@ const Header = () => {
               className="flex justify-center items-center"
             >
               <HiMenuAlt3 className="text-[1.3rem] md:hidden" />
-              <span className="text-[13px] font-medium uppercase hidden md:block">
+              <span className="text-sm font-medium uppercase hidden md:block">
                 Menu
               </span>
             </button>
