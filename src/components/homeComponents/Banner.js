@@ -5,7 +5,7 @@ const Banner = () => {
   return (
     <div className="h-screen flex flex-col items-center justify-center gap-24">
       <TbNorthStar className="text-6xl md:text-8xl lg:text-8xl" />
-      <span className="flex flex-col items-center font-black text-4xl md:text-7xl lg:text-8xl uppercase">
+      <h1 className="flex flex-col items-center font-black text-4xl md:text-7xl lg:text-8xl uppercase">
         Saigoncypher
         <span className="text-xs md:text-base font-medium">
           Đơn giản nhưng chẳng đơn điệu
@@ -13,7 +13,7 @@ const Banner = () => {
         <span className="text-xs md:text-base font-medium">
           Định hình phong cách riêng
         </span>
-      </span>
+      </h1>
       <TbNorthStar className="text-6xl md:text-8xl lg:text-8xl" />
     </div>
   );

@@ -68,7 +68,7 @@ const MenuLayout = ({ result }) => {
     >
       <div className="flex justify-between w-full items-center px-5 py-6">
         <span className="text-darkPrimary font-medium uppercase">Menu</span>
-        <button onClick={() => toggleIsBarRight("")}>
+        <button type="button" onClick={() => toggleIsBarRight("")}>
           <MdClose aria-label="Đóng menu" className="text-2xl md:text-3xl" />
         </button>
       </div>
@@ -87,12 +87,13 @@ const MenuLayout = ({ result }) => {
               <div className="flex flex-col gap-1 md:gap-2">
                 <Link
                   to="/profile"
-                  aria-label="Đi đến trang thông tin tài khoản cá nhân"
+                  aria-label="Đi đến trang thông tin cá nhân"
                   className="text-sm uppercase hover:underline"
                 >
                   Tài khoản
                 </Link>
                 <button
+                  type="button"
                   onClick={() => logoutHandle()}
                   aria-label="Đăng xuất tài khoản"
                   className="text-sm uppercase hover:underline"
@@ -142,7 +143,7 @@ const MenuLayout = ({ result }) => {
                 key={i}
                 target="_blank"
                 rel="noopener noreferrer"
-                href={`${item.link}`}
+                href={item.link}
                 aria-label={`Đi đến trang ${item.name}`}
                 className="uppercase text-sm hover:underline cursor-pointer"
               >

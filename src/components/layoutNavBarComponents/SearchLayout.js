@@ -37,24 +37,34 @@ const SearchLayout = ({ result }) => {
       } `}
     >
       <div className="flex justify-between w-full items-center px-5 py-6">
-        <span className="text-black font-medium uppercase">Search</span>
-        <button aria-label="Đóng tìm kiếm" onClick={() => toggleIsBarRight("")}>
+        <span className="text-black font-medium uppercase">Tìm kiếm</span>
+        <button
+          type="button"
+          aria-label="Đóng tìm kiếm"
+          onClick={() => toggleIsBarRight("")}
+        >
           <MdClose className="text-2xl md:text-3xl" />
         </button>
       </div>
 
-      <form className="relative px-5 mt-4" onSubmit={(e) => submitHandle(e)}>
+      <form
+        title="Form tìm kiếm sản phẩm"
+        className="relative px-5 mt-4"
+        onSubmit={(e) => submitHandle(e)}
+      >
         <input
           ref={inputRef}
           onChange={(e) => setKeyword(e.target.value)}
           className="w-full pl-5 pr-11 py-2 md:py-3 placeholder:text-[0.9rem] outline-none border border-black"
           type="text"
           placeholder="Tìm kiếm sản phẩm..."
+          aria-label="Ô tìm kiếm sản phẩm"
           value={keyword}
+          name="search"
         />
         <button
-          aria-label={`Tìm kiếm sản phẩm: ${keyword}`}
-          onClick={(e) => submitHandle(e)}
+          type="submit"
+          aria-label={`Tìm kiếm sản phẩm với từ khóa ${keyword}`}
         >
           <RiSearchLine className="text-xl md:text-[22px] absolute top-1/2 right-8 cursor-pointer transform -translate-y-1/2" />
         </button>

@@ -41,7 +41,7 @@ const Contents = () => {
                       className="w-full cursor-pointer"
                       src={product.thumbImage}
                       alt={`Hình ảnh của sản phẩm ${product.name}`}
-                      title={`Nhấp vào để xem chi tiết về ${product.name}`}
+                      title={`Nhấn để xem chi tiết về ${product.name}`}
                     />
                   </Link>
                   <div className="mt-1 px-1 md:px-0">
@@ -69,7 +69,7 @@ const Contents = () => {
           </section>
           <Link
             to="/products"
-            aria-label="Truy cập trang tất cả sản phẩm"
+            aria-label="Nhấn để đi đến trang tất cả sản phẩm"
             className="mt-5 md:mt-10 cursor-pointer hover:underline font-medium text-sm uppercase"
           >
             {"["} Xem tất cả sản phẩm {"]"}

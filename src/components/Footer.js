@@ -41,14 +41,14 @@ const Footer = () => {
 
   return (
     <footer>
-      <div className="px-2 md:px-20 mt-72 mb-10 md:mb-20 flex flex-col gap-40">
+      <div className="px-2 md:px-20 mt-72 mb-5 md:mb-20 flex flex-col gap-40">
         <div className="flex justify-center gap-6 md:gap-8">
           {socials.map((item, i) => (
             <a
               key={i}
               target="_blank"
               rel="noopener noreferrer"
-              href={`${item.link}`}
+              href={item.link}
               aria-label={`Đi đến trang ${item.name}`}
               className="uppercase text-sm hover:underline cursor-pointer"
             >
@@ -57,13 +57,13 @@ const Footer = () => {
           ))}
         </div>
 
-        <div className="flex gap-2 flex-col">
-          <div className="uppercase text-sm text-center">
-            <span>Hotline:</span>
+        <div className="flex gap-1 md:gap-2 flex-col items-center">
+          <div className="text-center">
+            <span className="uppercase text-sm">Hotline:</span>
             <a
               aria-label="Truy cập số điện thoại của SaigonCypher: 0905260554"
               href="tel:0905260554"
-              className="hover:underline cursor-pointer ml-1"
+              className="hover:underline cursor-pointer uppercase text-sm ml-1 "
             >
               0905260554
             </a>
@@ -71,12 +71,12 @@ const Footer = () => {
           <span className="uppercase text-sm text-center">
             Online từ Thứ 2 - Chúa Nhật, Từ 7am - 8pm
           </span>
-          <div className="uppercase text-sm text-center">
-            <span>Email:</span>
+          <div className="text-center">
+            <span className="uppercase text-sm">Email:</span>
             <a
-              aria-label="Truy cập email của SaigonCypher: saigoncyphersupport@gmail.com"
+              aria-label="Truy cập email của SaigonCypher: support.saigoncypher@gmail.com"
               href="mailto:saigoncyphersupport@gmail.com"
-              className="hover:underline cursor-pointer ml-1"
+              className="hover:underline cursor-pointer text-[15px] ml-1"
             >
               saigoncyphersupport@gmail.com
             </a>
@@ -102,9 +102,7 @@ const Footer = () => {
         <span className="text-sm text-white text-center">
           Copyright @ 2024 by SaigonCypher. All rights reserved.
         </span>
-        <span className="text-sm text-white text-center">
-          Design by Pham Van Quan
-        </span>
+        <span className="text-sm text-white">Design by Pham Van Quan</span>
       </div>
     </footer>
   );

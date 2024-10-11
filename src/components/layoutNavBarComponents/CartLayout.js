@@ -41,7 +41,11 @@ const CartLayout = ({ result }) => {
     >
       <div className="sticky top-0 right-0 flex w-full justify-between items-center px-5 py-6">
         <span className="font-medium uppercase">Giỏ hàng</span>
-        <button aria-label="Đóng giỏ hàng" onClick={() => toggleIsBarRight("")}>
+        <button
+          type="button"
+          aria-label="Đóng giỏ hàng"
+          onClick={() => toggleIsBarRight("")}
+        >
           <MdClose className="text-2xl md:text-3xl" />
         </button>
       </div>
@@ -94,7 +98,8 @@ const CartLayout = ({ result }) => {
                     </div>
                   </div>
                   <button
-                    aria-label="Xóa sản phẩm khỏi giỏ hàng của bạn"
+                    type="button"
+                    aria-label={`Xóa sản phẩm ${item.name} - ${item.size} khỏi giỏ hàng của bạn`}
                     onClick={() =>
                       removeFromCartHandle(item.product, item.size)
                     }

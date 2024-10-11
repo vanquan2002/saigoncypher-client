@@ -20,7 +20,7 @@ const Header = () => {
       <Link
         to="/"
         aria-label="Logo của Saigoncypher. Đi đến trang chủ"
-        title="Truy cập trang chủ Saigoncypher"
+        title="Đi đến trang chủ Saigoncypher"
       >
         <span className="md:text-lg font-bold cursor-pointer">
           SaigonCypher
@@ -32,7 +32,9 @@ const Header = () => {
             <Link
               to={`${userInfo ? "/profile" : "/login"}`}
               aria-label={`${
-                userInfo ? `Thông tin của ${userInfo.name}` : "Chưa đăng nhập"
+                userInfo
+                  ? `Xem thông tin của ${userInfo.name}`
+                  : "Chưa đăng nhập. Đi đến trang đăng nhập."
               }`}
               className="text-sm font-medium uppercase hidden md:block"
             >
@@ -41,11 +43,12 @@ const Header = () => {
           </li>
           <li>
             <button
+              type="button"
               onClick={() => toggleIsBarRight("search")}
-              aria-label="Tìm kiếm"
+              aria-label="Mở công cụ tìm kiếm"
               className="flex justify-center items-center"
             >
-              <RiSearchLine className="text-[1.3rem] md:hidden" />
+              <RiSearchLine className="text-[1.2rem] md:hidden" />
               <span className="text-sm font-medium uppercase hidden md:block">
                 Tìm kiếm
               </span>
@@ -53,28 +56,30 @@ const Header = () => {
           </li>
           <li>
             <button
+              type="button"
               onClick={() => toggleIsBarRight("cart")}
               className="relative flex justify-center items-center"
-              aria-label="Giỏ hàng"
+              aria-label="Mở giỏ hàng"
             >
-              <MdOutlineShoppingBag className="text-[1.3rem] md:hidden" />
+              <MdOutlineShoppingBag className="text-[1.2rem] md:hidden" />
               <span className="text-sm font-medium uppercase hidden md:block">
                 Giỏ hàng {"("}
                 {cartItems.length}
                 {")"}
               </span>
-              <span className="md:hidden absolute bottom-2 right-[-8px] flex items-center justify-center h-[18px] w-[18px] bg-black rounded-full text-white text-[11px]">
+              <span className="md:hidden absolute bottom-2 right-[-8px] flex items-center justify-center h-[16px] w-[16px] bg-black rounded-full text-white text-[12px]">
                 {cartItems.length}
               </span>
             </button>
           </li>
           <li>
             <button
+              type="button"
               onClick={() => toggleIsBarRight("menu")}
-              aria-label="Menu"
+              aria-label="Mở menu"
               className="flex justify-center items-center"
             >
-              <HiMenuAlt3 className="text-[1.3rem] md:hidden" />
+              <HiMenuAlt3 className="text-[1.2rem] md:hidden" />
               <span className="text-sm font-medium uppercase hidden md:block">
                 Menu
               </span>
