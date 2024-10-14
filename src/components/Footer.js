@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { MdArrowOutward } from "react-icons/md";
 
 const Footer = () => {
   const socials = [
@@ -26,23 +27,19 @@ const Footer = () => {
       link: "/",
     },
     {
-      name: "Chính sách bảo mật",
-      link: "/",
-    },
-    {
       name: "Đổi, trả hàng và hoàn tiền",
       link: "/",
     },
     {
-      name: "Đóng góp ý tưởng - ý kiến",
+      name: "Đóng góp ý kiến",
       link: "/",
     },
   ];
 
   return (
     <footer>
-      <div className="px-2 md:px-20 mt-72 mb-5 md:mb-20 flex flex-col gap-40">
-        <div className="flex justify-center gap-6 md:gap-8">
+      <div className="px-5 md:px-20 mt-72 mb-20 flex flex-col gap-20 md:gap-32">
+        <div className="flex justify-center gap-5 md:gap-8">
           {socials.map((item, i) => (
             <a
               key={i}
@@ -50,58 +47,55 @@ const Footer = () => {
               rel="noopener noreferrer"
               href={item.link}
               aria-label={`Đi đến trang ${item.name}`}
-              className="uppercase text-sm hover:underline cursor-pointer"
+              className="uppercase text-sm hover:underline cursor-pointer flex items-center"
             >
-              {item.name}
+              <span className="mr-[1px]">{item.name}</span>
+              <MdArrowOutward className="text-[17px] text-gray-500" />
             </a>
           ))}
         </div>
 
-        <div className="flex gap-1 md:gap-2 flex-col items-center">
-          <div className="text-center">
-            <span className="uppercase text-sm">Hotline:</span>
+        <div className="flex gap-1 flex-col items-center">
+          <div>
+            <span className="uppercase text-sm">Phone:</span>
             <a
               aria-label="Truy cập số điện thoại của SaigonCypher: 0905260554"
               href="tel:0905260554"
-              className="hover:underline cursor-pointer uppercase text-sm ml-1 "
+              className="hover:underline cursor-pointer ml-1 "
             >
               0905260554
             </a>
           </div>
-          <span className="uppercase text-sm text-center">
-            Online từ Thứ 2 - Chúa Nhật, Từ 7am - 8pm
-          </span>
-          <div className="text-center">
+          <div>
             <span className="uppercase text-sm">Email:</span>
             <a
               aria-label="Truy cập email của SaigonCypher: support.saigoncypher@gmail.com"
               href="mailto:saigoncyphersupport@gmail.com"
-              className="hover:underline cursor-pointer text-[15px] ml-1"
+              className="hover:underline cursor-pointer ml-1"
             >
               saigoncyphersupport@gmail.com
             </a>
           </div>
         </div>
 
-        <div className="flex justify-center flex-wrap gap-x-6 md:gap-x-8 gap-y-1 md:gap-y-2">
+        <div className="flex justify-center flex-wrap gap-x-5 md:gap-x-8 gap-y-1">
           {others.map((item, i) => (
             <Link
               key={i}
               to={item.link}
               target="_blank"
               aria-label={`Đi đến trang ${item.name}`}
-              className="uppercase text-sm hover:underline cursor-pointer"
+              className="uppercase text-sm hover:underline cursor-pointer flex items-center"
             >
-              {item.name}
+              <span className="mr-[1px]">{item.name}</span>
+              <MdArrowOutward className="text-[17px] text-gray-500" />
             </Link>
           ))}
         </div>
       </div>
 
       <div className="bg-black flex flex-wrap justify-center py-[6px] gap-x-2">
-        <span className="text-sm text-white text-center">
-          Copyright @ 2024 by SaigonCypher. All rights reserved.
-        </span>
+        <span className="text-sm text-white text-center">@2024.</span>
         <span className="text-sm text-white">Design by Pham Van Quan</span>
       </div>
     </footer>

@@ -1,21 +1,34 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RiSearchLine } from "react-icons/ri";
 import { MdOutlineShoppingBag } from "react-icons/md";
-import { HiMenuAlt3 } from "react-icons/hi";
 import { AppContext } from "../../AppContext";
+import { RxDividerVertical } from "react-icons/rx";
+import { RxSquare } from "react-icons/rx";
+import { GrSplit } from "react-icons/gr";
+import { FaRegUser } from "react-icons/fa";
 
 const Header = () => {
-  const { toggleIsBarRight } = useContext(AppContext);
+  const { toggleIsBarRight, toggleNumberColList } = useContext(AppContext);
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+  const [keyword, setKeyword] = useState("");
+  const navigate = useNavigate();
 
+  const submitHandle = (e) => {
+    e.preventDefault();
+    if (keyword.trim()) {
+      navigate(`/products/search/${keyword}`);
+    } else {
+      navigate(`/products`);
+    }
+  };
   return (
     <header
-      className={`z-10 fixed top-0 left-0 w-full flex justify-between items-center h-12 md:h-16 px-5 backdrop-blur-sm bg-whitePrimary/30`}
+      className={`z-10 fixed top-0 left-0 w-full flex flex-wrap justify-between items-center py-4 px-5 backdrop-blur-sm bg-whitePrimary/30`}
     >
       <Link
         to="/"
@@ -26,8 +39,9 @@ const Header = () => {
           SaigonCypher
         </span>
       </Link>
-      <nav className="flex justify-between items-center gap-4 md:gap-5">
-        <ul className="flex gap-4 md:gap-5 justify-center items-center">
+
+      <nav className="order-none md:order-last">
+        <ul className="flex justify-end items-center gap-4 md:gap-5">
           <li>
             <Link
               to={`${userInfo ? "/profile" : "/login"}`}
@@ -36,57 +50,87 @@ const Header = () => {
                   ? `Xem thông tin của ${userInfo.name}`
                   : "Chưa đăng nhập. Đi đến trang đăng nhập."
               }`}
-              className="text-sm font-medium uppercase hidden md:block"
             >
-              {userInfo ? <>Hi, {userInfo.name}</> : <>Chưa đăng nhập</>}
+              <FaRegUser className="text-[1.2rem] md:hidden" />
+              <span className="uppercase text-sm font-medium hidden md:block text-nowrap line-clamp-1 md:max-w-[120px] lg:max-w-[200px]">
+                {userInfo ? `${userInfo.name}` : "Đăng nhập"}
+              </span>
             </Link>
           </li>
           <li>
             <button
               type="button"
-              onClick={() => toggleIsBarRight("search")}
-              aria-label="Mở công cụ tìm kiếm"
-              className="flex justify-center items-center"
-            >
-              <RiSearchLine className="text-[1.2rem] md:hidden" />
-              <span className="text-sm font-medium uppercase hidden md:block">
-                Tìm kiếm
-              </span>
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
               onClick={() => toggleIsBarRight("cart")}
-              className="relative flex justify-center items-center"
+              className="relative flex items-center mr-2 md:mr-0"
               aria-label="Mở giỏ hàng"
             >
-              <MdOutlineShoppingBag className="text-[1.2rem] md:hidden" />
-              <span className="text-sm font-medium uppercase hidden md:block">
-                Giỏ hàng {"("}
-                {cartItems.length}
-                {")"}
-              </span>
+              <MdOutlineShoppingBag className="text-[1.3rem] md:hidden" />
               <span className="md:hidden absolute bottom-2 right-[-8px] flex items-center justify-center h-[16px] w-[16px] bg-black rounded-full text-white text-[12px]">
                 {cartItems.length}
               </span>
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              onClick={() => toggleIsBarRight("menu")}
-              aria-label="Mở menu"
-              className="flex justify-center items-center"
-            >
-              <HiMenuAlt3 className="text-[1.2rem] md:hidden" />
-              <span className="text-sm font-medium uppercase hidden md:block">
-                Menu
+              <span className="uppercase text-sm font-medium hidden md:block">
+                Giỏ hàng {"("}
+                {cartItems.length}
+                {")"}
               </span>
             </button>
           </li>
         </ul>
       </nav>
+
+      <form
+        title="Form tìm kiếm sản phẩm"
+        className="mt-4 md:mt-0 w-full md:w-[36%] lg:w-[28%] px-3 flex items-center border border-black"
+        onSubmit={(e) => submitHandle(e)}
+      >
+        <label aria-hidden="true" htmlFor="search-input" className="mr-[6px]">
+          <RiSearchLine className="text-lg" />
+        </label>
+        <input
+          id="search-input"
+          autocomplete="off"
+          onChange={(e) => setKeyword(e.target.value)}
+          className="w-full bg-inherit px-1 py-[6px] placeholder:text-sm outline-none"
+          type="text"
+          placeholder="Tìm kiếm sản phẩm..."
+          aria-label="Ô tìm kiếm sản phẩm"
+          value={keyword}
+          name="search"
+        />
+        <button
+          type="submit"
+          aria-label={`Tìm kiếm sản phẩm với từ khóa ${keyword}`}
+          className="text-nowrap uppercase text-sm font-medium flex items-center"
+        >
+          <span className="mr-[2px]">
+            <RxDividerVertical className="text-xl text-gray-400" />
+          </span>
+          Tìm kiếm
+        </button>
+      </form>
+
+      <div className="md:hidden w-full mt-5">
+        <ul className="flex items-center justify-end gap-5">
+          <li className="flex">
+            <button
+              onClick={() => toggleNumberColList(1)}
+              type="button"
+              aria-label="Hiển thị danh sách sản phẩm theo 1 cột"
+            >
+              <RxSquare className="text-lg" />
+            </button>
+          </li>
+          <li className="flex">
+            <button
+              onClick={() => toggleNumberColList(2)}
+              type="button"
+              aria-label="Hiển thị danh sách sản phẩm theo 2 cột"
+            >
+              <GrSplit className="text-lg" />
+            </button>
+          </li>
+        </ul>
+      </div>
     </header>
   );
 };
