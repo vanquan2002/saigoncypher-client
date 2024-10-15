@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { MdArrowOutward } from "react-icons/md";
 
 const Footer = () => {
   const socials = [
@@ -47,27 +46,26 @@ const Footer = () => {
               rel="noopener noreferrer"
               href={item.link}
               aria-label={`Đi đến trang ${item.name}`}
-              className="uppercase text-sm hover:underline cursor-pointer flex items-center"
+              className="lowercase hover:underline cursor-pointer flex items-center"
             >
-              <span className="mr-[1px]">{item.name}</span>
-              <MdArrowOutward className="text-[17px] text-gray-500" />
+              {item.name}.
             </a>
           ))}
         </div>
 
         <div className="flex gap-1 flex-col items-center">
           <div>
-            <span className="uppercase text-sm">Phone:</span>
+            <span className="lowercase">Phone:</span>
             <a
               aria-label="Truy cập số điện thoại của SaigonCypher: 0905260554"
               href="tel:0905260554"
-              className="hover:underline cursor-pointer ml-1 "
+              className="hover:underline cursor-pointer ml-1"
             >
               0905260554
             </a>
           </div>
           <div>
-            <span className="uppercase text-sm">Email:</span>
+            <span className="lowercase">Email:</span>
             <a
               aria-label="Truy cập email của SaigonCypher: support.saigoncypher@gmail.com"
               href="mailto:saigoncyphersupport@gmail.com"
@@ -85,10 +83,9 @@ const Footer = () => {
               to={item.link}
               target="_blank"
               aria-label={`Đi đến trang ${item.name}`}
-              className="uppercase text-sm hover:underline cursor-pointer flex items-center"
+              className="lowercase hover:underline cursor-pointer flex items-center"
             >
-              <span className="mr-[1px]">{item.name}</span>
-              <MdArrowOutward className="text-[17px] text-gray-500" />
+              {item.name}.
             </Link>
           ))}
         </div>

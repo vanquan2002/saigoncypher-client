@@ -52,8 +52,8 @@ const Header = () => {
               }`}
             >
               <FaRegUser className="text-[1.2rem] md:hidden" />
-              <span className="uppercase text-sm font-medium hidden md:block text-nowrap line-clamp-1 md:max-w-[120px] lg:max-w-[200px]">
-                {userInfo ? `${userInfo.name}` : "Đăng nhập"}
+              <span className="lowercase hidden md:block text-nowrap line-clamp-1 md:max-w-[120px] lg:max-w-[200px]">
+                {userInfo ? `${userInfo.name}.` : "Đăng nhập."}
               </span>
             </Link>
           </li>
@@ -68,8 +68,8 @@ const Header = () => {
               <span className="md:hidden absolute bottom-2 right-[-8px] flex items-center justify-center h-[16px] w-[16px] bg-black rounded-full text-white text-[12px]">
                 {cartItems.length}
               </span>
-              <span className="uppercase text-sm font-medium hidden md:block">
-                Giỏ hàng {"("}
+              <span className="lowercase hidden md:block">
+                Giỏ hàng{"("}
                 {cartItems.length}
                 {")"}
               </span>
@@ -80,33 +80,33 @@ const Header = () => {
 
       <form
         title="Form tìm kiếm sản phẩm"
-        className="mt-4 md:mt-0 w-full md:w-[36%] lg:w-[28%] px-3 flex items-center border border-black"
+        className="mt-4 md:mt-0 py-[6px] w-full md:w-[36%] lg:w-[28%] flex items-center border border-black"
         onSubmit={(e) => submitHandle(e)}
       >
-        <label aria-hidden="true" htmlFor="search-input" className="mr-[6px]">
+        <label aria-hidden="true" htmlFor="search-input" className="px-2">
           <RiSearchLine className="text-lg" />
         </label>
         <input
           id="search-input"
-          autocomplete="off"
+          autoComplete="off"
           onChange={(e) => setKeyword(e.target.value)}
-          className="w-full bg-inherit px-1 py-[6px] placeholder:text-sm outline-none"
+          className="w-full bg-inherit outline-none placeholder:text-sm"
           type="text"
-          placeholder="Tìm kiếm sản phẩm..."
+          placeholder="tìm kiếm sản phẩm..."
           aria-label="Ô tìm kiếm sản phẩm"
           value={keyword}
           name="search"
         />
-        <button
-          type="submit"
-          aria-label={`Tìm kiếm sản phẩm với từ khóa ${keyword}`}
-          className="text-nowrap uppercase text-sm font-medium flex items-center"
-        >
-          <span className="mr-[2px]">
-            <RxDividerVertical className="text-xl text-gray-400" />
-          </span>
-          Tìm kiếm
-        </button>
+        <div className="flex items-center">
+          <RxDividerVertical className="text-xl text-gray-400" />
+          <button
+            type="submit"
+            aria-label={`Tìm kiếm sản phẩm với từ khóa ${keyword}`}
+            className="lowercase text-nowrap font-medium pr-2"
+          >
+            Tìm kiếm
+          </button>
+        </div>
       </form>
 
       <div className="md:hidden w-full mt-5">

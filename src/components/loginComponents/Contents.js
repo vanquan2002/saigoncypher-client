@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { USER_LOGOUT } from "../../redux/constants/UserConstants";
 import { AppContext } from "../../AppContext";
 import MessageModal from "../MessageModal";
+import { Link } from "react-router-dom";
 
 const Contents = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -44,6 +45,10 @@ const Contents = () => {
   });
 
   useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
+
+  useEffect(() => {
     if (error) {
       toggleIsMassage("login");
       dispatch({
@@ -53,52 +58,58 @@ const Contents = () => {
   }, [error]);
 
   useEffect(() => {
-    window.scrollTo({ top: 0 });
     if (userInfo) {
       navigate(`/${redirect}`);
     }
   }, [userInfo, redirect]);
 
   return (
-    <div className="flex flex-wrap flex-col md:flex-row md:flex-nowrap mt-14 md:mt-32 w-full px-5 md:gap-x-14 md:px-14 lg:gap-x-[8vw] lg:px-[8vw]">
-      <div className="w-full">
-        <p className="uppercase text-base md:text-lg">
-          Truy cập vào tài khoản của bạn
-        </p>
+    <main className="flex flex-col lg:flex-row gap-20 mt-48 md:mt-40 w-full px-5 md:px-20">
+      <section className="w-full">
+        <h2 className="lowercase text-center text-lg md:text-xl lg:text-2xl">
+          Truy cập vào tài khoản của bạn.
+        </h2>
         <form className="w-ful flex flex-col gap-12 mt-6">
-          <div className="relative h-11 min-[10px] w-full">
+          <div className="relative h-11 w-full">
             <input
+              aria-label="Nhập email tài khoản của bạn"
               id="email"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
               placeholder=""
-              className="peer h-full w-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm text-black outline outline-0 transition-all placeholder-shown:border-black focus:border-black focus:outline-0 disabled:border-0 disabled:bg-black placeholder:opacity-0 focus:placeholder:opacity-100"
+              className="peer w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none placeholder-transparent"
             />
-            <label className="uppercase after:content[''] pointer-events-none absolute left-0  -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[13px] leading-tight text-darkPrimary transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-black after:transition-transform after:duration-300 peer-placeholder-shown:leading-[4.25] peer-focus:leading-tight peer-focus:after:scale-x-100 peer-focus:after:border-black peer-disabled:text-transparent">
+            <label
+              htmlFor="email"
+              className="lowercase pointer-events-none absolute left-0 -top-1.5 text-sm transition-all peer-placeholder-shown:leading-[4.7] leading-tight peer-focus:leading-tight"
+            >
               Địa chỉ email
             </label>
-            {formik.touched.email && formik.errors.email ? (
+            {formik.touched.email && formik.errors.email && (
               <div className="flex items-center gap-1 mt-1">
                 <PiWarningCircleLight className="text-red-500" />
-                <span className="text-xs text-red-500">
+                <span className="lowercase text-xs text-red-500">
                   {formik.errors.email}
                 </span>
               </div>
-            ) : null}
+            )}
           </div>
-          <div className="relative h-11 min-[10px] w-full">
-            <div
+
+          <div className="relative h-11 w-full">
+            <button
+              type="button"
               onClick={() => setPasswordVisible(!passwordVisible)}
-              className="cursor-pointer absolute grid w-5 h-5 place-items-center text-blue-gray-500 top-2/4 right-0 -translate-y-2/4"
+              className="absolute right-0 bottom-2"
             >
               {passwordVisible ? (
                 <BsEye size="1.2rem" />
               ) : (
                 <BsEyeSlash size="1.2rem" />
               )}
-            </div>
+            </button>
             <input
+              aria-label="Nhập mật khẩu tài khoản của bạn"
               id="password"
               type={passwordVisible ? "text" : "password"}
               onChange={formik.handleChange}
@@ -107,50 +118,54 @@ const Contents = () => {
               placeholder=""
               className={`${
                 !passwordVisible && "font-serif tracking-wider"
-              } peer h-full w-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm text-black outline outline-0 transition-all placeholder-shown:border-black focus:border-black focus:outline-0 disabled:border-0 disabled:bg-black placeholder:opacity-0 focus:placeholder:opacity-100`}
+              } peer w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none placeholder-transparent`}
             />
-            <label className="uppercase after:content[''] pointer-events-none absolute left-0  -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[13px] leading-tight text-darkPrimary transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-black after:transition-transform after:duration-300 peer-placeholder-shown:leading-[4.25] peer-focus:leading-tight peer-focus:after:scale-x-100 peer-focus:after:border-black peer-disabled:text-transparent">
+            <label
+              htmlFor="password"
+              className="lowercase pointer-events-none absolute left-0 -top-1.5 text-sm transition-all peer-placeholder-shown:leading-[4.7] leading-tight peer-focus:leading-tight"
+            >
               Mật khẩu
             </label>
-            {formik.touched.password && formik.errors.password ? (
+            {formik.touched.password && formik.errors.password && (
               <div className="flex items-center gap-1 mt-1">
                 <PiWarningCircleLight className="text-red-500" />
-                <span className="text-xs text-red-500">
+                <span className="lowercase text-xs text-red-500">
                   {formik.errors.password}
                 </span>
               </div>
-            ) : null}
+            )}
           </div>
-          <div
+
+          <button
+            type="submit"
             onClick={formik.handleSubmit}
-            className="text-black hover:text-opacity-60 duration-200 cursor-pointer flex justify-center mt-3 md:mt-6 border border-black py-[0.6rem]"
+            className="mt-6 py-2.5 text-[13px] lowercase duration-300 text-black hover:text-opacity-60 border border-black"
           >
-            <button type="submit" className="text-[13px] uppercase">
-              {loading ? "Đang đăng nhập..." : "Đăng nhập"}
-            </button>
-          </div>
-        </form>
-        <p className="text-xs underline mt-5">Qúy khách quên mật khẩu?</p>
-      </div>
-      <div className="h-80 min-w-[1px] bg-black hidden md:block"></div>
-      <div className="w-full flex flex-col mt-28 md:mt-0">
-        <p className="uppercase text-base md:text-lg text-left">
-          Quý khách cần một tài khoản?
-        </p>
-        <div
-          onClick={() =>
-            navigate(redirect ? `/register?redirect=${redirect}` : "/register")
-          }
-          className="text-black hover:text-opacity-60 duration-200 cursor-pointer flex justify-center mt-6 md:mt-8 border border-black py-[0.6rem]"
-        >
-          <button type="submit" className="text-[13px] uppercase">
-            Đăng Ký
+            {loading ? "Đang đăng nhập..." : "Đăng nhập."}
           </button>
-        </div>
-      </div>
+        </form>
+        <button type="button" className="lowercase text-xs underline mt-3">
+          Qúy khách quên mật khẩu?
+        </button>
+      </section>
+
+      <div className="md:border-b lg:border-l border-black"></div>
+
+      <section className="w-full">
+        <h2 className="lowercase text-center text-lg md:text-xl lg:text-2xl">
+          Quý khách cần một tài khoản?
+        </h2>
+        <Link
+          to={redirect ? `/register?redirect=${redirect}` : "/register"}
+          type="submit"
+          className="w-full mt-8 py-2.5 text-center text-sm lowercase duration-300 text-black hover:text-opacity-60 border border-black"
+        >
+          Đăng Ký.
+        </Link>
+      </section>
 
       <MessageModal message="Email hoặc mật khẩu không đúng!" />
-    </div>
+    </main>
   );
 };
 

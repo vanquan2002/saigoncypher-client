@@ -17,9 +17,7 @@ const Banner = () => {
         </span>
 
         <span className="tracking-wider text-[18vw] md:text-[17vw] lg:text-[10vw] leading-none text-right font-black flex items-center justify-end">
-          St
-          <TbNorthStar />
-          re
+          T-shirt.
         </span>
       </h1>
     </div>
