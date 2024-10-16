@@ -5,9 +5,9 @@ const Breadcrumbs = ({ namePages }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="mt-10 pl-5 md:pl-20 flex flex-wrap uppercase">
+    <div className="flex gap-2 lowercase line-clamp-1">
       {namePages.map((item, i) => (
-        <p key={i}>
+        <div key={i} className="flex">
           {i !== 0 && (
             <span
               className={`pr-2 ${
@@ -21,15 +21,15 @@ const Breadcrumbs = ({ namePages }) => {
           )}
           <span
             onClick={() => namePages.length - 1 !== i && navigate(item.url)}
-            className={`text-sm font-medium pr-2 ${
+            className={`${
               namePages.length - 1 !== i
-                ? "text-gray-500 cursor-pointer hover:underline"
-                : "font-semibold text-black"
+                ? "text-gray-500 cursor-pointer hover:underline text-nowrap"
+                : "font-medium text-black line-clamp-1"
             }`}
           >
             {item.name}
           </span>
-        </p>
+        </div>
       ))}
     </div>
   );

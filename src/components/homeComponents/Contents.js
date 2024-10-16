@@ -1,15 +1,13 @@
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Loading from "../loadingError/Loading";
 import Message from "../loadingError/Error";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { useDispatch, useSelector } from "react-redux";
 import { listProduct } from "./../../redux/actions/ProductActions";
 import { LiaStarSolid } from "react-icons/lia";
-import { LiaStar } from "react-icons/lia";
 import { AppContext } from "../../AppContext";
 import { MdArrowOutward } from "react-icons/md";
-import ProductListHomeSkeleton from "../../skeletons/ProductListHomeSkeleton";
+import ProductListHomeSkeleton from "../skeletons/ProductListHomeSkeleton";
 
 const Contents = () => {
   const dispatch = useDispatch();
@@ -18,12 +16,13 @@ const Contents = () => {
   const { numberColList } = useContext(AppContext);
 
   useEffect(() => {
+    window.scrollTo({ top: 0 });
     dispatch(listProduct());
   }, []);
 
   return (
     <main className="md:px-20">
-      <h3 className="text-center lowercase text-2xl md:text-3xl">
+      <h3 className="border-t border-gray-300 pt-7 md:pt-10 text-center lowercase text-2xl md:text-3xl">
         Sản phẩm mới nhất.
       </h3>
       {loading ? (
@@ -78,10 +77,7 @@ const Contents = () => {
                         } md:text-[15px] flex items-center gap-[2px]`}
                       >
                         <LiaStarSolid />
-                        <span>
-                          {product.rating}
-                          {"/5"}
-                        </span>
+                        <span>{product.rating}/5</span>
                       </div>
                     </div>
                   </div>
@@ -89,14 +85,16 @@ const Contents = () => {
               ))}
             </ul>
           </section>
-          <Link
-            to="/products"
-            aria-label="Nhấn để đi đến trang tất cả sản phẩm"
-            className="flex items-center lowercase text-gray-800 mt-7 md:mt-10 cursor-pointer hover:underline font-medium"
-          >
-            <span>Xem tất cả sản phẩm</span>
-            <MdArrowOutward />
-          </Link>
+          <div className="border-t border-gray-300 pt-7 md:pt-10 mt-7 md:mt-10 w-full flex justify-center">
+            <Link
+              to="/products"
+              aria-label="Nhấn để đi đến trang tất cả sản phẩm"
+              className="lowercase flex items-center hover:underline text-lg"
+            >
+              <span>Xem tất cả sản phẩm</span>
+              <MdArrowOutward />
+            </Link>
+          </div>
         </div>
       )}
     </main>

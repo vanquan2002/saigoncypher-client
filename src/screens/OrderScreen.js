@@ -56,7 +56,7 @@ const OrderScreen = () => {
           </div>
           <div className="border-2 border-indigo-600 m-2 p-2">
             <h4>Deliver to:</h4>
-            Address: {order.shippingAddress.city},{" "}
+            Address: {order.shippingAddress.city},
             {order.shippingAddress.address}, {order.shippingAddress.postalCode}
             <hr />
             {order.isDelivered ? (

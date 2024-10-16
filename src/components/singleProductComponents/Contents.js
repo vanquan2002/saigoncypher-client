@@ -13,9 +13,11 @@ import MessageModal from "../MessageModal";
 import { AppContext } from "../../AppContext";
 import Reviews from "./Reviews";
 import RelatedProducts from "./RelatedProducts";
-import { FaStar } from "react-icons/fa";
-import { GoDotFill } from "react-icons/go";
 import { PiWarningCircleLight } from "react-icons/pi";
+import Breadcrumbs from "../Breadcrumbs";
+import { LiaStarSolid } from "react-icons/lia";
+import { LiaStar } from "react-icons/lia";
+import { IoPricetagsSharp } from "react-icons/io5";
 
 const Contents = () => {
   const { id } = useParams();
@@ -37,6 +39,11 @@ const Contents = () => {
     isCartModal,
     toggleIsCartModal,
   } = useContext(AppContext);
+  const namePages = [
+    { name: "Trang chủ", url: "/" },
+    { name: "Tất cả sản phẩm", url: "/products" },
+    { name: "Thông tin sản phẩm", url: "" },
+  ];
 
   const increment = () => {
     setQty(qty + 1);
@@ -107,7 +114,10 @@ const Contents = () => {
   }, [size]);
 
   return (
-    <div className="px-5 md:px-20">
+    <main className="px-5 md:px-20">
+      <div className="mt-40 md:mt-28">
+        <Breadcrumbs namePages={namePages} />
+      </div>
       {loading ? (
         <div className="mt-10">
           <Loading loading={loading} />
@@ -117,45 +127,44 @@ const Contents = () => {
           <Message error={error} />
         </div>
       ) : (
-        <div>
-          <div className="mt-10 flex flex-col lg:flex-row gap-10 lg:gap-20">
-            <div className="w-full lg:w-2/5">
+        <article>
+          <div className="mt-10 flex flex-col lg:flex-row gap-5 md:gap-10 lg:gap-20">
+            <section className="w-full lg:w-2/5">
               <ImageList images={product.images} />
-            </div>
+            </section>
 
-            <div className="flex flex-col gap-[10px] w-full lg:w-3/5">
-              <h5 className="uppercase line-clamp-2">{product.name}</h5>
-              <div className="flex items-center gap-5 mt-[2px]">
-                <div className="px-4 py-2 font-medium opacity-80 bg-gray-100">
-                  <p>{formatCurrency(product.price)}</p>
-                </div>
-                <div className="flex items-center gap-[7px]">
-                  <div className="flex items-center gap-1">
-                    <FaStar className="text-yellow-400" />
-                    <span>{product.rating}</span>
-                  </div>
-                  <GoDotFill className="text-gray-500 text-[9px]" />
-                  <span>{product.numReviews} đánh giá</span>
-                </div>
-              </div>
-              <div className="grid grid-cols-3 mt-4">
-                <p className="col-span-1 text-gray-500">Màu:</p>
-                <p className="col-span-2">{product.color}</p>
+            <section className="flex flex-col gap-[10px] w-full lg:w-3/5">
+              <h1 className="lowercase text-2xl font-medium">
+                {product.name}.{" "}
+                <span className="bg-yellow-400 text-black text-xs font-medium px-1.5 py-1">
+                  freeship.
+                </span>
+              </h1>
+              <div className="grid grid-cols-3">
+                <span className="lowercase col-span-1">Giá:</span>
+                <p className="lowercase col-span-2 font-medium">
+                  {formatCurrency(product.price)}.
+                </p>
               </div>
               <div className="grid grid-cols-3">
-                <p className="col-span-1 text-gray-500">Mô tả:</p>
-                <div className="flex flex-col items-start col-span-2">
+                <span className="lowercase col-span-1">Màu:</span>
+                <p className="lowercase col-span-2">{product.color}.</p>
+              </div>
+              <div className="grid grid-cols-3">
+                <span className="lowercase col-span-1">Mô tả:</span>
+                <div className="flex flex-col items-start col-span-2 bg-gray-50 py-[1px] px-[6px]">
                   <p
                     ref={descriptionRef}
-                    className={`${
+                    className={`lowercase ${
                       isDescriptionMore ? "line-clamp-none" : "line-clamp-3"
                     }`}
                   >
-                    {product.description}
+                    {product.description}.
                   </p>
 
                   {isOverflowing && (
                     <button
+                      type="button"
                       className="underline"
                       onClick={() => setIsDescriptionMore(!isDescriptionMore)}
                     >
@@ -165,14 +174,17 @@ const Contents = () => {
                 </div>
               </div>
               <div className="grid grid-cols-3">
-                <p className="col-span-1 text-gray-500">Chính sách:</p>
-                <p className="col-span-2">Đổi trả miễn phí trong 7 ngày</p>
-              </div>
-              <div className="grid grid-cols-3">
-                <p className="col-span-1 text-gray-500">Vận chuyển:</p>
-                <p className="col-span-2">
-                  Giao hàng trong vòng 1 - 2 ngày tại TP. Hồ Chí Minh
+                <span className="lowercase col-span-1">Chính sách:</span>
+                <p className="lowercase col-span-2">
+                  Đổi trả miễn phí trong 7 ngày.
                 </p>
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="flex items-center gap-[2px]">
+                  <LiaStarSolid />
+                  <span>{product.rating}/5</span>
+                </div>
+                <span>({product.numReviews} đánh giá)</span>
               </div>
 
               <div
@@ -251,18 +263,18 @@ const Contents = () => {
                   )}
                 </button>
               </div>
-            </div>
+            </section>
           </div>
 
           <Reviews product={product} />
           <RelatedProducts productId={id} />
-        </div>
+        </article>
       )}
 
       {isMassage === "size" && (
         <MessageModal message="Quý khách chưa chọn size!" />
       )}
-    </div>
+    </main>
   );
 };
 

@@ -9,7 +9,7 @@ const ProductListHomeSkeleton = ({ numberColList }) => {
     } else if (window.innerWidth >= 768) {
       setItemCount(4);
     } else {
-      setItemCount(2);
+      setItemCount(4);
     }
   };
 
@@ -31,26 +31,16 @@ const ProductListHomeSkeleton = ({ numberColList }) => {
       >
         {Array.from({ length: itemCount }).map((_, index) => (
           <li key={index} aria-hidden="true" className="col-span-1">
-            <div className="bg-slate-100 animate-pulse aspect-[2/3]"></div>
+            <div className="bg-gray-100 animate-pulse aspect-[2/3]"></div>
             <div
               className={`flex flex-col ${
-                numberColList === 2
-                  ? "mt-2 px-2 gap-2"
-                  : "mt-[10px] px-3 gap-[10px]"
+                numberColList === 2 ? "mt-2 px-2 gap-2" : "mt-3 px-3 gap-3"
               } md:mt-3 md:px-0 md:gap-3`}
             >
-              <div
-                className={`bg-slate-100 animate-pulse w-full ${
-                  numberColList === 2 ? "h-4" : "h-5"
-                } md:h-5`}
-              ></div>
-              <div
-                className={`w-full flex justify-between ${
-                  numberColList === 2 ? "h-4" : "h-5"
-                } md:h-5`}
-              >
-                <div className="bg-slate-100 animate-pulse w-2/5"></div>
-                <div className="bg-slate-100 animate-pulse w-1/5"></div>
+              <div className="bg-gray-100 animate-pulse w-full h-4"></div>
+              <div className="w-full flex justify-between h-4">
+                <div className="bg-gray-100 animate-pulse w-2/5"></div>
+                <div className="bg-gray-100 animate-pulse w-1/5"></div>
               </div>
             </div>
           </li>

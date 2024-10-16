@@ -69,9 +69,7 @@ const Header = () => {
                 {cartItems.length}
               </span>
               <span className="lowercase hidden md:block">
-                Giỏ hàng{"("}
-                {cartItems.length}
-                {")"}
+                Giỏ hàng({cartItems.length})
               </span>
             </button>
           </li>

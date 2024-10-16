@@ -70,7 +70,7 @@ const PlaceOrderScreen = () => {
           <div className="border-2 border-indigo-600 m-2 p-2">
             <h4>Deliver to:</h4>
             <p>
-              Address: {shippingAddress.city}, {shippingAddress.address},{" "}
+              Address: {shippingAddress.city}, {shippingAddress.address},
               {shippingAddress.postalCode}
             </p>
           </div>

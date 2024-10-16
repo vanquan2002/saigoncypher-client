@@ -93,11 +93,7 @@ const Reviews = ({ product }) => {
             <p className="text-[15px]">Xếp hạng:</p>
             <RatingIconChange rating={rating} setRating={setRating} />
             {rating ? (
-              <span className="text-sm">
-                {"("}
-                {desc[rating - 1]}
-                {")"}
-              </span>
+              <span className="text-sm">({desc[rating - 1]})</span>
             ) : null}
           </div>
           <form onSubmit={(e) => submitReviewHandle(e)}>
@@ -148,7 +144,7 @@ const Reviews = ({ product }) => {
 
       <div className="bg-gray-50 mt-16 p-5 flex flex-col gap-12">
         {product.reviews.length === 0 ? (
-          <p className="text-sm text-gray-700">Chưa có đánh giá nào{"!"}</p>
+          <p className="text-sm text-gray-700">Chưa có đánh giá nào!</p>
         ) : (
           product.reviews.map((review, i) => (
             <div key={i} className="flex gap-3">
