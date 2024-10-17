@@ -9,7 +9,6 @@ import Message from "../loadingError/Error";
 import { addToCart } from "../../redux/actions/CartActions";
 import { AiOutlinePlus } from "react-icons/ai";
 import { AiOutlineMinus } from "react-icons/ai";
-import MessageModal from "../MessageModal";
 import { AppContext } from "../../AppContext";
 import Reviews from "./Reviews";
 import RelatedProducts from "./RelatedProducts";
@@ -17,7 +16,8 @@ import { PiWarningCircleLight } from "react-icons/pi";
 import Breadcrumbs from "../Breadcrumbs";
 import { LiaStarSolid } from "react-icons/lia";
 import { LiaStar } from "react-icons/lia";
-import { IoPricetagsSharp } from "react-icons/io5";
+import { CART_ADD_ITEM_RESET } from "../../redux/constants/CartConstants";
+import MessageModal from "../modals/MessageModal";
 
 const Contents = () => {
   const { id } = useParams();
@@ -32,13 +32,8 @@ const Contents = () => {
   const [isOverflowing, setIsOverflowing] = useState(false);
   const [isDescriptionMore, setIsDescriptionMore] = useState(false);
   const [isSelectSize, setIsSelectSize] = useState(false);
-  const {
-    isMassage,
-    toggleIsMassage,
-    toggleIsBarRight,
-    isCartModal,
-    toggleIsCartModal,
-  } = useContext(AppContext);
+  const { toggleIsMassage, isCartModal, toggleIsCartModal } =
+    useContext(AppContext);
   const namePages = [
     { name: "Trang chủ", url: "/" },
     { name: "Tất cả sản phẩm", url: "/products" },
@@ -88,7 +83,9 @@ const Contents = () => {
     if (success) {
       setSize("");
       setQty(1);
-      toggleIsBarRight("cart");
+      dispatch({
+        type: CART_ADD_ITEM_RESET,
+      });
       if (window.innerWidth < 768) {
         toggleIsCartModal();
       }
@@ -96,15 +93,20 @@ const Contents = () => {
   }, [success]);
 
   useEffect(() => {
-    const descriptionElement = descriptionRef.current;
-    if (descriptionElement) {
-      const computedStyle = window.getComputedStyle(descriptionElement);
-      const lineHeight = parseFloat(computedStyle.lineHeight);
-      const totalHeight = descriptionElement.scrollHeight;
-      const lines = Math.round(totalHeight / lineHeight);
-      const isOverflowing = lines > 3;
-      setIsOverflowing(isOverflowing);
-    }
+    const handleResize = () => {
+      const descriptionElement = descriptionRef.current;
+      if (descriptionElement) {
+        const computedStyle = window.getComputedStyle(descriptionElement);
+        const lineHeight = parseFloat(computedStyle.lineHeight);
+        const totalHeight = descriptionElement.scrollHeight;
+        const lines = Math.round(totalHeight / lineHeight);
+        const isOverflowing = lines > 3;
+        setIsOverflowing(isOverflowing);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [product]);
 
   useEffect(() => {
@@ -114,26 +116,22 @@ const Contents = () => {
   }, [size]);
 
   return (
-    <main className="px-5 md:px-20">
-      <div className="mt-40 md:mt-28">
+    <main className="md:px-20">
+      <div className="mx-5 md:mx-0 mt-40 md:mt-28">
         <Breadcrumbs namePages={namePages} />
       </div>
       {loading ? (
-        <div className="mt-10">
-          <Loading loading={loading} />
-        </div>
+        <Loading loading={loading} />
       ) : error ? (
-        <div className="mt-10">
-          <Message error={error} />
-        </div>
+        <Message error={error} />
       ) : (
         <article>
-          <div className="mt-10 flex flex-col lg:flex-row gap-5 md:gap-10 lg:gap-20">
+          <div className="mt-5 md:mt-10 flex flex-col lg:flex-row gap-4 md:gap-10 lg:gap-20">
             <section className="w-full lg:w-2/5">
               <ImageList images={product.images} />
             </section>
 
-            <section className="flex flex-col gap-[10px] w-full lg:w-3/5">
+            <section className="px-5 md:px-0 flex flex-col gap-[10px] w-full lg:w-3/5">
               <h1 className="lowercase text-2xl font-medium">
                 {product.name}.{" "}
                 <span className="bg-yellow-400 text-black text-xs font-medium px-1.5 py-1">
@@ -152,7 +150,7 @@ const Contents = () => {
               </div>
               <div className="grid grid-cols-3">
                 <span className="lowercase col-span-1">Mô tả:</span>
-                <div className="flex flex-col items-start col-span-2 bg-gray-50 py-[1px] px-[6px]">
+                <div className="flex flex-col items-start col-span-2">
                   <p
                     ref={descriptionRef}
                     className={`lowercase ${
@@ -192,21 +190,25 @@ const Contents = () => {
                   isCartModal ? "block z-30 p-5" : "hidden"
                 } md:block mt-8 bg-white w-full fixed left-0 bottom-0 md:static`}
               >
-                <div className="grid grid-cols-2 gap-3">
+                <ul className="grid grid-cols-2 gap-3">
                   {product.sizes?.map((item, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setSize(item.size)}
-                      className={`cursor-pointer border border-black flex items-center justify-center h-10 ${
-                        item.size === size
-                          ? "bg-black text-white"
-                          : "text-black hover:bg-gray-100"
-                      }`}
-                    >
-                      <span className="uppercase ">{item.size}</span>
-                    </button>
+                    <li>
+                      <button
+                        key={i}
+                        type="button"
+                        aria-label={`Nhấn chọn size ${item.size}`}
+                        onClick={() => setSize(item.size)}
+                        className={`text-lg border border-black flex w-full items-center justify-center h-10 ${
+                          item.size === size
+                            ? "bg-black text-white"
+                            : "text-black hover:bg-gray-100"
+                        }`}
+                      >
+                        <span className="lowercase">{item.size}</span>
+                      </button>
+                    </li>
                   ))}
-                </div>
+                </ul>
 
                 <div className="mt-2">
                   {isSelectSize && (
@@ -217,63 +219,75 @@ const Contents = () => {
                       </span>
                     </div>
                   )}
-                  <span className="cursor-pointer underline text-[13px]">
-                    Hướng dẫn chọn size
-                  </span>
+                  <button
+                    type="button"
+                    className="lowercase underline text-[13px]"
+                  >
+                    Hướng dẫn chọn size.
+                  </button>
                 </div>
 
                 <div className="flex items-end justify-between mt-10">
-                  <p className="text-sm">Chọn hoặc nhập số lượng</p>
+                  <span className="lowercase text-sm">
+                    Chọn hoặc nhập số lượng.
+                  </span>
                   <div className="flex">
                     <button
+                      type="button"
+                      aria-label="Nhấn giảm số lượng đặt sản phẩm"
                       className={`${
                         qty <= 1 && "opacity-30 pointer-events-none"
-                      } flex cursor-pointer w-12 h-9 justify-center items-center border-t border-l border-b border-black hover:bg-gray-100`}
+                      } flex w-12 h-9 justify-center items-center border-t border-l border-b border-black hover:bg-gray-100`}
                       onClick={() => decrement()}
                     >
-                      <AiOutlineMinus color="#1c1c1c" size="1rem" />
+                      <AiOutlineMinus />
                     </button>
                     <input
+                      aria-label="Ô nhập số lượng đặt sản phẩm"
                       className="w-12 h-9 text-lg text-center outline-none border border-black"
                       type="text"
                       onChange={(e) => setInputQtyHandle(e.target.value)}
                       value={qty}
                     />
                     <button
+                      type="button"
+                      aria-label="Nhấn tăng số lượng đặt sản phẩm"
                       className={`${
                         qty >= 20 && "opacity-30 pointer-events-none"
-                      } flex cursor-pointer w-12 h-9 justify-center items-center border-t border-r border-b border-black hover:bg-gray-100`}
+                      } flex w-12 h-9 justify-center items-center border-t border-r border-b border-black hover:bg-gray-100`}
                       onClick={() => increment()}
                     >
-                      <AiOutlinePlus color="#1c1c1c" size="1rem" />
+                      <AiOutlinePlus />
                     </button>
                   </div>
                 </div>
 
                 <button
+                  type="button"
+                  aria-label="Nhấn thêm vào giỏ hàng"
                   className={`w-full h-14 mt-5 duration-300 flex justify-center items-center border border-black hover:text-opacity-60 ${
                     size ? "bg-black text-white" : "text-black"
                   }`}
                   onClick={() => addToCartHandle()}
                 >
                   {loadingAddCart ? (
-                    <span className="uppercase">Đang thêm vào giỏ...</span>
+                    <span className="lowercase text-lg">
+                      Đang thêm vào giỏ...
+                    </span>
                   ) : (
-                    <span className="uppercase">Thêm vào giỏ</span>
+                    <span className="lowercase text-lg">Thêm vào giỏ.</span>
                   )}
                 </button>
               </div>
             </section>
           </div>
 
-          <Reviews product={product} />
+          {/*  <Reviews product={product} /> */}
           <RelatedProducts productId={id} />
         </article>
       )}
 
-      {isMassage === "size" && (
-        <MessageModal message="Quý khách chưa chọn size!" />
-      )}
+      <MessageModal message="Quý khách chưa chọn size!" />
     </main>
   );
 };

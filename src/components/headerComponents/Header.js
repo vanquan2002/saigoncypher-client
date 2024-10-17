@@ -93,7 +93,6 @@ const Header = () => {
           placeholder="tìm kiếm sản phẩm..."
           aria-label="Ô tìm kiếm sản phẩm"
           value={keyword}
-          name="search"
         />
         <div className="flex items-center">
           <RxDividerVertical className="text-xl text-gray-400" />

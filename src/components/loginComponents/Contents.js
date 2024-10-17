@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { USER_LOGOUT } from "../../redux/constants/UserConstants";
 import { AppContext } from "../../AppContext";
-import MessageModal from "../MessageModal";
+import MessageModal from "../modals/MessageModal";
 import { Link } from "react-router-dom";
 
 const Contents = () => {
@@ -139,7 +139,7 @@ const Contents = () => {
           <button
             type="submit"
             onClick={formik.handleSubmit}
-            className="mt-6 py-2.5 text-[13px] lowercase duration-300 text-black hover:text-opacity-60 border border-black"
+            className="mt-6 py-2.5 text-[13px] lowercase text-black hover:text-opacity-60 border border-black"
           >
             {loading ? "Đang đăng nhập..." : "Đăng nhập."}
           </button>
@@ -158,7 +158,7 @@ const Contents = () => {
         <Link
           to={redirect ? `/register?redirect=${redirect}` : "/register"}
           type="submit"
-          className="w-full mt-8 py-2.5 text-center text-sm lowercase duration-300 text-black hover:text-opacity-60 border border-black"
+          className="w-full mt-8 py-2.5 text-center text-sm lowercase text-black hover:text-opacity-60 border border-black"
         >
           Đăng Ký.
         </Link>

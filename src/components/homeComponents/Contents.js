@@ -22,16 +22,16 @@ const Contents = () => {
 
   return (
     <main className="md:px-20">
-      <h3 className="border-t border-gray-300 pt-7 md:pt-10 text-center lowercase text-2xl md:text-3xl">
+      <h3 className="border-t border-gray-300 pt-5 md:pt-10 text-center lowercase text-2xl md:text-3xl">
         Sản phẩm mới nhất.
       </h3>
       {loading ? (
         <ProductListHomeSkeleton numberColList={numberColList} />
       ) : error ? (
         <Message error={error} />
-      ) : (
-        <div className="flex flex-col items-center">
-          <section className="w-full mt-7 md:mt-10">
+      ) : products.length > 0 ? (
+        <div className="mt-5 md:mt-10">
+          <section className="w-full">
             <ul
               className={`grid grid-cols-${numberColList} md:grid-cols-2 lg:grid-cols-4 ${
                 numberColList === 2
@@ -85,7 +85,7 @@ const Contents = () => {
               ))}
             </ul>
           </section>
-          <div className="border-t border-gray-300 pt-7 md:pt-10 mt-7 md:mt-10 w-full flex justify-center">
+          <div className="border-t border-gray-300 pt-5 md:pt-10 mt-5 md:mt-10 w-full flex justify-center">
             <Link
               to="/products"
               aria-label="Nhấn để đi đến trang tất cả sản phẩm"
@@ -95,6 +95,10 @@ const Contents = () => {
               <MdArrowOutward />
             </Link>
           </div>
+        </div>
+      ) : (
+        <div className="mt-5 md:mt-10 py-2 px-4 mx-5 md:mx-0 border border-black">
+          <h5 className="lowercase">Không có sản phẩm nào cả!</h5>
         </div>
       )}
     </main>

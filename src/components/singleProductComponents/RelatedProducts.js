@@ -1,16 +1,18 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import Loading from "../loadingError/Loading";
+import React, { useContext, useEffect } from "react";
 import Message from "../loadingError/Error";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { useDispatch, useSelector } from "react-redux";
 import { relatedProducts } from "./../../redux/actions/ProductActions";
+import ProductListHomeSkeleton from "../skeletons/ProductListHomeSkeleton";
+import { AppContext } from "../../AppContext";
+import { Link } from "react-router-dom";
+import { LiaStarSolid } from "react-icons/lia";
 
 const RelatedProducts = ({ productId }) => {
   const dispatch = useDispatch();
   const productsRelated = useSelector((state) => state.productsRelated);
   const { loading, error, products } = productsRelated;
-  const navigate = useNavigate();
+  const { numberColList } = useContext(AppContext);
 
   useEffect(() => {
     dispatch(relatedProducts(productId));
@@ -18,39 +20,71 @@ const RelatedProducts = ({ productId }) => {
 
   return (
     <div className="mt-40">
-      <h6 className="uppercase font-medium">Sản phẩm liên quan</h6>
+      <h3 className="mx-5 md:mx-0 lowercase text-xl font-medium">
+        Sản phẩm liên quan.
+      </h3>
       {loading ? (
-        <div className="mt-10">
-          <Loading loading={loading} />
-        </div>
+        <ProductListHomeSkeleton numberColList={numberColList} />
       ) : error ? (
-        <div className="mt-10">
-          <Message error={error} />
-        </div>
-      ) : (
-        <div className="mt-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-10">
-          {products.map((product, i) => (
-            <div className="" key={i}>
-              <img
-                onClick={() => navigate(`/products/${product._id}/detail`)}
-                className="w-full cursor-pointer"
-                src={product.thumbImage}
-                alt={`Hình ảnh của ${product.name}`}
-                title={product.name}
-              />
-              <div>
-                <h6
-                  onClick={() => navigate(`/products/${product._id}/detail`)}
-                  className="cursor-pointer uppercase truncate hover:underline"
+        <Message error={error} />
+      ) : products.length > 0 ? (
+        <section className="mt-5 md:mt-10 w-full">
+          <ul
+            className={`grid grid-cols-${numberColList} md:grid-cols-2 lg:grid-cols-4 ${
+              numberColList === 2
+                ? "gap-x-[2px] gap-y-5 border-x-2 border-white"
+                : "gap-5"
+            } md:gap-10`}
+          >
+            {products.slice(0, 8).map((product, i) => (
+              <li key={i}>
+                <Link to={`/products/${product._id}/detail`}>
+                  <img
+                    className="w-full cursor-pointer"
+                    src={product.thumbImage}
+                    alt={`Hình ảnh của sản phẩm ${product.name}`}
+                    title={`Nhấn để xem chi tiết về ${product.name}`}
+                  />
+                </Link>
+                <div
+                  className={`mt-1 ${
+                    numberColList === 2 ? "px-2" : "px-[10px]"
+                  } md:px-0`}
                 >
-                  {product.name}
-                </h6>
-                <p className="text-sm font-medium">
-                  {formatCurrency(product.price)}
-                </p>
-              </div>
-            </div>
-          ))}
+                  <Link to={`/products/${product._id}/detail`}>
+                    <h2
+                      className={`${
+                        numberColList === 2 ? "text-base" : "text-[19px]"
+                      } md:text-[19px] cursor-pointer line-clamp-1 hover:underline lowercase`}
+                    >
+                      {product.name}.
+                    </h2>
+                  </Link>
+                  <div className="flex justify-between items-end">
+                    <span
+                      className={`${
+                        numberColList === 2 ? "text-sm" : "text-base"
+                      } md:text-base font-medium line-clamp-1 lowercase`}
+                    >
+                      {formatCurrency(product.price)}.
+                    </span>
+                    <div
+                      className={`${
+                        numberColList === 2 ? "text-sm" : "text-[15px]"
+                      } md:text-[15px] flex items-center gap-[2px]`}
+                    >
+                      <LiaStarSolid />
+                      <span>{product.rating}/5</span>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : (
+        <div className="mt-5 md:mt-10 py-2 px-4 mx-5 md:mx-0 border border-black">
+          <h5 className="lowercase">Không có sản phẩm nào cả!</h5>
         </div>
       )}
     </div>

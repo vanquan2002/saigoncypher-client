@@ -22,7 +22,6 @@ const Contents = () => {
     { name: "Trang chủ", url: "/" },
     { name: "Tất cả sản phẩm", url: "/products" },
   ];
-
   const updatedPages = useMemo(() => {
     if (keyword) {
       return [...namePages, { name: `${keyword}`, url: "" }];
@@ -40,7 +39,7 @@ const Contents = () => {
       <div className="mx-5 md:mx-0 mt-40 md:mt-28">
         <Breadcrumbs namePages={updatedPages} />
       </div>
-      <h3 className="border-t border-gray-300 pt-7 md:pt-10 mt-5 md:mt-6 text-center lowercase text-2xl md:text-3xl">
+      <h3 className="border-t border-gray-300 pt-5 md:pt-10 mt-3 md:mt-6 text-center lowercase text-2xl md:text-3xl">
         Tất cả sản phẩm.
       </h3>
       {loading ? (
@@ -48,7 +47,7 @@ const Contents = () => {
       ) : error ? (
         <Message error={error} />
       ) : products.length > 0 ? (
-        <div className="mt-7 md:mt-10">
+        <div className="mt-5 md:mt-10">
           <section className="w-full">
             <ul
               className={`grid grid-cols-${numberColList} md:grid-cols-2 lg:grid-cols-4 ${
@@ -103,12 +102,12 @@ const Contents = () => {
               ))}
             </ul>
           </section>
-          <div className="border-t border-gray-300 pt-7 md:pt-10 mt-7 md:mt-10 flex items-center justify-center">
+          <div className="border-t border-gray-300 pt-5 md:pt-10 mt-5 md:mt-10 flex items-center justify-center">
             <Pagination page={page} pages={pages} keyword={keyword} />
           </div>
         </div>
       ) : products.length === 0 && keyword ? (
-        <div className="mt-7 md:mt-10 mx-5 md:mx-0">
+        <div className="mt-5 md:mt-10 mx-5 md:mx-0">
           <h5 className="lowercase flex items-center justify-between py-4 px-6 mb-2 text-lg border border-black">
             <span>Không tìm thấy sản phẩm!</span>
             <FaRegFaceMeh className="text-2xl" />
@@ -118,7 +117,7 @@ const Contents = () => {
           </span>
         </div>
       ) : (
-        <div className="mt-7 md:mt-10 py-2 px-4 mx-5 md:mx-0 border border-black">
+        <div className="mt-5 md:mt-10 py-2 px-4 mx-5 md:mx-0 border border-black">
           <h5 className="lowercase">Không có sản phẩm nào cả!</h5>
         </div>
       )}

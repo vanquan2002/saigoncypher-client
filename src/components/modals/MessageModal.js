@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { AppContext } from "../AppContext";
+import { AppContext } from "../../AppContext";
 
 const MessageModal = ({ message }) => {
   const { isMassage, toggleIsMassage } = useContext(AppContext);

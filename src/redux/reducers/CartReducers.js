@@ -35,7 +35,6 @@ export const cartReducer = (
             ...state,
             loading: false,
             success: true,
-            indexAdded: { id: newItem.product, size: newItem.size },
             cartItems: updateCartItems(existingItemIndex, {
               ...newItem,
             }),
@@ -55,7 +54,6 @@ export const cartReducer = (
             ...state,
             loading: false,
             success: true,
-            indexAdded: { id: newItem.product, size: newItem.size },
             cartItems: updatedCartItems,
           };
         } else {
@@ -63,7 +61,6 @@ export const cartReducer = (
             ...state,
             loading: false,
             success: true,
-            indexAdded: { id: newItem.product, size: newItem.size },
             cartItems: updateCartItems(existingItemIndex, {
               size:
                 newItem.sizeUpdate || state.cartItems[existingItemIndex].size,
@@ -75,13 +72,12 @@ export const cartReducer = (
           ...state,
           loading: false,
           success: true,
-          indexAdded: { id: newItem.product, size: newItem.size },
           cartItems: [...state.cartItems, newItem],
         };
       }
 
     case CART_ADD_ITEM_RESET:
-      return { ...state, success: false, indexAdded: {} };
+      return { ...state, success: false };
     case CART_REMOVE_ITEM:
       return {
         ...state,

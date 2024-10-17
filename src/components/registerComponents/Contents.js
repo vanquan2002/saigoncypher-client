@@ -8,8 +8,8 @@ import { useLocation, useNavigate } from "react-router";
 import { AppContext } from "../../AppContext";
 import { USER_LOGOUT } from "../../redux/constants/UserConstants";
 import { register } from "../../redux/actions/UserActions";
-import MessageModal from "../MessageModal";
 import { Link } from "react-router-dom";
+import MessageModal from "../modals/MessageModal";
 
 const Contents = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -166,7 +166,7 @@ const Contents = () => {
           <button
             type="button"
             onClick={formik.handleSubmit}
-            className="mt-6 py-2.5 text-sm lowercase duration-300 text-black hover:text-opacity-60 border border-black"
+            className="mt-6 py-2.5 text-sm lowercase text-black hover:text-opacity-60 border border-black"
           >
             {loading ? "Đang tạo tài khoản..." : "Tạo tài khoản."}
           </button>
@@ -182,7 +182,7 @@ const Contents = () => {
         <Link
           to={redirect ? `/login?redirect=${redirect}` : "/login"}
           type="submit"
-          className="w-full mt-8 py-2.5 text-center text-sm lowercase uppercase duration-300 text-black hover:text-opacity-60 border border-black"
+          className="w-full mt-8 py-2.5 text-center text-sm lowercase text-black hover:text-opacity-60 border border-black"
         >
           Đăng nhập.
         </Link>

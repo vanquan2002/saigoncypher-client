@@ -13,8 +13,8 @@ import "moment/locale/vi";
 import { PRODUCT_CREATE_REVIEW_RESET } from "../../redux/constants/ProductConstants";
 import RatingIconChange from "./RatingIconChange";
 import RatingIconReadonly from "./RatingIconReadonly";
-import MessageModal from "../MessageModal";
 import { AppContext } from "../../AppContext";
+import MessageModal from "../modals/MessageModal";
 
 const Reviews = ({ product }) => {
   moment.locale("vi");
