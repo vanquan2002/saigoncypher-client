@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import Fancybox from "./Fancybox ";
+import { Link } from "react-router-dom";
 
 const ImageList = ({ images }) => {
   const containerRef = useRef(null);
@@ -46,42 +47,47 @@ const ImageList = ({ images }) => {
           },
         }}
       >
-        <div ref={containerRef} className="h-[550px] overflow-hidden">
+        <ul ref={containerRef} className="h-[550px] overflow-hidden">
           {images?.map((item, i) => (
-            <a
-              data-fancybox="gallery"
-              className="flex flex-col items-start"
-              href={item.image}
-              ref={(element) => (imgsRefs.current[i] = element)}
-              key={i}
+            <li key={i}>
+              <Link
+                aria-label={`Đi đến hình ảnh ${item.description}`}
+                data-fancybox="gallery"
+                className="flex flex-col"
+                to={item.image}
+                ref={(element) => (imgsRefs.current[i] = element)}
+              >
+                <img
+                  src={item.image}
+                  className="object-cover w-full h-[550px]"
+                  alt={`Hình ảnh của ${item.description}`}
+                  title={item.description}
+                />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </Fancybox>
+
+      <ul className="absolute bottom-0 right-0 w-9 flex gap-1 flex-col justify-end mr-3 mb-3">
+        {images?.map((item, i) => (
+          <li key={i}>
+            <button
+              type="button"
+              aria-label={`Nút nhấn để hiển thị hình ảnh ${item.description}`}
+              className="flex justify-center items-center "
+              onClick={() => wheelImgsWhenClickHandle(i)}
             >
               <img
                 src={item.image}
-                className="object-cover w-full h-[550px]"
+                className="w-full shadow-sm"
                 alt={`Hình ảnh của ${item.description}`}
-                title={item.description}
+                title={`Hiển thị hình ảnh ${item.description}`}
               />
-            </a>
-          ))}
-        </div>
-      </Fancybox>
-
-      <div className="absolute bottom-0 right-0 w-9 flex gap-1 flex-col justify-end mr-3 mb-3">
-        {images?.map((item, i) => (
-          <button
-            key={i}
-            className="flex justify-center items-center "
-            onClick={() => wheelImgsWhenClickHandle(i)}
-          >
-            <img
-              src={item.image}
-              className="w-full shadow-sm"
-              alt={`Hình ảnh của ${item.description}`}
-              title={item.description}
-            />
-          </button>
+            </button>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 };

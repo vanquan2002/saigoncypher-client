@@ -14,7 +14,7 @@ const MessageModal = ({ message }) => {
   return (
     <div
       onClick={() => toggleIsMassage("")}
-      className={`${
+      className={`z-20 ${
         isMassage
           ? "opacity-100 pointer-events-auto"
           : "opacity-0 pointer-events-none"

@@ -18,6 +18,8 @@ import { LiaStarSolid } from "react-icons/lia";
 import { LiaStar } from "react-icons/lia";
 import { CART_ADD_ITEM_RESET } from "../../redux/constants/CartConstants";
 import MessageModal from "../modals/MessageModal";
+import ProductDetailSkeleton from "../skeletons/ProductDetailSkeleton";
+import AddCartSuccessModal from "../modals/AddCartSuccessModal";
 
 const Contents = () => {
   const { id } = useParams();
@@ -32,8 +34,12 @@ const Contents = () => {
   const [isOverflowing, setIsOverflowing] = useState(false);
   const [isDescriptionMore, setIsDescriptionMore] = useState(false);
   const [isSelectSize, setIsSelectSize] = useState(false);
-  const { toggleIsMassage, isCartModal, toggleIsCartModal } =
-    useContext(AppContext);
+  const {
+    toggleIsMassage,
+    isCartModal,
+    toggleIsCartModal,
+    toggleIsSmallModal,
+  } = useContext(AppContext);
   const namePages = [
     { name: "Trang chủ", url: "/" },
     { name: "Tất cả sản phẩm", url: "/products" },
@@ -88,6 +94,8 @@ const Contents = () => {
       });
       if (window.innerWidth < 768) {
         toggleIsCartModal();
+      } else {
+        toggleIsSmallModal("cart");
       }
     }
   }, [success]);
@@ -121,7 +129,7 @@ const Contents = () => {
         <Breadcrumbs namePages={namePages} />
       </div>
       {loading ? (
-        <Loading loading={loading} />
+        <ProductDetailSkeleton />
       ) : error ? (
         <Message error={error} />
       ) : (
@@ -177,12 +185,15 @@ const Contents = () => {
                   Đổi trả miễn phí trong 7 ngày.
                 </p>
               </div>
-              <div className="flex items-center gap-1">
-                <div className="flex items-center gap-[2px]">
-                  <LiaStarSolid />
-                  <span>{product.rating}/5</span>
+              <div className="grid grid-cols-3">
+                <span className="lowercase col-span-1">Đánh giá:</span>
+                <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-[2px]">
+                    <LiaStarSolid />
+                    <span>{product.rating}/5</span>
+                  </div>
+                  <span>({product.numReviews} lượt)</span>
                 </div>
-                <span>({product.numReviews} đánh giá)</span>
               </div>
 
               <div
@@ -288,6 +299,7 @@ const Contents = () => {
       )}
 
       <MessageModal message="Quý khách chưa chọn size!" />
+      <AddCartSuccessModal />
     </main>
   );
 };
