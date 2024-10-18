@@ -34,6 +34,12 @@ const Contents = () => {
     dispatch(listProduct(keyword, pageNumber));
   }, [keyword, pageNumber]);
 
+  useEffect(() => {
+    document.title = keyword
+      ? `Tìm kiếm: ${keyword}`
+      : "Saigoncypher - Tất cả sản phẩm";
+  }, [keyword]);
+
   return (
     <main className="md:px-20">
       <div className="mx-5 md:mx-0 mt-40 md:mt-28">
@@ -108,17 +114,18 @@ const Contents = () => {
         </div>
       ) : products.length === 0 && keyword ? (
         <div className="mt-5 md:mt-10 mx-5 md:mx-0">
-          <h5 className="lowercase flex items-center justify-between py-4 px-6 mb-2 text-lg border border-black">
-            <span>Không tìm thấy sản phẩm!</span>
-            <FaRegFaceMeh className="text-2xl" />
+          <h5 className="lowercase mb-2 text-lg py-4 px-6 border border-black">
+            Không tìm thấy sản phẩm!
           </h5>
           <span className="lowercase text-[15px]">
             Từ khóa tìm kiếm: <span>{keyword}</span>
           </span>
         </div>
       ) : (
-        <div className="mt-5 md:mt-10 py-2 px-4 mx-5 md:mx-0 border border-black">
-          <h5 className="lowercase">Không có sản phẩm nào cả!</h5>
+        <div className="mt-5 md:mt-10 mx-5 md:mx-0">
+          <h5 className="lowercase text-lg py-4 px-6 border border-black">
+            Không có sản phẩm nào cả!
+          </h5>
         </div>
       )}
     </main>

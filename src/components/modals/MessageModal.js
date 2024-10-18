@@ -18,7 +18,7 @@ const MessageModal = ({ message }) => {
         isMassage
           ? "opacity-100 pointer-events-auto"
           : "opacity-0 pointer-events-none"
-      } transition-opacity duration-300 bg-black bg-opacity-50 fixed top-0 left-0 h-screen w-screen flex justify-center items-center`}
+      } duration-300 bg-black bg-opacity-50 fixed top-0 left-0 h-screen w-screen flex justify-center items-center`}
     >
       <div
         onClick={(e) => e.stopPropagation()}

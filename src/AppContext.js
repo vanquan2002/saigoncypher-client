@@ -1,17 +1,34 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [isMassage, setIsMassage] = useState("");
-  const [isCartModal, setIsCartModal] = useState(false);
   const [isSmallModal, setIsSmallModal] = useState("");
+  const [isCartModal, setIsCartModal] = useState(false);
   const [numberColList, setNumberColList] = useState(1);
 
   const toggleIsMassage = (text) => setIsMassage(text);
-  const toggleIsCartModal = () => setIsCartModal((prev) => !prev);
+  const toggleIsCartModal = (bol) => setIsCartModal(bol);
   const toggleIsSmallModal = (text) => setIsSmallModal(text);
   const toggleNumberColList = (num) => setNumberColList(num);
+
+  useEffect(() => {
+    let timeoutId;
+    if (isSmallModal === "cart") {
+      timeoutId = setTimeout(
+        () => {
+          toggleIsSmallModal("");
+        },
+        window.innerWidth < 768 ? 2000 : 4000
+      );
+    }
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [isSmallModal]);
 
   return (
     <AppContext.Provider

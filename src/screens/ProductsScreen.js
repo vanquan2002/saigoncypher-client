@@ -8,14 +8,6 @@ const ProductsScreen = () => {
     <div>
       <Helmet>
         <title>Saigoncypher - Tất cả sản phẩm</title>
-        <meta
-          name="description"
-          content="Saigoncypher - Cửa hàng áo thun thời trang với phong cách đơn giản."
-        />
-        <meta
-          name="keywords"
-          content="áo thun, thời trang, saigon, sài gòn, simple, đơn giản, saigoncypher"
-        />
       </Helmet>
 
       <Header />

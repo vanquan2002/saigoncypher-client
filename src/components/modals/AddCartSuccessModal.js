@@ -1,48 +1,31 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { MdClose } from "react-icons/md";
 import { AppContext } from "../../AppContext";
-import { useLocation } from "react-router";
 
 const AddCartSuccessModal = () => {
   const { isSmallModal, toggleIsSmallModal } = useContext(AppContext);
-  const location = useLocation();
-
-  useEffect(() => {
-    let timeoutId;
-    if (isSmallModal === "cart") {
-      timeoutId = setTimeout(() => {
-        toggleIsSmallModal("");
-      }, 4000);
-    }
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, [isSmallModal]);
-
-  useEffect(() => {
-    if (isSmallModal === "cart") {
-      toggleIsSmallModal("");
-    }
-  }, [location]);
 
   return (
     <div
-      className={`z-20 fixed bottom-8 left-8 bg-black flex items-center gap-4 px-4 py-[10px] ${
-        isSmallModal ? "translate-x-0" : "-translate-x-[40vw]"
+      className={`z-20 fixed -translate-x-1/2 md:-translate-x-0 bottom-1/2 left-1/2 md:bottom-8 md:left-8 ${
+        isSmallModal
+          ? "opacity-100 pointer-events-auto"
+          : "opacity-0 pointer-events-none"
       } duration-300`}
     >
-      <span className="text-white text-sm lowercase">
-        Thêm sản phẩm vào giỏ hàng thành công!
-      </span>
-      <button
-        onClick={() => toggleIsSmallModal("")}
-        type="button"
-        aria-label="Đóng thông báo đã thêm sản phẩm vào giỏ hàng thành công"
-      >
-        <MdClose className="text-white text-lg" />
-      </button>
+      <div className="bg-black flex items-center gap-4 px-4 py-[11px]">
+        <span className="text-white text-center text-sm lowercase">
+          Thêm sản phẩm vào giỏ hàng thành công!
+        </span>
+        <button
+          onClick={() => toggleIsSmallModal("")}
+          type="button"
+          aria-label="Đóng thông báo đã thêm sản phẩm vào giỏ hàng thành công"
+          className="hidden md:block"
+        >
+          <MdClose className="text-white text-xl" />
+        </button>
+      </div>
     </div>
   );
 };

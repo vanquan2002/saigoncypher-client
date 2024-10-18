@@ -4,13 +4,11 @@ import ImageList from "./ImageList";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { useParams } from "react-router";
 import { detailsProduct } from "../../redux/actions/ProductActions";
-import Loading from "../loadingError/Loading";
 import Message from "../loadingError/Error";
 import { addToCart } from "../../redux/actions/CartActions";
 import { AiOutlinePlus } from "react-icons/ai";
 import { AiOutlineMinus } from "react-icons/ai";
 import { AppContext } from "../../AppContext";
-import Reviews from "./Reviews";
 import RelatedProducts from "./RelatedProducts";
 import { PiWarningCircleLight } from "react-icons/pi";
 import Breadcrumbs from "../Breadcrumbs";
@@ -52,22 +50,11 @@ const Contents = () => {
   const decrement = () => {
     setQty(qty - 1);
   };
-  const setInputQtyHandle = (num) => {
-    if (num !== "" && !isNaN(num) && num > 0 && num <= 20) {
-      setQty(parseInt(num));
-    } else {
-      setQty(0);
-    }
-  };
+
   const addToCartHandle = () => {
-    if (size && qty) {
+    if (size) {
       dispatch(addToCart(id, qty, size));
-    }
-    if (size && qty === 0) {
-      dispatch(addToCart(id, 1, size));
-      setQty(1);
-    }
-    if (!size) {
+    } else {
       if (window.innerWidth < 768) {
         setIsSelectSize(true);
       } else {
@@ -93,10 +80,9 @@ const Contents = () => {
         type: CART_ADD_ITEM_RESET,
       });
       if (window.innerWidth < 768) {
-        toggleIsCartModal();
-      } else {
-        toggleIsSmallModal("cart");
+        toggleIsCartModal(false);
       }
+      toggleIsSmallModal("cart");
     }
   }, [success]);
 
@@ -111,6 +97,8 @@ const Contents = () => {
         const isOverflowing = lines > 3;
         setIsOverflowing(isOverflowing);
       }
+      toggleIsCartModal(false);
+      setIsSelectSize(false);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -118,7 +106,7 @@ const Contents = () => {
   }, [product]);
 
   useEffect(() => {
-    if (size) {
+    if (size && window.innerWidth < 768) {
       setIsSelectSize(false);
     }
   }, [size]);
@@ -197,15 +185,14 @@ const Contents = () => {
               </div>
 
               <div
-                className={`${
+                className={`w-full ${
                   isCartModal ? "block z-30 p-5" : "hidden"
                 } md:block mt-8 bg-white w-full fixed left-0 bottom-0 md:static`}
               >
                 <ul className="grid grid-cols-2 gap-3">
                   {product.sizes?.map((item, i) => (
-                    <li>
+                    <li key={i}>
                       <button
-                        key={i}
                         type="button"
                         aria-label={`Nhấn chọn size ${item.size}`}
                         onClick={() => setSize(item.size)}
@@ -225,7 +212,7 @@ const Contents = () => {
                   {isSelectSize && (
                     <div className="flex items-center gap-1">
                       <PiWarningCircleLight className="text-red-500" />
-                      <span className="md:hidden text-[13px] text-red-600">
+                      <span className="md:hidden text-[13px] text-red-500">
                         Qúy khách chưa chọn size!
                       </span>
                     </div>
@@ -254,17 +241,17 @@ const Contents = () => {
                       <AiOutlineMinus />
                     </button>
                     <input
-                      aria-label="Ô nhập số lượng đặt sản phẩm"
+                      aria-label="Ô hiển thị số lượng đặt sản phẩm"
                       className="w-12 h-9 text-lg text-center outline-none border border-black"
                       type="text"
-                      onChange={(e) => setInputQtyHandle(e.target.value)}
                       value={qty}
+                      readOnly
                     />
                     <button
                       type="button"
                       aria-label="Nhấn tăng số lượng đặt sản phẩm"
                       className={`${
-                        qty >= 20 && "opacity-30 pointer-events-none"
+                        qty >= 10 && "opacity-30 pointer-events-none"
                       } flex w-12 h-9 justify-center items-center border-t border-r border-b border-black hover:bg-gray-100`}
                       onClick={() => increment()}
                     >

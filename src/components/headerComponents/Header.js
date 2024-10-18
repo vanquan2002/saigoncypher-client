@@ -10,7 +10,7 @@ import { GrSplit } from "react-icons/gr";
 import { FaRegUser } from "react-icons/fa";
 
 const Header = () => {
-  const { toggleIsBarRight, toggleNumberColList } = useContext(AppContext);
+  const { toggleNumberColList } = useContext(AppContext);
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
   const userLogin = useSelector((state) => state.userLogin);
@@ -28,7 +28,7 @@ const Header = () => {
   };
   return (
     <header
-      className={`z-10 fixed top-0 left-0 w-full flex flex-wrap justify-between items-center py-4 px-5 backdrop-blur-sm bg-whitePrimary/30`}
+      className={`z-10 fixed top-0 left-0 w-full flex flex-wrap justify-between items-center py-4 px-5 backdrop-blur-sm bg-white/30`}
     >
       <Link
         to="/"
@@ -58,20 +58,19 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <button
-              type="button"
-              onClick={() => toggleIsBarRight("cart")}
-              className="relative flex items-center mr-2 md:mr-0"
-              aria-label="Mở giỏ hàng"
+            <Link
+              to="/cart"
+              aria-label="Đi đến giỏ hàng của bạn."
+              className="relative"
             >
-              <MdOutlineShoppingBag className="text-[1.3rem] md:hidden" />
+              <MdOutlineShoppingBag className="text-[1.4rem] md:hidden" />
               <span className="md:hidden absolute bottom-2 right-[-8px] flex items-center justify-center h-[16px] w-[16px] bg-black rounded-full text-white text-[12px]">
                 {cartItems.length}
               </span>
               <span className="lowercase hidden md:block">
                 Giỏ hàng({cartItems.length})
               </span>
-            </button>
+            </Link>
           </li>
         </ul>
       </nav>

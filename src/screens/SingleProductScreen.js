@@ -20,14 +20,6 @@ const SingleProductScreen = () => {
     <div>
       <Helmet>
         <title>Saigoncypher - Thông tin sản phẩm</title>
-        <meta
-          name="description"
-          content="Saigoncypher - Cửa hàng áo thun thời trang với phong cách đơn giản."
-        />
-        <meta
-          name="keywords"
-          content="áo thun, thời trang, saigon, sài gòn, simple, đơn giản, saigoncypher"
-        />
       </Helmet>
 
       <Header />
@@ -40,11 +32,11 @@ const SingleProductScreen = () => {
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
         }`}
-        onClick={() => toggleIsCartModal()}
+        onClick={() => toggleIsCartModal(false)}
       ></div>
 
       <button
-        onClick={() => toggleIsCartModal()}
+        onClick={() => toggleIsCartModal(true)}
         className={`md:hidden fixed z-10 left-0 bottom-0 h-14 w-screen bg-black flex justify-center items-center`}
       >
         <span className="text-white uppercase">Thêm vào giỏ</span>
