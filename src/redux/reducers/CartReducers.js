@@ -22,65 +22,38 @@ export const cartReducer = (
     case CART_ADD_ITEM_SUCCESS:
       const newItem = action.payload;
       const existingItemIndex = state.cartItems.findIndex(
-        (x) => x.product === newItem.product && x.size === newItem.size
+        (item) => item.product === newItem.product && item.size === newItem.size
       );
-      const updateCartItems = (updatedIndex, updatedFields) => {
-        return state.cartItems.map((item, index) =>
-          index === updatedIndex ? { ...item, ...updatedFields } : item
-        );
-      };
+
       if (existingItemIndex !== -1) {
-        if (!newItem.sizeUpdate) {
-          return {
-            ...state,
-            loading: false,
-            success: true,
-            cartItems: updateCartItems(existingItemIndex, {
-              ...newItem,
-            }),
-          };
-        }
-        const existingSizeIndex = state.cartItems.findIndex(
-          (x) => x.product === newItem.product && x.size === newItem.sizeUpdate
-        );
-        if (existingSizeIndex !== -1) {
-          const updatedCartItems = updateCartItems(existingSizeIndex, {
-            qty: Math.min(
-              50,
-              state.cartItems[existingSizeIndex].qty + newItem.qty
-            ),
-          }).filter((_, index) => index !== existingItemIndex);
-          return {
-            ...state,
-            loading: false,
-            success: true,
-            cartItems: updatedCartItems,
-          };
-        } else {
-          return {
-            ...state,
-            loading: false,
-            success: true,
-            cartItems: updateCartItems(existingItemIndex, {
-              size:
-                newItem.sizeUpdate || state.cartItems[existingItemIndex].size,
-            }),
-          };
-        }
+        const updatedCartItems = [...state.cartItems];
+        const existingItem = updatedCartItems[existingItemIndex];
+        const updatedQty = existingItem.qty + newItem.qty;
+        updatedCartItems[existingItemIndex] = {
+          ...existingItem,
+          qty: updatedQty > 10 ? 10 : updatedQty,
+        };
+        return {
+          ...state,
+          loading: false,
+          successType: newItem.type,
+          cartItems: updatedCartItems,
+        };
       } else {
         return {
           ...state,
           loading: false,
-          success: true,
+          successType: newItem.type,
           cartItems: [...state.cartItems, newItem],
         };
       }
 
     case CART_ADD_ITEM_RESET:
-      return { ...state, success: false };
+      return { ...state, successType: 0 };
     case CART_REMOVE_ITEM:
       return {
         ...state,
+        successType: 2,
         cartItems: state.cartItems.filter(
           (item) =>
             item.product !== action.payload.id ||

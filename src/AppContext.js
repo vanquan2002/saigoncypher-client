@@ -15,7 +15,7 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
     let timeoutId;
-    if (isSmallModal === "cart") {
+    if (isSmallModal) {
       timeoutId = setTimeout(
         () => {
           toggleIsSmallModal("");

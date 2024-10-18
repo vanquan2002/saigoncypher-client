@@ -36,7 +36,7 @@ const RelatedProducts = ({ productId }) => {
                 : "gap-5"
             } md:gap-10`}
           >
-            {products.slice(0, 8).map((product, i) => (
+            {products.map((product, i) => (
               <li key={i}>
                 <Link to={`/products/${product._id}/detail`}>
                   <img

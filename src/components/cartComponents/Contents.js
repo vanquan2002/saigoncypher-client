@@ -1,25 +1,40 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { MdClose } from "react-icons/md";
-import { removeFromCart } from "../../redux/actions/CartActions";
+import { addToCart, removeFromCart } from "../../redux/actions/CartActions";
 import Breadcrumbs from "../Breadcrumbs";
+import { AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineMinus } from "react-icons/ai";
+import { CART_ADD_ITEM_RESET } from "../../redux/constants/CartConstants";
+import { AppContext } from "../../AppContext";
+import SmallModal from "../modals/SmallModal";
 
 const Contents = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-  const { cartItems } = cart;
+  const { cartItems, successType } = cart;
   const total = cartItems.reduce((a, i) => a + i.qty * i.price, 0).toFixed(0);
   const namePages = [
     { name: "Trang chủ", url: "/" },
     { name: "Tất cả sản phẩm", url: "/products" },
     { name: "Giỏ hàng", url: "" },
   ];
+  const { isSmallModal, toggleIsSmallModal } = useContext(AppContext);
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
+
+  useEffect(() => {
+    if (successType === 2) {
+      dispatch({
+        type: CART_ADD_ITEM_RESET,
+      });
+      toggleIsSmallModal("remove_item_cart");
+    }
+  }, [successType]);
 
   return (
     <main className="md:px-20">
@@ -30,68 +45,123 @@ const Contents = () => {
         Giỏ hàng của bạn.
       </h3>
       {cartItems.length === 0 ? (
-        <h4 className="mt-5 md:mt-10 lowercase text-lg px-6 py-4 border border-black">
+        <h4 className="mt-5 md:mt-10 mx-5 lowercase text-lg px-6 py-4 border border-black">
           Giỏ hàng của bạn đang trống!
         </h4>
       ) : (
-        <div className="mt-5 md:mt-10 grid grid-cols-2">
-          <section className="col-span-1 bg-yellow-300">
+        <div className="mt-5 md:mt-10 grid grid-cols-2 gap-20">
+          <ul className="col-span-1 flex flex-col border-y py-5 border-gray-300">
             {cartItems.map((item, i) => (
-              <div
+              <li
                 key={i}
-                className={`flex items-center gap-4 p-5 ${
-                  cartItems.length - 1 > i && "border-b border-gray-300"
+                className={`flex items-center gap-5 ${
+                  cartItems.length - 1 > i &&
+                  "border-b pb-5 mb-5 border-gray-300"
                 } `}
               >
                 <Link to={`/products/${item.product}/detail`}>
                   <img
-                    className="w-16"
+                    className="w-20"
                     src={item.thumbImage}
                     alt={`Hình ảnh của ${item.name}`}
                     title={item.name}
                   />
                 </Link>
-                <div className="w-full flex items-start justify-between gap-4">
+
+                <div className="w-full flex items-start gap-2">
                   <div className="w-full flex flex-col items-start gap-1">
                     <Link to={`/products/${item.product}/detail`}>
-                      <h2 className="uppercase line-clamp-1 text-sm">
-                        {item.name}
+                      <h2 className="lowercase font-medium text-lg line-clamp-1">
+                        {item.name}.
                       </h2>
                     </Link>
-                    <div className="w-full flex justify-between">
-                      <span className="text-sm">
-                        Size: <span className="uppercase">{item.size}</span>
+                    <div className="flex items-center gap-5">
+                      <span className="lowercase text-[15px]">
+                        {item.size}.
                       </span>
-                      <span className="text-sm">{item.color}</span>
+                      <span className="lowercase text-[15px]">
+                        {item.color}.
+                      </span>
                     </div>
                     <div className="w-full flex justify-between items-center">
-                      <div className="flex justify-center items-center bg-gray-100 h-7 w-7">
-                        <p className="text-sm">{item.qty}</p>
-                      </div>
-                      <span className="text-sm">
-                        {formatCurrency(item.price)}
+                      <span className="lowercase text-[15px]">
+                        {formatCurrency(item.price * item.qty)}.
                       </span>
+                      <div className="flex items-center">
+                        <button
+                          type="button"
+                          aria-label="Nhấn giảm số lượng đặt sản phẩm"
+                          className={`flex w-8 h-7 justify-center items-center border-l border-t border-b border-black hover:bg-gray-100`}
+                          onClick={() =>
+                            item.qty === 1
+                              ? dispatch(
+                                  removeFromCart(item.product, item.size)
+                                )
+                              : dispatch(addToCart(item.product, -1, item.size))
+                          }
+                        >
+                          <AiOutlineMinus className="text-xs" />
+                        </button>
+                        <input
+                          aria-label="Ô hiển thị số lượng đặt sản phẩm"
+                          className="w-8 h-7 text-center outline-none border border-black"
+                          type="text"
+                          value={item.qty}
+                          readOnly
+                        />
+                        <button
+                          type="button"
+                          aria-label="Nhấn tăng số lượng đặt sản phẩm"
+                          className={`flex w-8 h-7 justify-center items-center border-r border-t border-b border-black hover:bg-gray-100 ${
+                            item.qty === 10
+                              ? "opacity-30 pointer-events-none"
+                              : "opacity-100 pointer-events-auto"
+                          }`}
+                          onClick={() =>
+                            dispatch(addToCart(item.product, 1, item.size))
+                          }
+                        >
+                          <AiOutlinePlus className="text-xs" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                   <button
                     type="button"
-                    aria-label={`Xóa sản phẩm ${item.name} - ${item.size} khỏi giỏ hàng của bạn`}
+                    aria-label={`Xóa sản phẩm ${item.name} - ${item.size} khỏi giỏ hàng`}
                     onClick={() =>
                       dispatch(removeFromCart(item.product, item.size))
                     }
                   >
-                    <MdClose className="text-lg" />
+                    <MdClose className="text-xl text-gray-500" />
                   </button>
                 </div>
-              </div>
+              </li>
             ))}
-          </section>
+          </ul>
 
-          <section className="col-span-1 bg-red-300"></section>
+          <div className="col-span-1 sticky top-0 left-0 bg-red-300"></div>
         </div>
       )}
 
       <section></section>
+
+      <div className="z-20 fixed bottom-0 left-0 flex gap-8 items-center justify-end w-full backdrop-blur-sm bg-white/30">
+        <span className="lowercase font-medium">
+          Tổng: {formatCurrency(total)}
+        </span>
+        <Link
+          to="/shipping"
+          aria-label="Đi đến trang nhập địa chỉ giao hàng"
+          className="bg-black py-5 px-8 text-white"
+        >
+          Thanh toán
+        </Link>
+      </div>
+
+      {isSmallModal === "remove_item_cart" && (
+        <SmallModal text="Xóa khỏi giỏ hàng thành công!" />
+      )}
     </main>
   );
 };

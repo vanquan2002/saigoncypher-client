@@ -35,15 +35,8 @@ const ProductDetailSkeleton = () => {
               <div key={item} className="bg-slate-100 w-full h-10"></div>
             ))}
           </div>
-
           <div className="mt-4 w-1/3 h-4 animate-pulse bg-slate-100"></div>
-
-          <div className="mt-10 flex justify-between items-end">
-            <div className="w-1/3 h-4 animate-pulse bg-slate-100"></div>
-            <div className="w-28 h-9 animate-pulse bg-slate-100"></div>
-          </div>
-
-          <div className="mt-6 h-14 animate-pulse bg-slate-100"></div>
+          <div className="mt-10 h-14 animate-pulse bg-slate-100"></div>
         </div>
       </div>
     </div>

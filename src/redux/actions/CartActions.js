@@ -8,7 +8,7 @@ import {
 } from "./../constants/CartConstants";
 
 export const addToCart =
-  (id, qty, size, sizeUpdate) => async (dispatch, getState) => {
+  (id, qty, size, type) => async (dispatch, getState) => {
     dispatch({
       type: CART_ADD_ITEM_REQUEST,
     });
@@ -19,12 +19,11 @@ export const addToCart =
         product: data._id,
         name: data.name,
         price: data.price,
-        sizes: data.sizes,
         color: data.color,
         thumbImage: data.thumbImage,
         qty,
         size,
-        sizeUpdate,
+        type,
       },
     });
     localStorage.setItem(

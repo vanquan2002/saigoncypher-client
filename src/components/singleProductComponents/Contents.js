@@ -6,8 +6,6 @@ import { useParams } from "react-router";
 import { detailsProduct } from "../../redux/actions/ProductActions";
 import Message from "../loadingError/Error";
 import { addToCart } from "../../redux/actions/CartActions";
-import { AiOutlinePlus } from "react-icons/ai";
-import { AiOutlineMinus } from "react-icons/ai";
 import { AppContext } from "../../AppContext";
 import RelatedProducts from "./RelatedProducts";
 import { PiWarningCircleLight } from "react-icons/pi";
@@ -17,7 +15,7 @@ import { LiaStar } from "react-icons/lia";
 import { CART_ADD_ITEM_RESET } from "../../redux/constants/CartConstants";
 import MessageModal from "../modals/MessageModal";
 import ProductDetailSkeleton from "../skeletons/ProductDetailSkeleton";
-import AddCartSuccessModal from "../modals/AddCartSuccessModal";
+import SmallModal from "../modals/SmallModal";
 
 const Contents = () => {
   const { id } = useParams();
@@ -26,8 +24,7 @@ const Contents = () => {
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
   const cart = useSelector((state) => state.cart);
-  const { loading: loadingAddCart, success } = cart;
-  const [qty, setQty] = useState(1);
+  const { loading: loadingAddCart, successType } = cart;
   const [size, setSize] = useState("");
   const [isOverflowing, setIsOverflowing] = useState(false);
   const [isDescriptionMore, setIsDescriptionMore] = useState(false);
@@ -36,6 +33,7 @@ const Contents = () => {
     toggleIsMassage,
     isCartModal,
     toggleIsCartModal,
+    isSmallModal,
     toggleIsSmallModal,
   } = useContext(AppContext);
   const namePages = [
@@ -44,16 +42,9 @@ const Contents = () => {
     { name: "Thông tin sản phẩm", url: "" },
   ];
 
-  const increment = () => {
-    setQty(qty + 1);
-  };
-  const decrement = () => {
-    setQty(qty - 1);
-  };
-
   const addToCartHandle = () => {
     if (size) {
-      dispatch(addToCart(id, qty, size));
+      dispatch(addToCart(id, 1, size, 1));
     } else {
       if (window.innerWidth < 768) {
         setIsSelectSize(true);
@@ -66,25 +57,23 @@ const Contents = () => {
   useEffect(() => {
     window.scrollTo({ top: 0 });
     setSize("");
-    setQty(1);
     setIsSelectSize(false);
     setIsDescriptionMore(false);
     dispatch(detailsProduct(id));
   }, [id]);
 
   useEffect(() => {
-    if (success) {
+    if (successType === 1) {
       setSize("");
-      setQty(1);
       dispatch({
         type: CART_ADD_ITEM_RESET,
       });
       if (window.innerWidth < 768) {
         toggleIsCartModal(false);
       }
-      toggleIsSmallModal("cart");
+      toggleIsSmallModal("add_item_cart");
     }
-  }, [success]);
+  }, [successType]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -225,45 +214,10 @@ const Contents = () => {
                   </button>
                 </div>
 
-                <div className="flex items-end justify-between mt-10">
-                  <span className="lowercase text-sm">
-                    Chọn hoặc nhập số lượng.
-                  </span>
-                  <div className="flex">
-                    <button
-                      type="button"
-                      aria-label="Nhấn giảm số lượng đặt sản phẩm"
-                      className={`${
-                        qty <= 1 && "opacity-30 pointer-events-none"
-                      } flex w-12 h-9 justify-center items-center border-t border-l border-b border-black hover:bg-gray-100`}
-                      onClick={() => decrement()}
-                    >
-                      <AiOutlineMinus />
-                    </button>
-                    <input
-                      aria-label="Ô hiển thị số lượng đặt sản phẩm"
-                      className="w-12 h-9 text-lg text-center outline-none border border-black"
-                      type="text"
-                      value={qty}
-                      readOnly
-                    />
-                    <button
-                      type="button"
-                      aria-label="Nhấn tăng số lượng đặt sản phẩm"
-                      className={`${
-                        qty >= 10 && "opacity-30 pointer-events-none"
-                      } flex w-12 h-9 justify-center items-center border-t border-r border-b border-black hover:bg-gray-100`}
-                      onClick={() => increment()}
-                    >
-                      <AiOutlinePlus />
-                    </button>
-                  </div>
-                </div>
-
                 <button
                   type="button"
                   aria-label="Nhấn thêm vào giỏ hàng"
-                  className={`w-full h-14 mt-5 duration-300 flex justify-center items-center border border-black hover:text-opacity-60 ${
+                  className={`w-full h-14 mt-10 duration-300 flex justify-center items-center border border-black hover:text-opacity-60 ${
                     size ? "bg-black text-white" : "text-black"
                   }`}
                   onClick={() => addToCartHandle()}
@@ -286,7 +240,9 @@ const Contents = () => {
       )}
 
       <MessageModal message="Quý khách chưa chọn size!" />
-      <AddCartSuccessModal />
+      {isSmallModal === "add_item_cart" && (
+        <SmallModal text="Thêm vào giỏ hàng thành công!" />
+      )}
     </main>
   );
 };

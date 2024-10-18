@@ -37,7 +37,7 @@ const Footer = () => {
 
   return (
     <footer>
-      <div className="px-5 md:px-20 mt-72 mb-20 flex flex-col gap-20 md:gap-32">
+      <div className="px-5 md:px-20 mt-72 flex flex-col gap-20 md:gap-32">
         <div className="flex justify-center gap-5 md:gap-8">
           {socials.map((item, i) => (
             <a
@@ -91,9 +91,9 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="bg-black flex flex-wrap justify-center py-[6px] gap-x-2">
-        <span className="text-sm text-white text-center">@2024.</span>
-        <span className="text-sm text-white">Design by Pham Van Quan</span>
+      <div className=" flex justify-center pt-2 mt-16 mb-[10px] border-t border-black">
+        <span className="text-sm">@2024.</span>
+        <span className="text-sm">Design by Pham Van Quan</span>
       </div>
     </footer>
   );

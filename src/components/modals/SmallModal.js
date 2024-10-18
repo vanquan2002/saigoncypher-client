@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { MdClose } from "react-icons/md";
 import { AppContext } from "../../AppContext";
 
-const AddCartSuccessModal = () => {
+const SmallModal = ({ text }) => {
   const { isSmallModal, toggleIsSmallModal } = useContext(AppContext);
 
   return (
@@ -14,9 +14,7 @@ const AddCartSuccessModal = () => {
       } duration-300`}
     >
       <div className="bg-black flex items-center gap-4 px-4 py-[11px]">
-        <span className="text-white text-center text-sm lowercase">
-          Thêm sản phẩm vào giỏ hàng thành công!
-        </span>
+        <span className="text-white text-center text-sm lowercase">{text}</span>
         <button
           onClick={() => toggleIsSmallModal("")}
           type="button"
@@ -30,4 +28,4 @@ const AddCartSuccessModal = () => {
   );
 };
 
-export default AddCartSuccessModal;
+export default SmallModal;

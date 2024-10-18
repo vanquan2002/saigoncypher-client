@@ -8,7 +8,7 @@ const CartScreen = () => {
   return (
     <div>
       <Helmet>
-        <title>SaigonCypher | Đăng nhập</title>
+        <title>SaigonCypher | Giỏ hàng</title>
       </Helmet>
 
       <Header />
