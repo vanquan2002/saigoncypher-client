@@ -22,7 +22,7 @@ const SingleProductScreen = () => {
         <title>Saigoncypher - Thông tin sản phẩm</title>
       </Helmet>
 
-      <Header />
+      <Header isTypeCol={0} />
       <Contents />
       <Footer />
 

@@ -64,7 +64,7 @@ const Contents = () => {
   }, [userInfo, redirect]);
 
   return (
-    <main className="flex flex-col lg:flex-row gap-20 mt-48 md:mt-40 w-full px-5 md:px-20">
+    <main className="flex flex-col lg:flex-row gap-20 mt-36 md:mt-40 w-full px-5 md:px-20">
       <section className="w-full">
         <h2 className="lowercase text-center text-lg md:text-xl lg:text-2xl">
           Truy cập vào tài khoản của bạn.

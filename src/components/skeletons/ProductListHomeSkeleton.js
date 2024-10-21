@@ -27,7 +27,7 @@ const ProductListHomeSkeleton = ({ numberColList }) => {
           numberColList === 2
             ? "gap-x-[2px] gap-y-5 border-x-2 border-white"
             : "gap-5"
-        } md:gap-10`}
+        } md:gap-x-5 md:gap-y-8`}
       >
         {Array.from({ length: itemCount }).map((_, index) => (
           <li key={index} aria-hidden="true" className="col-span-1">

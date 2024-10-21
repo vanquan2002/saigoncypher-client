@@ -4,7 +4,7 @@ import { AppContext } from "../../AppContext";
 import { Link } from "react-router-dom";
 
 const SmallModal = ({ result, text }) => {
-  const { isSmallModal, toggleIsSmallModal } = useContext(AppContext);
+  const { toggleIsSmallModal } = useContext(AppContext);
 
   return (
     <div
@@ -16,15 +16,14 @@ const SmallModal = ({ result, text }) => {
     >
       <div className="bg-black flex items-center gap-4 px-4 py-[11px]">
         <span className="text-white text-center text-sm lowercase">{text}</span>
-        {isSmallModal === "add_item_cart" && (
-          <Link
-            to="/cart"
-            aria-label="Đi đến trang giỏ hàng"
-            className={`text-white lowercase underline `}
-          >
-            Xem danh sách
-          </Link>
-        )}
+
+        <Link
+          to="/cart"
+          aria-label="Đi đến trang giỏ hàng"
+          className="hidden md:block text-white lowercase underline text-sm"
+        >
+          Xem danh sách
+        </Link>
 
         <button
           onClick={() => toggleIsSmallModal("")}

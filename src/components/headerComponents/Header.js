@@ -9,7 +9,7 @@ import { RxSquare } from "react-icons/rx";
 import { GrSplit } from "react-icons/gr";
 import { FaRegUser } from "react-icons/fa";
 
-const Header = () => {
+const Header = ({ isTypeCol }) => {
   const { toggleNumberColList } = useContext(AppContext);
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
@@ -87,7 +87,7 @@ const Header = () => {
           id="search-input"
           autoComplete="off"
           onChange={(e) => setKeyword(e.target.value)}
-          className="w-full bg-inherit outline-none placeholder:text-sm"
+          className="w-full bg-transparent outline-none placeholder:text-sm"
           type="text"
           placeholder="tìm kiếm sản phẩm..."
           aria-label="Ô tìm kiếm sản phẩm"
@@ -105,7 +105,9 @@ const Header = () => {
         </div>
       </form>
 
-      <div className="md:hidden w-full mt-5">
+      <div
+        className={`${isTypeCol ? "block" : "hidden"} md:hidden w-full mt-5`}
+      >
         <ul className="flex items-center justify-end gap-5">
           <li className="flex">
             <button

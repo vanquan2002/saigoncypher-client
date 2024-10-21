@@ -39,7 +39,15 @@ const Footer = () => {
   const lastSegment = pathname.split("/").pop();
 
   return (
-    <footer className={lastSegment === "cart" ? "mb-16" : ""}>
+    <footer
+      className={`${
+        lastSegment === "cart"
+          ? "mb-[7.7rem]"
+          : lastSegment === "detail"
+          ? "mb-14"
+          : ""
+      } md:mb-0`}
+    >
       <div className="px-5 md:px-20 mt-72 flex flex-col gap-20 md:gap-32">
         <div className="flex justify-center gap-5 md:gap-8">
           {socials.map((item, i) => (
@@ -96,7 +104,7 @@ const Footer = () => {
 
       <div className="flex justify-center py-2 mt-16 bg-gray-100">
         <span className="text-sm">@2024.</span>
-        <span className="text-sm">Design by Pham Van Quan</span>
+        <span className="text-sm">Thiết kế web bởi Quân đẹp trai</span>
       </div>
     </footer>
   );

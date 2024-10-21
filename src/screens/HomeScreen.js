@@ -12,7 +12,7 @@ export default function HomeScreen() {
         <title>SaigonCypher | T-Shirt Store VietNam</title>
       </Helmet>
 
-      <Header />
+      <Header isTypeCol={1} />
       <Banner />
       <Contents />
       <Footer />

@@ -10,7 +10,7 @@ const ProductsScreen = () => {
         <title>Saigoncypher - Tất cả sản phẩm</title>
       </Helmet>
 
-      <Header />
+      <Header isTypeCol={1} />
       <Contents />
       <Footer />
     </div>

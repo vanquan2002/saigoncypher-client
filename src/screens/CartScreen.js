@@ -11,7 +11,7 @@ const CartScreen = () => {
         <title>SaigonCypher | Giỏ hàng</title>
       </Helmet>
 
-      <Header />
+      <Header isTypeCol={0} />
       <Contents />
       <Footer />
     </div>

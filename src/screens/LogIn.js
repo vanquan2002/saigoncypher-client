@@ -11,7 +11,7 @@ const Login = () => {
         <title>SaigonCypher | Đăng nhập</title>
       </Helmet>
 
-      <Header />
+      <Header isTypeCol={0} />
       <Contents />
       <Footer />
     </div>

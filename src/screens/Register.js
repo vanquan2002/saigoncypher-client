@@ -11,7 +11,7 @@ const Register = () => {
         <title>SaigonCypher | Đăng ký tài khoản</title>
       </Helmet>
 
-      <Header />
+      <Header isTypeCol={0} />
       <Contents />
       <Footer />
     </div>
