@@ -92,7 +92,7 @@ const Contents = () => {
                           numberColList === 2 ? "text-sm" : "text-base"
                         } md:text-base font-medium line-clamp-1 lowercase`}
                       >
-                        {formatCurrency(product.price)}.
+                        {formatCurrency(product.price)}
                       </span>
                       <div
                         className={`${

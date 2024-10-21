@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Footer = () => {
   const socials = [
@@ -35,8 +35,11 @@ const Footer = () => {
     },
   ];
 
+  const { pathname } = useLocation();
+  const lastSegment = pathname.split("/").pop();
+
   return (
-    <footer>
+    <footer className={lastSegment === "cart" ? "mb-16" : ""}>
       <div className="px-5 md:px-20 mt-72 flex flex-col gap-20 md:gap-32">
         <div className="flex justify-center gap-5 md:gap-8">
           {socials.map((item, i) => (
@@ -91,7 +94,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className=" flex justify-center pt-2 mt-16 mb-[10px] border-t border-black">
+      <div className="flex justify-center py-2 mt-16 bg-gray-100">
         <span className="text-sm">@2024.</span>
         <span className="text-sm">Design by Pham Van Quan</span>
       </div>

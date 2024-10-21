@@ -19,7 +19,7 @@ const RelatedProducts = ({ productId }) => {
   }, [productId]);
 
   return (
-    <div className="mt-40">
+    <section className="mt-40">
       <h3 className="mx-5 md:mx-0 lowercase text-xl font-medium">
         Sản phẩm liên quan.
       </h3>
@@ -28,7 +28,7 @@ const RelatedProducts = ({ productId }) => {
       ) : error ? (
         <Message error={error} />
       ) : products.length > 0 ? (
-        <section className="mt-5 md:mt-10 w-full">
+        <div className="mt-5 md:mt-10 w-full">
           <ul
             className={`grid grid-cols-${numberColList} md:grid-cols-2 lg:grid-cols-4 ${
               numberColList === 2
@@ -81,13 +81,13 @@ const RelatedProducts = ({ productId }) => {
               </li>
             ))}
           </ul>
-        </section>
+        </div>
       ) : (
         <div className="mt-5 md:mt-10 py-2 px-4 mx-5 md:mx-0 border border-black">
           <h5 className="lowercase">Không có sản phẩm nào cả!</h5>
         </div>
       )}
-    </div>
+    </section>
   );
 };
 

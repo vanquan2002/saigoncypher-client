@@ -1,5 +1,5 @@
 function formatCurrency(amount) {
-  return amount?.toLocaleString("vi-VN") + " VND";
+  return Number(amount)?.toLocaleString("vi-VN") + " VND";
 }
 
 export { formatCurrency };

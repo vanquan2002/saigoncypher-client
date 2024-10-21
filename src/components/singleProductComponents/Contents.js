@@ -43,6 +43,7 @@ const Contents = () => {
   ];
 
   const addToCartHandle = () => {
+    toggleIsSmallModal("");
     if (size) {
       dispatch(addToCart(id, 1, size, 1));
     } else {
@@ -120,13 +121,13 @@ const Contents = () => {
               <h1 className="lowercase text-2xl font-medium">
                 {product.name}.{" "}
                 <span className="bg-yellow-400 text-black text-xs font-medium px-1.5 py-1">
-                  freeship.
+                  freeship tp.<span className="uppercase">hcm</span>.
                 </span>
               </h1>
               <div className="grid grid-cols-3">
                 <span className="lowercase col-span-1">Giá:</span>
                 <p className="lowercase col-span-2 font-medium">
-                  {formatCurrency(product.price)}.
+                  {formatCurrency(product.price)}
                 </p>
               </div>
               <div className="grid grid-cols-3">
@@ -240,9 +241,10 @@ const Contents = () => {
       )}
 
       <MessageModal message="Quý khách chưa chọn size!" />
-      {isSmallModal === "add_item_cart" && (
-        <SmallModal text="Thêm vào giỏ hàng thành công!" />
-      )}
+      <SmallModal
+        result={isSmallModal === "add_item_cart"}
+        text="Thêm vào giỏ hàng thành công!"
+      />
     </main>
   );
 };

@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export const AppContext = createContext();
 
@@ -14,20 +15,20 @@ export const AppProvider = ({ children }) => {
   const toggleNumberColList = (num) => setNumberColList(num);
 
   useEffect(() => {
-    let timeoutId;
     if (isSmallModal) {
+      let timeoutId;
       timeoutId = setTimeout(
         () => {
           toggleIsSmallModal("");
         },
         window.innerWidth < 768 ? 2000 : 4000
       );
+      return () => {
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+        }
+      };
     }
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
   }, [isSmallModal]);
 
   return (

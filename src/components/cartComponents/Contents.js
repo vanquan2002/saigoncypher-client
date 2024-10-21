@@ -16,12 +16,18 @@ const Contents = () => {
   const cart = useSelector((state) => state.cart);
   const { cartItems, successType } = cart;
   const total = cartItems.reduce((a, i) => a + i.qty * i.price, 0).toFixed(0);
+  const quantity = cartItems.reduce((a, i) => a + i.qty, 0);
   const namePages = [
     { name: "Trang chủ", url: "/" },
     { name: "Tất cả sản phẩm", url: "/products" },
     { name: "Giỏ hàng", url: "" },
   ];
   const { isSmallModal, toggleIsSmallModal } = useContext(AppContext);
+
+  const removeFromCartHandle = (id, size) => {
+    toggleIsSmallModal("");
+    dispatch(removeFromCart(id, size));
+  };
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -85,7 +91,7 @@ const Contents = () => {
                     </div>
                     <div className="w-full flex justify-between items-center">
                       <span className="lowercase text-[15px]">
-                        {formatCurrency(item.price * item.qty)}.
+                        {formatCurrency(item.price * item.qty)}
                       </span>
                       <div className="flex items-center">
                         <button
@@ -94,9 +100,7 @@ const Contents = () => {
                           className={`flex w-8 h-7 justify-center items-center border-l border-t border-b border-black hover:bg-gray-100`}
                           onClick={() =>
                             item.qty === 1
-                              ? dispatch(
-                                  removeFromCart(item.product, item.size)
-                                )
+                              ? removeFromCartHandle(item.product, item.size)
                               : dispatch(addToCart(item.product, -1, item.size))
                           }
                         >
@@ -130,7 +134,7 @@ const Contents = () => {
                     type="button"
                     aria-label={`Xóa sản phẩm ${item.name} - ${item.size} khỏi giỏ hàng`}
                     onClick={() =>
-                      dispatch(removeFromCart(item.product, item.size))
+                      removeFromCartHandle(item.product, item.size)
                     }
                   >
                     <MdClose className="text-xl text-gray-500" />
@@ -140,28 +144,38 @@ const Contents = () => {
             ))}
           </ul>
 
-          <div className="col-span-1 sticky top-0 left-0 bg-red-300"></div>
+          <div className="col-span-1">
+            <span>Tổng đơn hàng: {quantity} sản phẩm</span>
+          </div>
         </div>
       )}
 
-      <section></section>
-
-      <div className="z-20 fixed bottom-0 left-0 flex gap-8 items-center justify-end w-full backdrop-blur-sm bg-white/30">
-        <span className="lowercase font-medium">
-          Tổng: {formatCurrency(total)}
-        </span>
+      <div className="z-20 border-t border-gray-500 fixed bottom-0 left-0 h-16 flex gap-8 items-center justify-between w-full backdrop-blur-sm bg-white/30">
         <Link
-          to="/shipping"
-          aria-label="Đi đến trang nhập địa chỉ giao hàng"
-          className="bg-black py-5 px-8 text-white"
+          to="/products"
+          aria-label="Đi đến trang tất cả sản phẩm"
+          className="ml-5 lowercase font-medium text-gray-700"
         >
-          Thanh toán
+          Tiếp tục mua sắm.
         </Link>
+        <div className="flex items-center h-full">
+          <span className="lowercase font-medium mr-5 text-gray-700">
+            Tổng: {formatCurrency(total)}
+          </span>
+          <Link
+            to="/shipping"
+            aria-label="Đi đến trang nhập địa chỉ giao hàng"
+            className="lowercase bg-black h-full px-8 text-white flex items-center"
+          >
+            Thanh toán.
+          </Link>
+        </div>
       </div>
 
-      {isSmallModal === "remove_item_cart" && (
-        <SmallModal text="Xóa khỏi giỏ hàng thành công!" />
-      )}
+      <SmallModal
+        result={isSmallModal === "remove_item_cart"}
+        text="Xóa khỏi giỏ hàng thành công!"
+      />
     </main>
   );
 };
