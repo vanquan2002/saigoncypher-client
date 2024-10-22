@@ -4,7 +4,7 @@ import { AppContext } from "../../AppContext";
 import { Link } from "react-router-dom";
 
 const SmallModal = ({ result, text }) => {
-  const { toggleIsSmallModal } = useContext(AppContext);
+  const { isSmallModal, toggleIsSmallModal } = useContext(AppContext);
 
   return (
     <div
@@ -20,7 +20,9 @@ const SmallModal = ({ result, text }) => {
         <Link
           to="/cart"
           aria-label="Đi đến trang giỏ hàng"
-          className="hidden md:block text-white lowercase underline text-sm"
+          className={`hidden ${
+            isSmallModal === "add_item_cart" ? "md:block" : "md:hidden"
+          } text-white lowercase underline text-sm`}
         >
           Xem danh sách
         </Link>

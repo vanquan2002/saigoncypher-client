@@ -26,7 +26,7 @@ const Contents = () => {
 
   const removeFromCartHandle = (id, size) => {
     toggleIsSmallModal("");
-    dispatch(removeFromCart(id, size));
+    dispatch(removeFromCart(id, size, 2));
   };
 
   useEffect(() => {
@@ -55,28 +55,31 @@ const Contents = () => {
           <span className="ml-5 md:ml-0">Giỏ hàng của bạn đang trống!</span>
         </h4>
       ) : (
-        <div className="grid grid-cols-5 md:gap-10 lg:gap-20 mt-5 lg:mt-10">
-          <ul className="col-span-5 lg:col-span-3 flex flex-col border-t md:pt-5">
-            {cartItems.map((item, i) => (
-              <li
-                key={i}
-                className={`flex items-center ${
-                  cartItems.length > i && "border-b border-gray-300"
-                } ${i !== 0 && "md:pt-5"} md:pb-5`}
+        <ul className="grid grid-cols-1 lg:grid-cols-2 mt-5 md:mt-10 md:border-l border-t border-gray-300">
+          {cartItems.map((item, i) => (
+            <li
+              key={i}
+              className={`flex items-center ${
+                cartItems.length > i && "md:border-r border-b border-gray-300"
+              }`}
+            >
+              <Link
+                to={`/products/${item.product}/detail`}
+                className="w-1/3 md:w-1/5 lg:w-1/4"
               >
-                <Link to={`/products/${item.product}/detail`}>
-                  <img
-                    className="w-28"
-                    src={item.thumbImage}
-                    alt={`Hình ảnh của ${item.name}`}
-                    title={item.name}
-                  />
-                </Link>
+                <img
+                  className="w-full"
+                  src={item.thumbImage}
+                  alt={`Hình ảnh của ${item.name}`}
+                  title={item.name}
+                />
+              </Link>
 
-                <div className="w-full flex flex-col items-star px-3">
-                  <div className="w-full flex justify-between items-center">
+              <div className="w-2/3 md:w-4/5 lg:w-3/4 flex flex-col justify-between h-full py-3 px-4 md:p-5">
+                <div className="flex flex-col gap-1">
+                  <div className="w-full flex justify-between items-start">
                     <Link to={`/products/${item.product}/detail`}>
-                      <h2 className="lowercase font-medium text-lg line-clamp-1">
+                      <h2 className="lowercase text-lg font-medium leading-6 line-clamp-2 hover:underline">
                         {item.name}.
                       </h2>
                     </Link>
@@ -90,84 +93,85 @@ const Contents = () => {
                       <MdClose className="text-2xl text-gray-500" />
                     </button>
                   </div>
-                  <span className="lowercase text-[15px]">{item.color}.</span>
-                  <span className="lowercase text-[15px]">{item.size}.</span>
-                  <div className="w-full flex justify-between items-end mt-1">
-                    <span className="lowercase text-lg">
-                      {formatCurrency(item.price * item.qty)}
-                    </span>
-                    <div className="flex items-center">
-                      <button
-                        type="button"
-                        aria-label="Nhấn giảm số lượng đặt sản phẩm"
-                        className={`flex w-9 h-8 justify-center items-center border-l border-t border-b border-black hover:bg-gray-100`}
-                        onClick={() =>
-                          item.qty === 1
-                            ? removeFromCartHandle(item.product, item.size)
-                            : dispatch(addToCart(item.product, -1, item.size))
-                        }
-                      >
-                        <AiOutlineMinus className="text-xs" />
-                      </button>
-                      <input
-                        aria-label="Ô hiển thị số lượng đặt sản phẩm"
-                        className="w-9 h-8 text-center outline-none border border-black"
-                        type="text"
-                        value={item.qty}
-                        readOnly
-                      />
-                      <button
-                        type="button"
-                        aria-label="Nhấn tăng số lượng đặt sản phẩm"
-                        className={`flex w-9 h-8 justify-center items-center border-r border-t border-b border-black hover:bg-gray-100 ${
-                          item.qty === 10
-                            ? "opacity-30 pointer-events-none"
-                            : "opacity-100 pointer-events-auto"
-                        }`}
-                        onClick={() =>
-                          dispatch(addToCart(item.product, 1, item.size))
-                        }
-                      >
-                        <AiOutlinePlus className="text-xs" />
-                      </button>
-                    </div>
-                  </div>
+
+                  <span className="lowercase text-[15px] mt-1 md:mt-2">
+                    {item.size} - {item.color}.
+                  </span>
+
+                  <span className="lowercase text-lg">
+                    {formatCurrency(item.price * item.qty)}
+                  </span>
                 </div>
-              </li>
-            ))}
-          </ul>
 
-          <div className="z-10 md:z-0 fixed bottom-0 left-0 w-full md:static md:col-span-5 lg:col-span-2 backdrop-blur-sm md:backdrop-blur-none bg-white/60 md:bg-transparent">
-            <div className="sticky left-0 top-1/4 flex flex-col justify-between h-[7.7rem] md:h-32 lg:h-44 border-t md:border-t-0 lg:border-t lg:border-x border-gray-300">
-              <div className="flex flex-col md:gap-1 px-5 pt-3 md:px-0 md:pt-0 lg:px-8 lg:pt-7">
-                <span className="lowercase">
-                  Tổng số lượng: {quantity} sản phẩm
-                </span>
-                <span className="lowercase text-xl font-medium">
-                  Tổng tiền: {formatCurrency(total)}
-                </span>
+                <div className="flex items-center">
+                  <button
+                    type="button"
+                    aria-label="Nhấn giảm số lượng đặt sản phẩm"
+                    className={`flex w-9 h-8 justify-center items-center border-l border-t border-b border-black hover:bg-gray-100`}
+                    onClick={() =>
+                      item.qty === 1
+                        ? removeFromCartHandle(item.product, item.size)
+                        : dispatch(addToCart(item.product, -1, item.size, 3))
+                    }
+                  >
+                    <AiOutlineMinus className="text-xs" />
+                  </button>
+                  <input
+                    aria-label="Ô hiển thị số lượng đặt sản phẩm"
+                    className="w-9 h-8 text-center outline-none border border-black"
+                    type="text"
+                    value={item.qty}
+                    readOnly
+                  />
+                  <button
+                    type="button"
+                    aria-label="Nhấn tăng số lượng đặt sản phẩm"
+                    className={`flex w-9 h-8 justify-center items-center border-r border-t border-b border-black hover:bg-gray-100 ${
+                      item.qty === 10
+                        ? "opacity-30 pointer-events-none"
+                        : "opacity-100 pointer-events-auto"
+                    }`}
+                    onClick={() =>
+                      dispatch(addToCart(item.product, 1, item.size, 3))
+                    }
+                  >
+                    <AiOutlinePlus className="text-xs" />
+                  </button>
+                </div>
               </div>
-
-              <div className="grid grid-cols-2 border-y border-x-0 md:border-x lg:border-x-0 border-gray-300">
-                <Link
-                  to="/products"
-                  aria-label="Đi đến trang tất cả sản phẩm"
-                  className="col-span-1 py-3 text-center lowercase text-gray-700"
-                >
-                  <span className="line-clamp-1">Tiếp tục mua sắm.</span>
-                </Link>
-                <Link
-                  to="/shipping"
-                  aria-label="Đi đến trang nhập địa chỉ giao hàng"
-                  className="col-span-1 py-3 text-center lowercase bg-black text-white"
-                >
-                  Thanh toán.
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
+            </li>
+          ))}
+        </ul>
       )}
+
+      <div className="z-10 h-[4.5rem] md:h-28 lg:h-20 fixed bottom-0 left-0 grid grid-cols-5 md:grid-cols-4 lg:grid-cols-7 w-full backdrop-blur-sm bg-white/60 border-t border-gray-300">
+        <div className="hidden md:col-span-1 md:flex items-center ml-5">
+          <Link
+            to="/products"
+            aria-label="Đi đến trang tất cả sản phẩm"
+            className="lowercase font-medium text-gray-700 hover:underline"
+          >
+            Tiếp tục mua sắm.
+          </Link>
+        </div>
+
+        <div className="col-span-3 md:col-span-2 lg:col-span-5 flex flex-col items-end justify-center mr-4 md:mr-6 lg:mr-10">
+          <span className="lowercase text-[15px]">{quantity} sản phẩm.</span>
+          <span className="lowercase text-lg font-semibold">
+            Tổng: {formatCurrency(total)}
+          </span>
+        </div>
+
+        <div className="col-span-2 md:col-span-1 flex justify-end">
+          <Link
+            to="/shipping"
+            aria-label="Đi đến trang nhập địa chỉ giao hàng"
+            className="flex items-center justify-center w-full h-full lowercase bg-black text-white text-lg hover:underline"
+          >
+            Thanh toán.
+          </Link>
+        </div>
+      </div>
 
       <SmallModal
         result={isSmallModal === "remove_item_cart"}

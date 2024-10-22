@@ -32,13 +32,17 @@ export const addToCart =
     );
   };
 
-export const removeFromCart = (id, size) => async (dispatch, getState) => {
-  dispatch({
-    type: CART_REMOVE_ITEM,
-    payload: { id, size },
-  });
-  localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
-};
+export const removeFromCart =
+  (id, size, type) => async (dispatch, getState) => {
+    dispatch({
+      type: CART_REMOVE_ITEM,
+      payload: { id, size, type },
+    });
+    localStorage.setItem(
+      "cartItems",
+      JSON.stringify(getState().cart.cartItems)
+    );
+  };
 
 export const saveShippingAddress = (data) => async (dispatch) => {
   dispatch({

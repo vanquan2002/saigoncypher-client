@@ -53,7 +53,7 @@ export const cartReducer = (
     case CART_REMOVE_ITEM:
       return {
         ...state,
-        successType: 2,
+        successType: action.payload.type,
         cartItems: state.cartItems.filter(
           (item) =>
             item.product !== action.payload.id ||

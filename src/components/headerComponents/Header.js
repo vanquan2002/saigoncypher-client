@@ -50,6 +50,7 @@ const Header = ({ isTypeCol }) => {
                   ? `Xem thông tin của ${userInfo.name}`
                   : "Chưa đăng nhập. Đi đến trang đăng nhập."
               }`}
+              className="hover:underline"
             >
               <FaRegUser className="text-[1.2rem] md:hidden" />
               <span className="lowercase hidden md:block text-nowrap line-clamp-1 md:max-w-[120px] lg:max-w-[200px]">
@@ -61,7 +62,7 @@ const Header = ({ isTypeCol }) => {
             <Link
               to="/cart"
               aria-label="Đi đến giỏ hàng của bạn."
-              className="relative"
+              className="relative hover:underline"
             >
               <MdOutlineShoppingBag className="text-[1.4rem] md:hidden" />
               <span className="md:hidden absolute bottom-2 right-[-8px] flex items-center justify-center h-[16px] w-[16px] bg-black rounded-full text-white text-[12px]">
@@ -98,7 +99,7 @@ const Header = ({ isTypeCol }) => {
           <button
             type="submit"
             aria-label={`Tìm kiếm sản phẩm với từ khóa ${keyword}`}
-            className="lowercase text-nowrap font-medium pr-2"
+            className="lowercase text-nowrap font-medium pr-2 hover:underline"
           >
             Tìm kiếm
           </button>
