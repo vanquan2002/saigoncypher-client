@@ -9,7 +9,6 @@ import { AppContext } from "../../AppContext";
 import { LiaStarSolid } from "react-icons/lia";
 import ProductListHomeSkeleton from "../skeletons/ProductListHomeSkeleton";
 import Breadcrumbs from "../Breadcrumbs";
-import { FaRegFaceMeh } from "react-icons/fa6";
 
 const Contents = () => {
   const { keyword } = useParams();
@@ -122,11 +121,9 @@ const Contents = () => {
           </span>
         </div>
       ) : (
-        <div className="mt-5 md:mt-10 mx-5 md:mx-0">
-          <h5 className="lowercase text-lg py-4 px-6 border border-black">
-            Không có sản phẩm nào cả!
-          </h5>
-        </div>
+        <h5 className="lowercase text-gray-600 text-lg py-4 px-6 mt-5 md:mt-10 border-y md:border border-gray-300">
+          Chưa có sản phẩm nào cả!
+        </h5>
       )}
     </main>
   );

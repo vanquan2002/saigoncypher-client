@@ -51,12 +51,12 @@ const Contents = () => {
         Giỏ hàng của bạn.
       </h3>
       {cartItems.length === 0 ? (
-        <h4 className="border-t border-gray-300 mt-5 md:mt-10 pt-5 md:pt-10 lowercase text-lg">
+        <h4 className="mt-5 md:mt-10 lowercase text-lg">
           <span className="ml-5 md:ml-0">Giỏ hàng của bạn đang trống!</span>
         </h4>
       ) : (
-        <div className="grid grid-cols-5 md:gap-10 lg:gap-20 border-t border-gray-300 mt-5 md:mt-10 md:pt-5 lg:pt-20">
-          <ul className="col-span-5 lg:col-span-3 flex flex-col">
+        <div className="grid grid-cols-5 md:gap-10 lg:gap-20 mt-5 lg:mt-10">
+          <ul className="col-span-5 lg:col-span-3 flex flex-col border-t md:pt-5">
             {cartItems.map((item, i) => (
               <li
                 key={i}

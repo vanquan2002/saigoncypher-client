@@ -59,9 +59,9 @@ const RelatedProducts = ({ productId }) => {
           </ul>
         </div>
       ) : (
-        <div className="mt-5 md:mt-10 py-2 px-4 mx-5 md:mx-0 border border-black">
-          <h5 className="lowercase">Không có sản phẩm nào cả!</h5>
-        </div>
+        <h5 className="lowercase text-gray-600 text-lg py-4 px-6 mt-5 md:mt-10 border-y md:border border-gray-300">
+          Không có sản phẩm nào cả!
+        </h5>
       )}
     </section>
   );

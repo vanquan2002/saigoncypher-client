@@ -4,7 +4,7 @@ import ImageList from "./ImageList";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { useParams } from "react-router";
 import { detailsProduct } from "../../redux/actions/ProductActions";
-import Message from "../loadingError/Error";
+import Error from "../loadingError/Error";
 import { addToCart } from "../../redux/actions/CartActions";
 import { AppContext } from "../../AppContext";
 import RelatedProducts from "./RelatedProducts";
@@ -109,7 +109,7 @@ const Contents = () => {
       {loading ? (
         <ProductDetailSkeleton />
       ) : error ? (
-        <Message error={error} />
+        <Error error={error} />
       ) : (
         <article>
           <div className="mt-5 md:mt-10 flex flex-col lg:flex-row gap-4 md:gap-10 lg:gap-20">

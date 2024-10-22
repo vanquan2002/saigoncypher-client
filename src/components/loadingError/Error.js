@@ -1,7 +1,7 @@
 import React from "react";
 
-const Message = ({ error }) => {
+const Error = ({ error }) => {
   return <p className="text-red-500">{error}</p>;
 };
 
-export default Message;
+export default Error;
