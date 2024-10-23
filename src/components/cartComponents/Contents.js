@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { formatCurrency } from "../../utils/formatCurrency";
@@ -10,6 +10,9 @@ import { AiOutlineMinus } from "react-icons/ai";
 import { CART_ADD_ITEM_RESET } from "../../redux/constants/CartConstants";
 import { AppContext } from "../../AppContext";
 import SmallModal from "../modals/SmallModal";
+import { MdChevronLeft } from "react-icons/md";
+import { MdKeyboardArrowRight } from "react-icons/md";
+import debounce from "lodash.debounce";
 
 const Contents = () => {
   const dispatch = useDispatch();
@@ -28,6 +31,14 @@ const Contents = () => {
     toggleIsSmallModal("");
     dispatch(removeFromCart(id, size, 2));
   };
+
+  const debouncedChangeQtyProduct = useMemo(
+    () =>
+      debounce((id, qty, size, type) => {
+        dispatch(addToCart(id, qty, size, type));
+      }, 300),
+    []
+  );
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -109,9 +120,7 @@ const Contents = () => {
                     aria-label="Nhấn giảm số lượng đặt sản phẩm"
                     className={`flex w-9 h-8 justify-center items-center border-l border-t border-b border-black hover:bg-gray-100`}
                     onClick={() =>
-                      item.qty === 1
-                        ? removeFromCartHandle(item.product, item.size)
-                        : dispatch(addToCart(item.product, -1, item.size, 3))
+                      debouncedChangeQtyProduct(item.product, -1, item.size, 3)
                     }
                   >
                     <AiOutlineMinus className="text-xs" />
@@ -132,7 +141,7 @@ const Contents = () => {
                         : "opacity-100 pointer-events-auto"
                     }`}
                     onClick={() =>
-                      dispatch(addToCart(item.product, 1, item.size, 3))
+                      debouncedChangeQtyProduct(item.product, 1, item.size, 3)
                     }
                   >
                     <AiOutlinePlus className="text-xs" />
@@ -149,9 +158,10 @@ const Contents = () => {
           <Link
             to="/products"
             aria-label="Đi đến trang tất cả sản phẩm"
-            className="lowercase font-medium text-gray-700 hover:underline"
+            className="lowercase font-medium text-gray-700 hover:underline flex items-center"
           >
-            Tiếp tục mua sắm.
+            <MdChevronLeft className="text-2xl mr-[-2px]" />
+            Tiếp tục mua.
           </Link>
         </div>
 
@@ -164,11 +174,12 @@ const Contents = () => {
 
         <div className="col-span-2 md:col-span-1 flex justify-end">
           <Link
-            to="/shipping"
+            to="/login?redirect=shipping"
             aria-label="Đi đến trang nhập địa chỉ giao hàng"
             className="flex items-center justify-center w-full h-full lowercase bg-black text-white text-lg hover:underline"
           >
-            Thanh toán.
+            Thanh toán
+            <MdKeyboardArrowRight className="text-2xl ml-[-2px]" />
           </Link>
         </div>
       </div>

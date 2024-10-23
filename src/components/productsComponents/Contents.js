@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useContext, useEffect, useMemo, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import Message from "./../loadingError/Error";
 import { formatCurrency } from "../../utils/formatCurrency";
@@ -9,6 +9,7 @@ import { AppContext } from "../../AppContext";
 import { LiaStarSolid } from "react-icons/lia";
 import ProductListHomeSkeleton from "../skeletons/ProductListHomeSkeleton";
 import Breadcrumbs from "../Breadcrumbs";
+import debounce from "lodash.debounce";
 
 const Contents = () => {
   const { keyword } = useParams();
@@ -16,6 +17,7 @@ const Contents = () => {
   const productList = useSelector((state) => state.productList);
   const { loading, error, products, page, pages } = productList;
   const dispatch = useDispatch();
+  const isFirstRender = useRef(true);
   const { numberColList } = useContext(AppContext);
   const namePages = [
     { name: "Trang chủ", url: "/" },
@@ -28,9 +30,26 @@ const Contents = () => {
     return namePages;
   }, [keyword]);
 
+  const debouncedListProduct = useMemo(
+    () =>
+      debounce((key, num) => {
+        dispatch(listProduct(key, num));
+      }, 500),
+    []
+  );
+
   useEffect(() => {
     window.scrollTo({ top: 0 });
-    dispatch(listProduct(keyword, pageNumber));
+    if (isFirstRender.current) {
+      dispatch(listProduct(keyword, pageNumber));
+      isFirstRender.current = false;
+    } else {
+      debouncedListProduct(keyword, pageNumber);
+    }
+
+    return () => {
+      debouncedListProduct.cancel();
+    };
   }, [keyword, pageNumber]);
 
   useEffect(() => {

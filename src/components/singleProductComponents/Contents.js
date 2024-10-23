@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ImageList from "./ImageList";
 import { formatCurrency } from "../../utils/formatCurrency";
@@ -16,6 +16,7 @@ import { CART_ADD_ITEM_RESET } from "../../redux/constants/CartConstants";
 import MessageModal from "../modals/MessageModal";
 import ProductDetailSkeleton from "../skeletons/ProductDetailSkeleton";
 import SmallModal from "../modals/SmallModal";
+import debounce from "lodash.debounce";
 
 const Contents = () => {
   const { id } = useParams();
@@ -42,10 +43,20 @@ const Contents = () => {
     { name: "Thông tin sản phẩm", url: "" },
   ];
 
+  const debouncedAddCartProduct = useMemo(
+    () =>
+      debounce((id, qty, size, type) => {
+        dispatch(addToCart(id, qty, size, type));
+      }, 500),
+    []
+  );
+
   const addToCartHandle = () => {
-    toggleIsSmallModal("");
+    if (isSmallModal) {
+      toggleIsSmallModal("");
+    }
     if (size) {
-      dispatch(addToCart(id, 1, size, 1));
+      debouncedAddCartProduct(id, 1, size, 1);
     } else {
       if (window.innerWidth < 768) {
         setIsSelectSize(true);

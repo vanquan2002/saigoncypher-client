@@ -29,16 +29,28 @@ export const cartReducer = (
         const updatedCartItems = [...state.cartItems];
         const existingItem = updatedCartItems[existingItemIndex];
         const updatedQty = existingItem.qty + newItem.qty;
-        updatedCartItems[existingItemIndex] = {
-          ...existingItem,
-          qty: updatedQty > 10 ? 10 : updatedQty,
-        };
-        return {
-          ...state,
-          loading: false,
-          successType: newItem.type,
-          cartItems: updatedCartItems,
-        };
+        if (updatedQty > 0) {
+          updatedCartItems[existingItemIndex] = {
+            ...existingItem,
+            qty: updatedQty > 10 ? 10 : updatedQty,
+          };
+          return {
+            ...state,
+            loading: false,
+            successType: newItem.type,
+            cartItems: updatedCartItems,
+          };
+        } else {
+          return {
+            ...state,
+            successType: 2,
+            cartItems: updatedCartItems.filter(
+              (item) =>
+                item.product !== existingItem.product ||
+                item.size !== existingItem.size
+            ),
+          };
+        }
       } else {
         return {
           ...state,

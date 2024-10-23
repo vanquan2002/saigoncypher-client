@@ -26,9 +26,10 @@ const Header = ({ isTypeCol }) => {
       navigate(`/products`);
     }
   };
+
   return (
     <header
-      className={`z-10 fixed top-0 left-0 w-full flex flex-wrap justify-between items-center py-4 px-5 backdrop-blur-sm bg-white/30`}
+      className={`z-10 fixed top-0 left-0 w-full flex flex-wrap justify-between items-center p-5 backdrop-blur-sm bg-white/30`}
     >
       <Link
         to="/"
@@ -89,7 +90,7 @@ const Header = ({ isTypeCol }) => {
           autoComplete="off"
           onChange={(e) => setKeyword(e.target.value)}
           className="w-full bg-transparent outline-none placeholder:text-sm"
-          type="text"
+          type="search"
           placeholder="tìm kiếm sản phẩm..."
           aria-label="Ô tìm kiếm sản phẩm"
           value={keyword}
@@ -99,7 +100,7 @@ const Header = ({ isTypeCol }) => {
           <button
             type="submit"
             aria-label={`Tìm kiếm sản phẩm với từ khóa ${keyword}`}
-            className="lowercase text-nowrap font-medium pr-2 hover:underline"
+            className="lowercase text-nowrap pr-2 hover:underline"
           >
             Tìm kiếm
           </button>

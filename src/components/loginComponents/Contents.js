@@ -139,7 +139,7 @@ const Contents = () => {
           <button
             type="submit"
             onClick={formik.handleSubmit}
-            className="mt-6 py-2.5 text-[13px] lowercase text-black hover:text-opacity-60 border border-black"
+            className="mt-6 py-2.5 lowercase hover:underline border border-black"
           >
             {loading ? "Đang đăng nhập..." : "Đăng nhập."}
           </button>
@@ -158,7 +158,7 @@ const Contents = () => {
         <Link
           to={redirect ? `/register?redirect=${redirect}` : "/register"}
           type="submit"
-          className="w-full mt-8 py-2.5 text-center text-sm lowercase text-black hover:text-opacity-60 border border-black"
+          className="w-full mt-8 py-2.5 text-center lowercase hover:underline border border-black"
         >
           Đăng Ký.
         </Link>
