@@ -31,12 +31,12 @@ function App() {
         <Route path="/cart/:id?" element={<CartScreen />} />
 
         <Route
-          path="/profile"
-          element={<PrivateRouter comp={<ProfileScreen />} />}
+          path="/shipping"
+          element={<PrivateRouter navig="shipping" comp={<ShippingScreen />} />}
         />
         <Route
-          path="/shipping"
-          element={<PrivateRouter comp={<ShippingScreen />} />}
+          path="/profile"
+          element={<PrivateRouter comp={<ProfileScreen />} />}
         />
         <Route
           path="/payment"

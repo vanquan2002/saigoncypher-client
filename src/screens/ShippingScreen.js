@@ -8,7 +8,7 @@ const ShippingScreen = () => {
   return (
     <div>
       <Helmet>
-        <title>SaigonCypher | Thông tin giao hàng</title>
+        <title>SaigonCypher | Thông tin đặt hàng</title>
       </Helmet>
 
       <Header />

@@ -5,19 +5,24 @@ import { useNavigate } from "react-router";
 import { PiWarningCircleLight } from "react-icons/pi";
 import { useFormik } from "formik";
 import axios from "axios";
+import { MdChevronLeft } from "react-icons/md";
+import { MdKeyboardArrowRight } from "react-icons/md";
+import { formatCurrency } from "../../utils/formatCurrency";
+import { Link } from "react-router-dom";
 
 const Contents = () => {
   const namePages = [
     { name: "Trang chủ", url: "/" },
     { name: "Tất cả sản phẩm", url: "/products" },
     { name: "Giỏ hàng", url: "/cart" },
-    { name: "Thông tin giao hàng", url: "" },
+    { name: "Thông tin đặt hàng", url: "" },
   ];
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
-  const { shippingAddress } = cart;
-
+  const { cartItems } = cart;
+  const total = cartItems.reduce((a, i) => a + i.qty * i.price, 0).toFixed(0);
+  const quantity = cartItems.reduce((a, i) => a + i.qty, 0);
   const [provinces, setProvinces] = useState([]);
   const [selectedProvince, setSelectedProvince] = useState(null);
   const [districts, setDistricts] = useState([]);
@@ -67,6 +72,7 @@ const Contents = () => {
         ?.province_id || null;
     setSelectedProvince(provinceId);
     formik.setFieldValue("district", "");
+    setDistricts([]);
   }, [formik.values.province, provinces]);
 
   useEffect(() => {
@@ -74,6 +80,8 @@ const Contents = () => {
       districts.find((item) => item.district_name === formik.values.district)
         ?.district_id || null;
     setSelectedDistrict(districtId);
+    formik.setFieldValue("ward", "");
+    setWards([]);
   }, [formik.values.district, districts]);
 
   useEffect(() => {
@@ -87,14 +95,12 @@ const Contents = () => {
 
   useEffect(() => {
     if (selectedProvince) {
-      formik.setFieldValue("ward", "");
       axios
         .get(
           `https://vapi.vnappmob.com/api/province/district/${selectedProvince}`
         )
         .then((response) => {
           setDistricts(response.data.results);
-          setWards([]);
         })
         .catch((error) => console.error(error));
     }
@@ -102,7 +108,6 @@ const Contents = () => {
 
   useEffect(() => {
     if (selectedDistrict) {
-      formik.setFieldValue("ward", "");
       axios
         .get(`https://vapi.vnappmob.com/api/province/ward/${selectedDistrict}`)
         .then((response) => {
@@ -113,8 +118,8 @@ const Contents = () => {
   }, [selectedDistrict]);
 
   return (
-    <main className="md:px-20">
-      <div className="mx-5 md:mx-0 mt-32 md:mt-28">
+    <main className="px-5 md:px-20">
+      <div className="mt-32 md:mt-28">
         <Breadcrumbs namePages={namePages} />
       </div>
       <h3 className="border-t border-gray-300 pt-5 md:pt-10 mt-3 md:mt-6 text-center lowercase text-2xl md:text-3xl">
@@ -122,20 +127,20 @@ const Contents = () => {
       </h3>
 
       <div className="mt-5 md:mt-10">
-        <form className="flex flex-col gap-5">
-          <div className="relative h-11 w-full">
+        <form className="grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-9 lg:gap-y-10">
+          <div className="relative h-11 col-span-1">
             <input
               aria-label="Nhập họ và tên của bạn"
               id="name"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.name}
-              placeholder=""
-              className="peer w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none placeholder-transparent"
+              placeholder="Nguyễn văn A"
+              className="w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none"
             />
             <label
               htmlFor="name"
-              className="pointer-events-none absolute left-0 -top-1.5 text-sm lowercase transition-all peer-placeholder-shown:leading-[4.7] leading-tight peer-focus:leading-tight"
+              className="absolute left-0 -top-1.5 text-sm lowercase"
             >
               Họ và tên
             </label>
@@ -149,45 +154,19 @@ const Contents = () => {
             )}
           </div>
 
-          <div className="relative h-11 w-full">
-            <input
-              aria-label="Nhập địa chỉ của bạn"
-              id="address"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.address}
-              placeholder=""
-              className="peer w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none placeholder-transparent"
-            />
-            <label
-              htmlFor="address"
-              className="pointer-events-none absolute left-0 -top-1.5 text-sm lowercase transition-all peer-placeholder-shown:leading-[4.7] leading-tight peer-focus:leading-tight"
-            >
-              Địa chỉ
-            </label>
-            {formik.touched.address && formik.errors.address && (
-              <div className="flex items-center gap-1 mt-1">
-                <PiWarningCircleLight className="text-red-500" />
-                <span className="text-xs text-red-500">
-                  {formik.errors.address}
-                </span>
-              </div>
-            )}
-          </div>
-
-          <div className="relative h-11 w-full">
+          <div className="relative h-11 col-span-1">
             <input
               aria-label="Nhập số điện thoại của bạn"
               id="phone"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.phone}
-              placeholder=""
-              className="peer w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none placeholder-transparent"
+              placeholder="0123456789"
+              className="w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none"
             />
             <label
               htmlFor="phone"
-              className="pointer-events-none absolute left-0 -top-1.5 text-sm lowercase transition-all peer-placeholder-shown:leading-[4.7] leading-tight peer-focus:leading-tight"
+              className="absolute left-0 -top-1.5 text-sm lowercase"
             >
               Số điện thoại
             </label>
@@ -201,14 +180,14 @@ const Contents = () => {
             )}
           </div>
 
-          <div className="relative w-full h-11">
+          <div className="relative h-11 col-span-1">
             <select
               aria-label="Chọn tỉnh/thành"
               id="province"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.province}
-              className="peer w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none placeholder-transparent"
+              className="w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none"
             >
               <option value="">--</option>
               {provinces.map((item) => (
@@ -219,7 +198,7 @@ const Contents = () => {
             </select>
             <label
               htmlFor="province"
-              className="pointer-events-none absolute left-0 -top-1.5 text-sm lowercase transition-all peer-placeholder-shown:leading-[4.7] leading-tight peer-focus:leading-tight"
+              className="pointer-events-none absolute left-0 -top-1.5 text-sm lowercase"
             >
               Tỉnh/Thành phố
             </label>
@@ -233,14 +212,14 @@ const Contents = () => {
             )}
           </div>
 
-          <div className="relative w-full h-11">
+          <div className="relative h-11 col-span-1">
             <select
               aria-label="Chọn quận/huyện"
               id="district"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.district}
-              className="peer w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none placeholder-transparent"
+              className="w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none"
             >
               <option value="">--</option>
               {districts.map((item) => (
@@ -251,7 +230,7 @@ const Contents = () => {
             </select>
             <label
               htmlFor="district"
-              className="pointer-events-none absolute left-0 -top-1.5 text-sm lowercase transition-all peer-placeholder-shown:leading-[4.7] leading-tight peer-focus:leading-tight"
+              className="pointer-events-none absolute left-0 -top-1.5 text-sm lowercase"
             >
               Quận/huyện
             </label>
@@ -265,14 +244,14 @@ const Contents = () => {
             )}
           </div>
 
-          <div className="relative w-full h-11">
+          <div className="relative h-11 col-span-1">
             <select
               aria-label="Chọn phường/xã"
               id="ward"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.ward}
-              className="peer w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none placeholder-transparent"
+              className="w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none"
             >
               <option value="">--</option>
               {wards.map((item) => (
@@ -283,7 +262,7 @@ const Contents = () => {
             </select>
             <label
               htmlFor="ward"
-              className="pointer-events-none absolute left-0 -top-1.5 text-sm lowercase transition-all peer-placeholder-shown:leading-[4.7] leading-tight peer-focus:leading-tight"
+              className="pointer-events-none absolute left-0 -top-1.5 text-sm lowercase"
             >
               Phường/xã
             </label>
@@ -297,14 +276,64 @@ const Contents = () => {
             )}
           </div>
 
-          <button
-            type="submit"
-            onClick={formik.handleSubmit}
-            className="mt-6 py-2.5 lowercase hover:underline border border-black"
-          >
-            Tiếp tục
-          </button>
+          <div className="relative h-11 col-span-1">
+            <input
+              aria-label="Nhập địa chỉ của bạn"
+              id="address"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.address}
+              placeholder="12/4 Phạm Văn B"
+              className="w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none"
+            />
+            <label
+              htmlFor="address"
+              className="absolute left-0 -top-1.5 text-sm lowercase"
+            >
+              Địa chỉ
+            </label>
+            {formik.touched.address && formik.errors.address && (
+              <div className="flex items-center gap-1 mt-1">
+                <PiWarningCircleLight className="text-red-500" />
+                <span className="text-xs text-red-500">
+                  {formik.errors.address}
+                </span>
+              </div>
+            )}
+          </div>
         </form>
+
+        <div className="z-10 h-[4.5rem] md:h-28 lg:h-20 fixed bottom-0 left-0 grid grid-cols-5 md:grid-cols-4 lg:grid-cols-7 w-full backdrop-blur-sm bg-white/60 border-t border-gray-300">
+          <div className="hidden md:col-span-1 md:flex items-center ml-5">
+            <Link
+              to="/cart"
+              aria-label="Đi đến trang tất cả sản phẩm"
+              className="lowercase font-medium text-gray-700 hover:underline flex items-center"
+            >
+              <MdChevronLeft className="text-2xl mr-[-2px]" />
+              Giỏ hàng
+            </Link>
+          </div>
+
+          <div className="col-span-3 md:col-span-2 lg:col-span-5 flex flex-col items-end justify-center mr-4 md:mr-6 lg:mr-10">
+            <span className="lowercase text-[15px]">{quantity} sản phẩm.</span>
+            <span className="lowercase text-lg font-semibold">
+              Tổng: {formatCurrency(total)}
+            </span>
+          </div>
+
+          <div className="col-span-2 md:col-span-1 flex justify-end">
+            <button
+              type="submit"
+              onClick={formik.handleSubmit}
+              aria-label="Đi đến trang nhập địa chỉ giao hàng"
+              className="flex items-center justify-center w-full h-full lowercase bg-black text-white text-lg hover:underline"
+            >
+              Tiếp tục
+              <MdKeyboardArrowRight className="text-2xl ml-[-2px]" />
+            </button>
+          </div>
+        </div>
       </div>
     </main>
   );
