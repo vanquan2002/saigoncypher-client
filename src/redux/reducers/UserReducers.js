@@ -14,10 +14,6 @@ import {
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_PROFILE_FAIL,
   USER_UPDATE_PROFILE_RESET,
-  USER_ADD_FAVORITE_REQUEST,
-  USER_ADD_FAVORITE_SUCCESS,
-  USER_ADD_FAVORITE_FAIL,
-  USER_ADD_FAVORITE_CLEAR,
 } from "../constants/UserConstants.js";
 
 export const userLoginReducer = (state = {}, action) => {
@@ -74,21 +70,6 @@ export const userUpdateProfileReducer = (state = {}, action) => {
     case USER_UPDATE_PROFILE_FAIL:
       return { loading: false, error: action.payload };
     case USER_UPDATE_PROFILE_RESET:
-      return {};
-    default:
-      return state;
-  }
-};
-
-export const userAddFavoritesReducer = (state = {}, action) => {
-  switch (action.type) {
-    case USER_ADD_FAVORITE_REQUEST:
-      return { loading: true };
-    case USER_ADD_FAVORITE_SUCCESS:
-      return { loading: false, success: true, isAdd: action.payload };
-    case USER_ADD_FAVORITE_FAIL:
-      return { loading: false, error: action.payload };
-    case USER_ADD_FAVORITE_CLEAR:
       return {};
     default:
       return state;

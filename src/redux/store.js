@@ -15,12 +15,16 @@ import {
   orderPayReducer,
 } from "./reducers/OrderReducers";
 import {
-  userAddFavoritesReducer,
   userDetailsReducer,
   userLoginReducer,
   userRegisterReducer,
   userUpdateProfileReducer,
 } from "./reducers/UserReducers";
+import {
+  districtsReducer,
+  provincesReducer,
+  wardsReducer,
+} from "./reducers/FormReducers";
 
 const reducer = combineReducers({
   productList: productsReducers,
@@ -36,7 +40,9 @@ const reducer = combineReducers({
   orderPay: orderPayReducer,
   orderListMy: orderListMyReducer,
   productsRelated: productsRelatedReducers,
-  userFavorite: userAddFavoritesReducer,
+  provinceList: provincesReducer,
+  districtList: districtsReducer,
+  wardList: wardsReducer,
 });
 
 const cartItemsFromLocalStorage = localStorage.getItem("cartItems")

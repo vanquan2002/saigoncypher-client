@@ -41,7 +41,7 @@ const Footer = () => {
   return (
     <footer
       className={`${
-        lastSegment === "cart"
+        lastSegment === "cart" || lastSegment === "shipping"
           ? "mb-[4.5rem] md:mb-28 lg:mb-20"
           : lastSegment === "detail"
           ? "mb-14 md:mb-0"
@@ -104,7 +104,7 @@ const Footer = () => {
 
       <div className="flex justify-center py-2 mt-16 bg-gray-100">
         <span className="text-sm">@2024.</span>
-        <span className="text-sm">Thiết kế web bởi Quân đẹp trai</span>
+        <span className="text-sm">Thiết kế web bởi Phạm Văn Quân</span>
       </div>
     </footer>
   );

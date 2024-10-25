@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useMemo, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
-import Message from "./../loadingError/Error";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { useDispatch, useSelector } from "react-redux";
 import Pagination from "./Pagination";
@@ -10,6 +9,7 @@ import { LiaStarSolid } from "react-icons/lia";
 import ProductListHomeSkeleton from "../skeletons/ProductListHomeSkeleton";
 import Breadcrumbs from "../Breadcrumbs";
 import debounce from "lodash.debounce";
+import Error from "./../loadingError/Error";
 
 const Contents = () => {
   const { keyword } = useParams();
@@ -69,7 +69,9 @@ const Contents = () => {
       {loading ? (
         <ProductListHomeSkeleton numberColList={numberColList} />
       ) : error ? (
-        <Message error={error} />
+        <div className="mx-5 md:mx-0 mt-5 md:mt-10">
+          <Error error={error} />
+        </div>
       ) : products.length > 0 ? (
         <div className="mt-5 md:mt-10">
           <section className="w-full">

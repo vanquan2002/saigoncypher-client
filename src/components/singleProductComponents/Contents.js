@@ -120,7 +120,9 @@ const Contents = () => {
       {loading ? (
         <ProductDetailSkeleton />
       ) : error ? (
-        <Error error={error} />
+        <div className="mx-5 md:mx-0 mt-5 md:mt-10">
+          <Error error={error} />
+        </div>
       ) : (
         <article>
           <div className="mt-5 md:mt-10 flex flex-col lg:flex-row gap-4 md:gap-10 lg:gap-20">

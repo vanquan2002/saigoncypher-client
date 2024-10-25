@@ -73,6 +73,7 @@ const Contents = () => {
         <form className="w-ful flex flex-col gap-12 mt-6">
           <div className="relative h-11 w-full">
             <input
+              type="text"
               aria-label="Nhập họ và tên của bạn"
               id="name"
               onChange={formik.handleChange}
@@ -99,6 +100,7 @@ const Contents = () => {
 
           <div className="relative h-11 w-full">
             <input
+              type="email"
               aria-label="Nhập email của bạn"
               id="email"
               onChange={formik.handleChange}

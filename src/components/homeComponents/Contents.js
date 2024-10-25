@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Message from "../loadingError/Error";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { useDispatch, useSelector } from "react-redux";
 import { listProduct } from "./../../redux/actions/ProductActions";
@@ -8,6 +7,7 @@ import { LiaStarSolid } from "react-icons/lia";
 import { AppContext } from "../../AppContext";
 import { MdArrowOutward } from "react-icons/md";
 import ProductListHomeSkeleton from "../skeletons/ProductListHomeSkeleton";
+import Error from "../loadingError/Error";
 
 const Contents = () => {
   const dispatch = useDispatch();
@@ -28,7 +28,9 @@ const Contents = () => {
       {loading ? (
         <ProductListHomeSkeleton numberColList={numberColList} />
       ) : error ? (
-        <Message error={error} />
+        <div className="mx-5 md:mx-0 mt-5 md:mt-10">
+          <Error error={error} />
+        </div>
       ) : products.length > 0 ? (
         <div className="mt-5 md:mt-10">
           <section className="w-full">
