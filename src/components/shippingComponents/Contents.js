@@ -18,6 +18,7 @@ import {
   WARD_DATA_RESET,
 } from "../../redux/constants/FormConstants";
 import Error from "../loadingError/Error";
+import { update } from "../../redux/actions/UserActions";
 
 const Contents = () => {
   const namePages = [
@@ -28,14 +29,20 @@ const Contents = () => {
   ];
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+  const userUpdate = useSelector((state) => state.userUpdate);
+  const { success } = userUpdate;
+
   const provinceList = useSelector((state) => state.provinceList);
   const { provinces, error: errorProvince } = provinceList;
   const districtList = useSelector((state) => state.districtList);
   const { districts, error: errorDistrict } = districtList;
   const wardList = useSelector((state) => state.wardList);
   const { wards, error: errorWard } = wardList;
+
   const [selectedProvince, setSelectedProvince] = useState(null);
   const [selectedDistrict, setSelectedDistrict] = useState(null);
   const total = cartItems.reduce((a, i) => a + i.qty * i.price, 0).toFixed(0);
@@ -43,8 +50,8 @@ const Contents = () => {
 
   const validate = (values) => {
     const errors = {};
-    if (!values.name) {
-      errors.name = "Thông tin bắt buộc";
+    if (!values.fullName) {
+      errors.fullName = "Thông tin bắt buộc";
     }
     if (!values.address) {
       errors.address = "Thông tin bắt buộc";
@@ -65,48 +72,32 @@ const Contents = () => {
   };
   const formik = useFormik({
     initialValues: {
-      name: "",
-      address: "",
-      phone: "",
+      fullName: userInfo.deliveryInformation.fullName ?? "",
+      address: userInfo.deliveryInformation.address ?? "",
+      phone: userInfo.deliveryInformation.phone ?? "",
       province: "",
       district: "",
       ward: "",
     },
     validate,
     onSubmit: (values) => {
-      console.log("addressed: ", values);
+      console.log(values);
+      // dispatch(update(values));
     },
   });
 
   useEffect(() => {
-    if (provinces) {
+    if (formik.values.province) {
+      formik.setFieldValue("district", "");
       const provinceId =
         provinces.find((item) => item.province_name === formik.values.province)
           ?.province_id || null;
-      setSelectedProvince(provinceId);
-      formik.setFieldValue("district", "");
       dispatch({
         type: DISTRICT_DATA_RESET,
       });
+      setSelectedProvince(provinceId);
     }
-  }, [formik.values.province, provinces]);
-
-  useEffect(() => {
-    if (districts) {
-      const districtId =
-        districts.find((item) => item.district_name === formik.values.district)
-          ?.district_id || null;
-      setSelectedDistrict(districtId);
-      formik.setFieldValue("ward", "");
-      dispatch({
-        type: WARD_DATA_RESET,
-      });
-    }
-  }, [formik.values.district, districts]);
-
-  useEffect(() => {
-    dispatch(listProvince());
-  }, []);
+  }, [formik.values.province]);
 
   useEffect(() => {
     if (selectedProvince) {
@@ -115,10 +106,33 @@ const Contents = () => {
   }, [selectedProvince]);
 
   useEffect(() => {
+    if (formik.values.district) {
+      formik.setFieldValue("ward", "");
+      const districtId =
+        districts.find((item) => item.district_name === formik.values.district)
+          ?.district_id || null;
+      dispatch({
+        type: WARD_DATA_RESET,
+      });
+      setSelectedDistrict(districtId);
+    }
+  }, [formik.values.district]);
+
+  useEffect(() => {
     if (selectedDistrict) {
       dispatch(listWard(selectedDistrict));
     }
   }, [selectedDistrict]);
+
+  useEffect(() => {
+    dispatch(listProvince());
+  }, []);
+
+  // useEffect(() => {
+  //   if (success) {
+  //     console.log("okee");
+  //   }
+  // }, [success]);
 
   return (
     <main className="px-5 md:px-20">
@@ -139,24 +153,24 @@ const Contents = () => {
               <input
                 type="text"
                 aria-label="Nhập họ và tên của bạn"
-                id="name"
+                id="fullName"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.name}
+                value={formik.values.fullName}
                 placeholder="Nguyễn văn A"
                 className="w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none"
               />
               <label
-                htmlFor="name"
+                htmlFor="fullName"
                 className="absolute left-0 -top-1.5 text-sm lowercase"
               >
                 Họ và tên
               </label>
-              {formik.touched.name && formik.errors.name && (
+              {formik.touched.fullName && formik.errors.fullName && (
                 <div className="flex items-center gap-1 mt-1">
                   <PiWarningCircleLight className="text-red-500" />
                   <span className="text-xs text-red-500">
-                    {formik.errors.name}
+                    {formik.errors.fullName}
                   </span>
                 </div>
               )}
@@ -198,7 +212,7 @@ const Contents = () => {
                 value={formik.values.province}
                 className="w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none"
               >
-                <option value="">--</option>
+                {!formik.values.province && <option value="">--</option>}
                 {provinces.map((item) => (
                   <option key={item.province_id} value={item.province_name}>
                     {item.province_name}
@@ -230,7 +244,7 @@ const Contents = () => {
                 value={formik.values.district}
                 className="w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none"
               >
-                <option value="">--</option>
+                {!formik.values.district && <option value="">--</option>}
                 {districts.map((item) => (
                   <option key={item.district_id} value={item.district_name}>
                     {item.district_name}
@@ -262,7 +276,7 @@ const Contents = () => {
                 value={formik.values.ward}
                 className="w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none"
               >
-                <option value="">--</option>
+                {!formik.values.ward && <option value="">--</option>}
                 {wards.map((item) => (
                   <option key={item.ward_id} value={item.ward_name}>
                     {item.ward_name}

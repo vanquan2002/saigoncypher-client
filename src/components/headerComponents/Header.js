@@ -102,7 +102,7 @@ const Header = ({ isTypeCol }) => {
             aria-label={`Tìm kiếm sản phẩm với từ khóa ${keyword}`}
             className="lowercase text-nowrap pr-2 hover:underline"
           >
-            Tìm kiếm
+            Tìm kiếm.
           </button>
         </div>
       </form>

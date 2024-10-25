@@ -15,7 +15,7 @@ const ProfileScreen = () => {
         <title>SaigonCypher | {userInfo.name}</title>
       </Helmet>
 
-      <Header isTypeCol={1} />
+      <Header isTypeCol={0} />
       <Contents />
       <Footer />
     </div>

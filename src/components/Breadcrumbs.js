@@ -21,7 +21,7 @@ const Breadcrumbs = ({ namePages }) => {
           )}
           <span
             onClick={() => namePages.length - 1 !== i && navigate(item.url)}
-            className={`${
+            className={`text-sm ${
               namePages.length - 1 !== i
                 ? "text-gray-500 cursor-pointer hover:underline"
                 : "font-medium text-black line-clamp-1"

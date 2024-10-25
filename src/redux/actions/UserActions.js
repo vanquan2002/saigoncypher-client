@@ -109,7 +109,7 @@ export const logout = () => (dispatch) => {
   });
 };
 
-export const getUserDetails = () => async (dispatch, getState) => {
+export const profile = () => async (dispatch, getState) => {
   try {
     dispatch({
       type: USER_DETAILS_REQUEST,
@@ -142,7 +142,7 @@ export const getUserDetails = () => async (dispatch, getState) => {
   }
 };
 
-export const updateUserProfile = (user) => async (dispatch, getState) => {
+export const update = (user) => async (dispatch, getState) => {
   try {
     dispatch({
       type: USER_UPDATE_PROFILE_REQUEST,
