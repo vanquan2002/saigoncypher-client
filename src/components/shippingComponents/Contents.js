@@ -42,12 +42,14 @@ const Contents = () => {
   const { districts, error: errorDistrict } = districtList;
   const wardList = useSelector((state) => state.wardList);
   const { wards, error: errorWard } = wardList;
-
   const [selectedProvince, setSelectedProvince] = useState(null);
   const [selectedDistrict, setSelectedDistrict] = useState(null);
   const total = cartItems.reduce((a, i) => a + i.qty * i.price, 0).toFixed(0);
   const quantity = cartItems.reduce((a, i) => a + i.qty, 0);
-
+  const [isInitialDistrict, setIsInitialDistrict] = useState(true);
+  const [isInitialWard, setIsInitialWard] = useState(true);
+  const [isDistrict, setIsDistrict] = useState(false);
+  const [isWard, setIsWard] = useState(false);
   const validate = (values) => {
     const errors = {};
     if (!values.fullName) {
@@ -81,14 +83,35 @@ const Contents = () => {
     },
     validate,
     onSubmit: (values) => {
-      console.log(values);
-      // dispatch(update(values));
+      dispatch(update(values));
     },
   });
 
   useEffect(() => {
+    if (districts.length > 0 && isDistrict) {
+      formik.setFieldValue(
+        "district",
+        userInfo.deliveryInformation.district ?? ""
+      );
+      setIsDistrict(false);
+    }
+  }, [districts, isDistrict]);
+
+  useEffect(() => {
+    if (wards.length > 0 && isWard) {
+      formik.setFieldValue("ward", userInfo.deliveryInformation.ward ?? "");
+      setIsWard(false);
+    }
+  }, [wards, isWard]);
+
+  useEffect(() => {
     if (formik.values.province) {
-      formik.setFieldValue("district", "");
+      if (isInitialDistrict) {
+        setIsInitialDistrict(false);
+        setIsDistrict(true);
+      } else {
+        formik.setFieldValue("district", "");
+      }
       const provinceId =
         provinces.find((item) => item.province_name === formik.values.province)
           ?.province_id || null;
@@ -107,7 +130,12 @@ const Contents = () => {
 
   useEffect(() => {
     if (formik.values.district) {
-      formik.setFieldValue("ward", "");
+      if (isInitialWard) {
+        setIsInitialWard(false);
+        setIsWard(true);
+      } else {
+        formik.setFieldValue("ward", "");
+      }
       const districtId =
         districts.find((item) => item.district_name === formik.values.district)
           ?.district_id || null;
@@ -123,6 +151,15 @@ const Contents = () => {
       dispatch(listWard(selectedDistrict));
     }
   }, [selectedDistrict]);
+
+  useEffect(() => {
+    if (provinces.length > 0) {
+      formik.setFieldValue(
+        "province",
+        userInfo.deliveryInformation.province ?? ""
+      );
+    }
+  }, [provinces]);
 
   useEffect(() => {
     dispatch(listProvince());
