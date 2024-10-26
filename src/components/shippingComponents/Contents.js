@@ -19,6 +19,7 @@ import {
 } from "../../redux/constants/FormConstants";
 import Error from "../loadingError/Error";
 import { update } from "../../redux/actions/UserActions";
+import { USER_UPDATE_PROFILE_RESET } from "../../redux/constants/UserConstants";
 
 const Contents = () => {
   const namePages = [
@@ -35,7 +36,6 @@ const Contents = () => {
   const { cartItems } = cart;
   const userUpdate = useSelector((state) => state.userUpdate);
   const { success } = userUpdate;
-
   const provinceList = useSelector((state) => state.provinceList);
   const { provinces, error: errorProvince } = provinceList;
   const districtList = useSelector((state) => state.districtList);
@@ -165,11 +165,14 @@ const Contents = () => {
     dispatch(listProvince());
   }, []);
 
-  // useEffect(() => {
-  //   if (success) {
-  //     console.log("okee");
-  //   }
-  // }, [success]);
+  useEffect(() => {
+    if (success) {
+      dispatch({
+        type: USER_UPDATE_PROFILE_RESET,
+      });
+      navigate("/placeorder");
+    }
+  }, [success]);
 
   return (
     <main className="px-5 md:px-20">
@@ -387,7 +390,7 @@ const Contents = () => {
 
             <div className="col-span-2 md:col-span-1 flex justify-end">
               <button
-                type="submit"
+                type="button"
                 onClick={formik.handleSubmit}
                 aria-label="Đi đến trang nhập địa chỉ giao hàng"
                 className="flex items-center justify-center w-full h-full lowercase bg-black text-white text-lg hover:underline"

@@ -126,17 +126,6 @@ const Contents = () => {
           </div>
 
           <div className="relative h-11 w-full">
-            <button
-              type="button"
-              onClick={() => setPasswordVisible(!passwordVisible)}
-              className="absolute right-0 bottom-2"
-            >
-              {passwordVisible ? (
-                <BsEye size="1.2rem" />
-              ) : (
-                <BsEyeSlash size="1.2rem" />
-              )}
-            </button>
             <input
               aria-label="Nhập mật khẩu của bạn"
               id="password"
@@ -163,6 +152,17 @@ const Contents = () => {
                 </span>
               </div>
             )}
+            <button
+              type="button"
+              onClick={() => setPasswordVisible(!passwordVisible)}
+              className="absolute right-0 bottom-2"
+            >
+              {passwordVisible ? (
+                <BsEye size="1.2rem" />
+              ) : (
+                <BsEyeSlash size="1.2rem" />
+              )}
+            </button>
           </div>
 
           <button
