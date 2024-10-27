@@ -18,7 +18,7 @@ import {
   WARD_DATA_RESET,
 } from "../../redux/constants/FormConstants";
 import Error from "../loadingError/Error";
-import { update } from "../../redux/actions/UserActions";
+import { updateProfile } from "../../redux/actions/UserActions";
 import { USER_UPDATE_PROFILE_RESET } from "../../redux/constants/UserConstants";
 
 const Contents = () => {
@@ -83,7 +83,7 @@ const Contents = () => {
     },
     validate,
     onSubmit: (values) => {
-      dispatch(update(values));
+      dispatch(updateProfile(values));
     },
   });
 
@@ -170,7 +170,7 @@ const Contents = () => {
       dispatch({
         type: USER_UPDATE_PROFILE_RESET,
       });
-      navigate("/placeorder");
+      // navigate("/placeorder");
     }
   }, [success]);
 
