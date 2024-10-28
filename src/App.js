@@ -6,7 +6,6 @@ import Register from "./screens/Register";
 import ProfileScreen from "./screens/ProfileScreen";
 import CartScreen from "./screens/CartScreen";
 import ShippingScreen from "./screens/ShippingScreen";
-import PaymentScreen from "./screens/PaymentScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen";
 import NotFound from "./screens/NotFound";
@@ -35,16 +34,14 @@ function App() {
           element={<PrivateRouter navig="shipping" comp={<ShippingScreen />} />}
         />
         <Route
-          path="/profile"
-          element={<PrivateRouter comp={<ProfileScreen />} />}
-        />
-        <Route
-          path="/payment"
-          element={<PrivateRouter comp={<PaymentScreen />} />}
-        />
-        <Route
           path="/placeorder"
-          element={<PrivateRouter comp={<PlaceOrderScreen />} />}
+          element={
+            <PrivateRouter navig="placeorder" comp={<PlaceOrderScreen />} />
+          }
+        />
+        <Route
+          path="/profile"
+          element={<PrivateRouter navig="profile" comp={<ProfileScreen />} />}
         />
         <Route
           path="/order/:id"

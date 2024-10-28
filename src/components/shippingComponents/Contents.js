@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Breadcrumbs from "../Breadcrumbs";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -20,6 +20,7 @@ import {
 import Error from "../loadingError/Error";
 import { updateProfile } from "../../redux/actions/UserActions";
 import { USER_UPDATE_PROFILE_RESET } from "../../redux/constants/UserConstants";
+import debounce from "lodash.debounce";
 
 const Contents = () => {
   const namePages = [
@@ -50,6 +51,14 @@ const Contents = () => {
   const [isInitialWard, setIsInitialWard] = useState(true);
   const [isDistrict, setIsDistrict] = useState(false);
   const [isWard, setIsWard] = useState(false);
+
+  const debouncedAddCartProduct = useMemo(
+    () =>
+      debounce((result) => {
+        dispatch(updateProfile(result));
+      }, 200),
+    []
+  );
   const validate = (values) => {
     const errors = {};
     if (!values.fullName) {
@@ -83,7 +92,7 @@ const Contents = () => {
     },
     validate,
     onSubmit: (values) => {
-      dispatch(updateProfile(values));
+      debouncedAddCartProduct(values);
     },
   });
 
@@ -170,7 +179,7 @@ const Contents = () => {
       dispatch({
         type: USER_UPDATE_PROFILE_RESET,
       });
-      // navigate("/placeorder");
+      navigate("/placeorder");
     }
   }, [success]);
 

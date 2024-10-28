@@ -34,7 +34,7 @@ const Contents = () => {
     () =>
       debounce((key, num) => {
         dispatch(listProduct(key, num));
-      }, 500),
+      }, 300),
     []
   );
 

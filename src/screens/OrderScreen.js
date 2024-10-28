@@ -20,7 +20,7 @@ const OrderScreen = () => {
   const { success: successPay, loading: loadingPay } = orderPay;
 
   const successPaymentHandle = (paymentResult) => {
-    dispatch(payOrder(id, paymentResult));
+    // dispatch(payOrder(id, paymentResult));
   };
 
   useEffect(() => {

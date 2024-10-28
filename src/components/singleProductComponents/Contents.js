@@ -47,7 +47,7 @@ const Contents = () => {
     () =>
       debounce((id, qty, size, type) => {
         dispatch(addToCart(id, qty, size, type));
-      }, 500),
+      }, 200),
     []
   );
 

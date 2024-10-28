@@ -6,6 +6,7 @@ import { FaUser } from "react-icons/fa";
 import { RiAddLine } from "react-icons/ri";
 import { RiEditFill } from "react-icons/ri";
 import { BiSolidEditAlt } from "react-icons/bi";
+import { logout } from "./../../redux/actions/UserActions";
 
 const Contents = () => {
   const namePages = [
@@ -82,6 +83,7 @@ const Contents = () => {
               <div className="flex justify-between items-center mb-1 w-full">
                 <h1 className="text-3xl font-semibold">{user.name}</h1>
                 <button
+                  onClick={() => dispatch(logout())}
                   aria-label="Các đơn hàng đã đặt"
                   type="button"
                   className="lowercase border border-black px-2 py-1 text-sm hover:underline"
