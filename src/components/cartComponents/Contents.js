@@ -175,7 +175,7 @@ const Contents = () => {
         <div className="col-span-2 md:col-span-1 flex justify-end">
           <Link
             to="/shipping"
-            aria-label="Đi đến trang nhập địa chỉ giao hàng"
+            aria-label="Đi đến trang nhập địa chỉ đặt hàng"
             className="flex items-center justify-center w-full h-full lowercase bg-black text-white text-lg hover:underline"
           >
             Thanh toán

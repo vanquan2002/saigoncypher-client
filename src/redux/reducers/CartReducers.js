@@ -68,10 +68,7 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
         ),
       };
     case CART_CLEAR_ITEMS:
-      return {
-        ...state,
-        cartItems: [],
-      };
+      return { cartItems: [] };
     default:
       return state;
   }

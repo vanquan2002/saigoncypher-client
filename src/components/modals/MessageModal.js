@@ -1,8 +1,15 @@
 import React, { useContext, useEffect } from "react";
 import { AppContext } from "../../AppContext";
+import { useNavigate } from "react-router-dom";
 
 const MessageModal = ({ message }) => {
   const { isMassage, toggleIsMassage } = useContext(AppContext);
+  const navigate = useNavigate();
+
+  const navigateShippingHandle = () => {
+    toggleIsMassage("");
+    navigate("/shipping");
+  };
 
   useEffect(() => {
     document.body.style.overflow = isMassage ? "hidden" : "auto";
@@ -26,7 +33,19 @@ const MessageModal = ({ message }) => {
       >
         <div className="flex flex-col gap-1 justify-center w-full min-h-1 p-3 md:p-4 border-b border-black">
           <span className="lowercase text-lg font-medium">Thông báo.</span>
-          <span className="lowercase text-[15px]">{message}</span>
+          <span className="lowercase text-[15px]">
+            {message}
+            {isMassage === "order" && (
+              <button
+                type="button"
+                aria-label="Đi đến trang nhập thông tin đặt hàng"
+                onClick={() => navigateShippingHandle()}
+                className="ml-2 text-[15px] underline"
+              >
+                Nhập
+              </button>
+            )}
+          </span>
         </div>
         <button
           onClick={() => toggleIsMassage("")}

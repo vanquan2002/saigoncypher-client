@@ -380,7 +380,7 @@ const Contents = () => {
             <div className="hidden md:col-span-1 md:flex items-center ml-5">
               <Link
                 to="/cart"
-                aria-label="Đi đến trang tất cả sản phẩm"
+                aria-label="Đi đến trang giỏ hàng"
                 className="lowercase font-medium text-gray-700 hover:underline flex items-center"
               >
                 <MdChevronLeft className="text-2xl mr-[-2px]" />
@@ -401,7 +401,7 @@ const Contents = () => {
               <button
                 type="button"
                 onClick={formik.handleSubmit}
-                aria-label="Đi đến trang nhập địa chỉ giao hàng"
+                aria-label="Cập nhật thông tin đặt hàng và đi đến trang thanh toán"
                 className="flex items-center justify-center w-full h-full lowercase bg-black text-white text-lg hover:underline"
               >
                 Tiếp tục
