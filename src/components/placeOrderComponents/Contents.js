@@ -24,7 +24,7 @@ const Contents = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const orderCreate = useSelector((state) => state.orderCreate);
-  const { loading, success } = orderCreate;
+  const { loading, success, order } = orderCreate;
   const itemsPrice = cartItems
     .reduce((a, i) => a + i.qty * i.price, 0)
     .toFixed(0);
@@ -48,6 +48,7 @@ const Contents = () => {
           itemsPrice,
           shippingPrice,
           totalPrice,
+          note,
         })
       );
     }
@@ -60,14 +61,10 @@ const Contents = () => {
   }, []);
 
   useEffect(() => {
-    if (success) {
-      // dispatch({
-      //   type: ORDER_CREATE_RESET,
-      // });
-      // navigate(`/order/${order._id}`);
-      console.log("run navigate");
+    if (success && order) {
+      navigate(`/order/${order._id}`);
     }
-  }, [success]);
+  }, [success, order]);
 
   return (
     <main className="md:px-20">
@@ -108,7 +105,7 @@ const Contents = () => {
           </span>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-20 mt-7">
+        <div className="flex flex-col lg:flex-row gap-x-20 gap-y-10 mt-7">
           <section className="w-full">
             <span className="px-5 md:px-0 lowercase font-medium">
               Sản phẩm({totalQuantity})
@@ -158,7 +155,7 @@ const Contents = () => {
             </ul>
           </section>
 
-          <section className="px-5 md:px-0 w-full">
+          <section className="flex flex-col gap-6 px-5 md:px-0 w-full">
             <div>
               <span className="lowercase font-medium">
                 Phương thức vận chuyển.
@@ -173,7 +170,7 @@ const Contents = () => {
               </div>
             </div>
 
-            <div className="flex flex-col mt-6">
+            <div className="flex flex-col">
               <span className="lowercase font-medium">
                 Phương thức thanh toán.
               </span>
@@ -183,7 +180,7 @@ const Contents = () => {
               </span>
             </div>
 
-            <div className="relative mt-6">
+            <div className="relative">
               <span className="lowercase font-medium">Lời nhắn.</span>
               <textarea
                 aria-label="Nhập lời nhắn của bạn"
@@ -200,23 +197,23 @@ const Contents = () => {
               </p>
             </div>
 
-            <div className="flex flex-col mt-6">
+            <div className="flex flex-col gap-1">
               <span className="lowercase font-medium">
                 Chi tiết thanh toán.
               </span>
-              <div className="flex justify-between mt-2">
+              <div className="flex justify-between">
                 <span className="lowercase text-[15px]">Giá sản phẩm</span>
                 <span className="lowercase text-[15px]">
                   {formatCurrency(itemsPrice)}
                 </span>
               </div>
-              <div className="flex justify-between mt-1">
+              <div className="flex justify-between">
                 <span className="lowercase text-[15px]">Phí vận chuyển</span>
                 <span className="lowercase text-[15px]">
                   {formatCurrency(shippingPrice)}
                 </span>
               </div>
-              <div className="flex justify-between mt-2 pt-2 border-t border-gray-300">
+              <div className="flex justify-between pt-1 border-t border-gray-300">
                 <span className="lowercase text-[15px]">Tổng cộng</span>
                 <span className="lowercase text-[15px]">
                   {formatCurrency(totalPrice)}
@@ -252,7 +249,7 @@ const Contents = () => {
           <button
             onClick={() => createOrderHandle()}
             type="button"
-            aria-label="Đi đến trang chi tiết đơn hàng đã đặt"
+            aria-label="Đặt hàng và đi đến trang chi tiết đơn hàng đã đặt"
             className="w-full h-full lowercase bg-black text-white text-lg hover:underline"
           >
             {loading ? "Đang đặt hàng..." : "Đặt hàng."}
