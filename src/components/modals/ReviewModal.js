@@ -5,18 +5,18 @@ import { useDispatch } from "react-redux";
 import {
   createProductReview,
   detailsProduct,
-} from "./../../redux/actions/ProductActions";
-import Loading from "./../loadingError/Loading";
-import Message from "./../loadingError/Error";
+} from "../../redux/actions/ProductActions";
+import Loading from "../loadingError/Loading";
+import Message from "../loadingError/Error";
 import moment from "moment";
 import "moment/locale/vi";
 import { PRODUCT_CREATE_REVIEW_RESET } from "../../redux/constants/ProductConstants";
-import RatingIconChange from "./RatingIconChange";
-import RatingIconReadonly from "./RatingIconReadonly";
+import RatingIconChange from "../singleProductComponents/RatingIconChange";
+import RatingIconReadonly from "../singleProductComponents/RatingIconReadonly";
 import { AppContext } from "../../AppContext";
-import MessageModal from "../modals/MessageModal";
+import MessageModal from "./MessageModal";
 
-const Reviews = ({ product }) => {
+const ReviewModal = ({ product }) => {
   moment.locale("vi");
   const desc = ["Tệ", "Không tốt", "Bình thường", "Tốt", "Tuyệt vời"];
   const navigate = useNavigate();
@@ -196,4 +196,4 @@ const Reviews = ({ product }) => {
   );
 };
 
-export default Reviews;
+export default ReviewModal;

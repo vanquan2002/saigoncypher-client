@@ -9,7 +9,6 @@ import { formatCurrency } from "../../utils/formatCurrency";
 import { AppContext } from "../../AppContext";
 import SmallModal from "./../modals/SmallModal";
 import Error from "../loadingError/Error";
-import { PiDotOutlineFill } from "react-icons/pi";
 import "moment/locale/vi";
 
 const Contents = () => {
@@ -40,6 +39,10 @@ const Contents = () => {
     }
   }, [success]);
 
+  // {moment(order.orderStatus.preparedAt)
+  //   .add(1, "days")
+  //   .format("DD/MM/YYYY")}
+
   return (
     <main className="md:px-20">
       <div className="px-5 md:px-0 mt-32 md:mt-28">
@@ -57,61 +60,68 @@ const Contents = () => {
         </div>
       ) : (
         <div className="mt-5 md:mt-10">
-          <div className="bg-gray-100 px-4 py-2">
+          <div className="border border-gray-300 px-4 py-3">
             <h4 className="lowercase font-medium">Trạng thái đơn hàng.</h4>
-            <ul className="flex gap-1">
-              <li className="lowercase flex items-center text-[15px]">
-                <div className="flex flex-col items-center">
-                  <span>Đang chuẩn bị</span>
-                  <p>({moment(order.orderStatus.preparedAt).calendar()})</p>
-                </div>
-                <PiDotOutlineFill className="text-gray-500 ml-1 text-lg" />
-              </li>
-              <li className="lowercase flex items-center text-[15px]">
-                <div className="flex flex-col items-center">
-                  <span> Đang giao</span>
-                  <p>
-                    (<span className="mr-1">Dự kiến</span>
-                    {moment(order.orderStatus.preparedAt)
-                      .add(1, "days")
-                      .format("DD/MM/YYYY")}
-                    )
-                  </p>
-                </div>
-                <PiDotOutlineFill className="text-gray-500 ml-1 text-lg" />
+            <ul className="flex flex-wrap gap-x-3 mt-1">
+              <li className="flex items-center gap-1">
+                <span className="lowercase text-[15px]">Đang chuẩn bị</span>
+                <span className="lowercase text-sm text-gray-700">
+                  ({moment(order.orderStatus.preparedAt).calendar()})
+                </span>
               </li>
 
-              <li className="lowercase flex items-center text-[15px]">
-                <span>Đã giao</span>
-                <PiDotOutlineFill className="text-gray-500 ml-1 text-lg" />
+              <li className="flex items-center">
+                <div className="w-7 border-t border-gray-300"></div>
               </li>
-              <li className="lowercase flex items-center text-[15px]">
-                <span>Trả hàng</span>
-                <PiDotOutlineFill className="text-gray-500 ml-1 text-lg" />
+
+              <li
+                className={`flex items-center gap-1 ${
+                  order.orderStatus.isDelivered ? "opacity-100" : "opacity-30"
+                }`}
+              >
+                <span className="lowercase text-[15px]">Đang giao</span>
+                {order.orderStatus.deliveredAt && (
+                  <span className="lowercase text-sm text-gray-700">
+                    ({moment(order.orderStatus.deliveredAt).calendar()})
+                  </span>
+                )}
               </li>
-              <li className="lowercase flex items-center text-[15px]">
-                <span>Đã hủy</span>
+
+              <li className="flex items-center">
+                <div className="w-7 border-t border-gray-300"></div>
+              </li>
+
+              <li
+                className={`flex items-center gap-1 ${
+                  order.orderStatus.isReceived ? "opacity-100" : "opacity-30"
+                }`}
+              >
+                <span className="lowercase text-[15px]">Đã giao</span>
+                {order.orderStatus.receivedAt && (
+                  <span className="lowercase text-sm text-gray-700">
+                    ({moment(order.orderStatus.receivedAt).calendar()})
+                  </span>
+                )}
               </li>
             </ul>
           </div>
 
-          <div className="flex flex-col lg:flex-row gap-x-20 gap-y-10 mt-7">
+          <div className="flex flex-col lg:flex-row gap-x-20 gap-y-10 mt-10">
             <section className="w-full">
               <span className="px-5 md:px-0 lowercase font-medium">
                 Sản phẩm({totalQuantity})
               </span>
-              <ul className="mt-2 border-l border-t border-gray-300">
+              <ul className="flex flex-col md:gap-5 mt-2">
                 {order.orderItems.map((item, i) => (
                   <li
                     key={i}
-                    className={`flex ${
-                      order.orderItems.length > i &&
-                      "border-r border-b border-gray-300"
-                    }`}
+                    className={`flex border-x ${
+                      i !== 0 ? "border-b md:border-y" : "border-y"
+                    } border-gray-300`}
                   >
                     <Link
                       to={`/products/${item.product}/detail`}
-                      className="w-1/4 md:w-1/6"
+                      className="w-1/3 md:w-1/5"
                     >
                       <img
                         className="w-full"
@@ -120,10 +130,10 @@ const Contents = () => {
                         title={item.name}
                       />
                     </Link>
-                    <div className="w-3/4 md:w-5/6 flex flex-col justify-between py-3 px-4 md:py-4 md:px-5">
+                    <div className="w-2/3 md:w-4/5 flex flex-col justify-between p-3 md:p-4">
                       <div>
                         <Link to={`/products/${item.product}/detail`}>
-                          <h2 className="lowercase text-lg font-medium leading-6 line-clamp-2 md:line-clamp-1 hover:underline">
+                          <h2 className="lowercase text-lg leading-6 line-clamp-2 md:line-clamp-1 hover:underline">
                             {item.name}.
                           </h2>
                         </Link>
@@ -140,96 +150,125 @@ const Contents = () => {
                           {formatCurrency(item.price * item.qty)}
                         </span>
                       </div>
+                      <button
+                        type="button"
+                        aria-label="Mở ô đánh giá sản phẩm"
+                        className={`w-full px-4 py-2  text-sm hover:underline ${
+                          order.orderStatus.isReceived
+                            ? "bg-black text-white"
+                            : "text-black border border-black pointer-events-none opacity-30"
+                        }`}
+                      >
+                        Đánh giá.
+                      </button>
                     </div>
                   </li>
                 ))}
               </ul>
             </section>
 
-            <section className="flex flex-col gap-6 px-5 md:px-0 w-full">
-              <div>
-                <h4 className="lowercase font-medium">Địa chỉ nhận hàng.</h4>
-                <span className="text-[15px] mr-1">
-                  {order.deliveryInformation.fullName} (
-                  {order.deliveryInformation.phone}),
-                </span>
-                <span className="text-[15px] mr-1">
-                  {order.deliveryInformation.address},
-                </span>
-                <span className="text-[15px] mr-1">
-                  {order.deliveryInformation.ward},
-                </span>
-                <span className="text-[15px] mr-1">
-                  {order.deliveryInformation.district},
-                </span>
-                <span className="text-[15px]">
-                  {order.deliveryInformation.province}.
-                </span>
-              </div>
+            <section className="px-5 md:px-0 w-full">
+              <ul className="flex flex-col gap-6">
+                <li>
+                  <h4 className="lowercase font-medium">Địa chỉ nhận hàng.</h4>
+                  <span className="text-[15px] mr-1">
+                    {order.deliveryInformation.fullName} (
+                    {order.deliveryInformation.phone}),
+                  </span>
+                  <span className="text-[15px] mr-1">
+                    {order.deliveryInformation.address},
+                  </span>
+                  <span className="text-[15px] mr-1">
+                    {order.deliveryInformation.ward},
+                  </span>
+                  <span className="text-[15px] mr-1">
+                    {order.deliveryInformation.district},
+                  </span>
+                  <span className="text-[15px]">
+                    {order.deliveryInformation.province}.
+                  </span>
+                </li>
 
-              <div>
-                <span className="lowercase font-medium">
-                  Phương thức vận chuyển.
-                </span>
-                <div className="flex justify-between mt-1">
-                  <span className="lowercase text-[15px]">
-                    Giao hàng tận nơi.
+                <li>
+                  <span className="lowercase font-medium">
+                    Phương thức vận chuyển.
                   </span>
-                  <span className="lowercase text-[15px]">
-                    {formatCurrency(order.shippingPrice)}
-                  </span>
-                </div>
-              </div>
+                  <div className="flex justify-between mt-1">
+                    <span className="lowercase text-[15px]">
+                      Giao hàng tận nơi.
+                    </span>
+                    <span className="lowercase text-[15px]">
+                      {formatCurrency(order.shippingPrice)}
+                    </span>
+                  </div>
+                </li>
 
-              <div className="flex flex-col">
-                <span className="lowercase font-medium">
-                  Phương thức thanh toán.
-                </span>
-                <span className="lowercase text-[15px] mt-1">
-                  Thanh toán khi nhận hàng{" "}
-                  <span className="uppercase">(COD)</span>.
-                </span>
-              </div>
+                <li className="flex flex-col">
+                  <span className="lowercase font-medium">
+                    Phương thức thanh toán.
+                  </span>
+                  <span className="lowercase text-[15px] mt-1">
+                    Thanh toán khi nhận hàng{" "}
+                    <span className="uppercase">(COD)</span>.
+                  </span>
+                </li>
 
-              {order.note && (
-                <div>
-                  <span className="lowercase font-medium">Lời nhắn.</span>
-                  <textarea
-                    aria-label="Nhập lời nhắn của bạn"
-                    value={order.note}
-                    placeholder="Nhập lời nhắn"
-                    className="px-4 py-2 bg-gray-100 italic resize-none w-full text-sm outline-none placeholder:lowercase scrollbar-thin"
-                    maxLength={200}
-                    cols="30"
-                    rows="3"
-                    readOnly
-                  ></textarea>
-                </div>
-              )}
+                {order.note && (
+                  <li>
+                    <span className="lowercase font-medium">Lời nhắn.</span>
+                    <textarea
+                      aria-label="Nhập lời nhắn của bạn"
+                      value={order.note}
+                      placeholder="Nhập lời nhắn"
+                      className="px-4 py-2 bg-gray-100 italic resize-none w-full text-sm outline-none placeholder:lowercase scrollbar-thin"
+                      maxLength={200}
+                      cols="30"
+                      rows="3"
+                      readOnly
+                    ></textarea>
+                  </li>
+                )}
 
-              <div className="flex flex-col gap-1">
-                <span className="lowercase font-medium">
-                  Chi tiết thanh toán.
-                </span>
-                <div className="flex justify-between">
-                  <span className="lowercase text-[15px]">Giá sản phẩm</span>
-                  <span className="lowercase text-[15px]">
-                    {formatCurrency(order.itemsPrice)}
+                <li className="flex flex-col gap-1">
+                  <span className="lowercase font-medium">
+                    Chi tiết thanh toán.
                   </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="lowercase text-[15px]">Phí vận chuyển</span>
-                  <span className="lowercase text-[15px]">
-                    {formatCurrency(order.shippingPrice)}
-                  </span>
-                </div>
-                <div className="flex justify-between pt-1 border-t border-gray-300">
-                  <span className="lowercase text-[15px]">Tổng cộng</span>
-                  <span className="lowercase text-[15px]">
-                    {formatCurrency(order.totalPrice)}
-                  </span>
-                </div>
-              </div>
+                  <div className="flex justify-between">
+                    <span className="lowercase text-[15px]">Giá sản phẩm</span>
+                    <span className="lowercase text-[15px]">
+                      {formatCurrency(order.itemsPrice)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="lowercase text-[15px]">
+                      Phí vận chuyển
+                    </span>
+                    <span className="lowercase text-[15px]">
+                      {formatCurrency(order.shippingPrice)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between pt-2 mt-1 border-t border-gray-300">
+                    <span className="lowercase text-[15px]">Tổng cộng</span>
+                    <span className="lowercase text-[15px]">
+                      {formatCurrency(order.totalPrice)}
+                    </span>
+                  </div>
+                </li>
+              </ul>
+
+              <button
+                type="button"
+                aria-label="Hủy đơn đặt hàng"
+                className={`mt-8 w-full px-4 py-2 text-sm hover:underline border border-black ${
+                  order.orderStatus.isDelivered &&
+                  "opacity-30 pointer-events-none"
+                }`}
+              >
+                Hủy đơn hàng.
+              </button>
+              <p className="mt-2 lowercase text-[13px]">
+                Lưu ý: Nếu đơn hàng đang được giao thì không thể hủy!
+              </p>
             </section>
           </div>
         </div>

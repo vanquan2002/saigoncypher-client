@@ -61,10 +61,10 @@ const Contents = () => {
   }, []);
 
   useEffect(() => {
-    if (success && order) {
+    if (success) {
       navigate(`/order/${order._id}`);
     }
-  }, [success, order]);
+  }, [success]);
 
   return (
     <main className="md:px-20">
@@ -213,7 +213,7 @@ const Contents = () => {
                   {formatCurrency(shippingPrice)}
                 </span>
               </div>
-              <div className="flex justify-between pt-1 border-t border-gray-300">
+              <div className="flex justify-between pt-2 mt-1 border-t border-gray-300">
                 <span className="lowercase text-[15px]">Tổng cộng</span>
                 <span className="lowercase text-[15px]">
                   {formatCurrency(totalPrice)}
