@@ -3,8 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import moment from "moment";
 import Breadcrumbs from "./../Breadcrumbs";
-import { detailsOrder } from "../../redux/actions/OrderActions";
-import { ORDER_CREATE_RESET } from "../../redux/constants/OrderConstants";
+import { cancelOrder, detailsOrder } from "../../redux/actions/OrderActions";
+import {
+  ORDER_CREATE_RESET,
+  ORDER_UPDATE_CANCEL_RESET,
+} from "../../redux/constants/OrderConstants";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { AppContext } from "../../AppContext";
 import SmallModal from "./../modals/SmallModal";
@@ -21,7 +24,9 @@ const Contents = () => {
   const orderDetails = useSelector((state) => state.orderDetails);
   const { loading, order, error } = orderDetails;
   const orderCreate = useSelector((state) => state.orderCreate);
-  const { success } = orderCreate;
+  const { success: successCreateOrder } = orderCreate;
+  const orderUpdateCancel = useSelector((state) => state.orderUpdateCancel);
+  const { success: successCancelOrder } = orderUpdateCancel;
   const dispatch = useDispatch();
   const totalQuantity = order?.orderItems.reduce((a, i) => a + i.qty, 0);
   const { isSmallModal, toggleIsSmallModal } = useContext(AppContext);
@@ -31,17 +36,22 @@ const Contents = () => {
   }, [id]);
 
   useEffect(() => {
-    if (success) {
+    if (successCancelOrder) {
+      dispatch(detailsOrder(id));
+      dispatch({
+        type: ORDER_UPDATE_CANCEL_RESET,
+      });
+    }
+  }, [successCancelOrder]);
+
+  useEffect(() => {
+    if (successCreateOrder) {
       dispatch({
         type: ORDER_CREATE_RESET,
       });
       toggleIsSmallModal("create_order");
     }
-  }, [success]);
-
-  // {moment(order.orderStatus.preparedAt)
-  //   .add(1, "days")
-  //   .format("DD/MM/YYYY")}
+  }, [successCreateOrder]);
 
   return (
     <main className="md:px-20">
@@ -60,7 +70,7 @@ const Contents = () => {
         </div>
       ) : (
         <div className="mt-5 md:mt-10">
-          <div className="border border-gray-300 px-4 py-3">
+          <div className="bg-gray-50 border border-gray-300 px-4 py-3">
             <h4 className="lowercase font-medium">Trạng thái đơn hàng.</h4>
             <ul className="flex flex-wrap gap-x-3 mt-1">
               <li className="flex items-center gap-1">
@@ -74,35 +84,67 @@ const Contents = () => {
                 <div className="w-7 border-t border-gray-300"></div>
               </li>
 
-              <li
-                className={`flex items-center gap-1 ${
-                  order.orderStatus.isDelivered ? "opacity-100" : "opacity-30"
-                }`}
-              >
-                <span className="lowercase text-[15px]">Đang giao</span>
-                {order.orderStatus.deliveredAt && (
+              {order.orderStatus.isCancelled ? (
+                <li className="flex items-center gap-1">
+                  <span className="lowercase text-[15px]">Đã hủy</span>
                   <span className="lowercase text-sm text-gray-700">
-                    ({moment(order.orderStatus.deliveredAt).calendar()})
+                    ({moment(order.orderStatus.cancelledAt).calendar()})
                   </span>
-                )}
-              </li>
+                </li>
+              ) : (
+                <>
+                  <li
+                    className={`flex items-center gap-1 ${
+                      order.orderStatus.isDelivered
+                        ? "opacity-100"
+                        : "opacity-30"
+                    }`}
+                  >
+                    <span className="lowercase text-[15px]">Đang giao</span>
+                    {order.orderStatus.deliveredAt && (
+                      <span className="lowercase text-sm text-gray-700">
+                        ({moment(order.orderStatus.deliveredAt).calendar()})
+                      </span>
+                    )}
+                  </li>
 
-              <li className="flex items-center">
-                <div className="w-7 border-t border-gray-300"></div>
-              </li>
+                  <li className="flex items-center">
+                    <div className="w-7 border-t border-gray-300"></div>
+                  </li>
 
-              <li
-                className={`flex items-center gap-1 ${
-                  order.orderStatus.isReceived ? "opacity-100" : "opacity-30"
-                }`}
-              >
-                <span className="lowercase text-[15px]">Đã giao</span>
-                {order.orderStatus.receivedAt && (
-                  <span className="lowercase text-sm text-gray-700">
-                    ({moment(order.orderStatus.receivedAt).calendar()})
-                  </span>
-                )}
-              </li>
+                  <li
+                    className={`flex items-center gap-1 ${
+                      order.orderStatus.isReceived
+                        ? "opacity-100"
+                        : "opacity-30"
+                    }`}
+                  >
+                    <span className="lowercase text-[15px]">Đã giao</span>
+                    {order.orderStatus.receivedAt && (
+                      <span className="lowercase text-sm text-gray-700">
+                        ({moment(order.orderStatus.receivedAt).calendar()})
+                      </span>
+                    )}
+                  </li>
+
+                  <li className="flex items-center">
+                    <div className="w-7 border-t border-gray-300"></div>
+                  </li>
+
+                  <li
+                    className={`flex items-center gap-1 ${
+                      order.orderStatus.isPaid ? "opacity-100" : "opacity-30"
+                    }`}
+                  >
+                    <span className="lowercase text-[15px]">Đã thanh toán</span>
+                    {order.orderStatus.paidAt && (
+                      <span className="lowercase text-sm text-gray-700">
+                        ({moment(order.orderStatus.paidAt).calendar()})
+                      </span>
+                    )}
+                  </li>
+                </>
+              )}
             </ul>
           </div>
 
@@ -220,7 +262,7 @@ const Contents = () => {
                       aria-label="Nhập lời nhắn của bạn"
                       value={order.note}
                       placeholder="Nhập lời nhắn"
-                      className="px-4 py-2 bg-gray-100 italic resize-none w-full text-sm outline-none placeholder:lowercase scrollbar-thin"
+                      className="px-4 py-2 bg-gray-50 italic resize-none w-full text-sm outline-none placeholder:lowercase scrollbar-thin"
                       maxLength={200}
                       cols="30"
                       rows="3"
@@ -255,20 +297,22 @@ const Contents = () => {
                   </div>
                 </li>
               </ul>
-
-              <button
-                type="button"
-                aria-label="Hủy đơn đặt hàng"
-                className={`mt-8 w-full px-4 py-2 text-sm hover:underline border border-black ${
-                  order.orderStatus.isDelivered &&
-                  "opacity-30 pointer-events-none"
-                }`}
-              >
-                Hủy đơn hàng.
-              </button>
-              <p className="mt-2 lowercase text-[13px]">
-                Lưu ý: Nếu đơn hàng đang được giao thì không thể hủy!
-              </p>
+              {!order.orderStatus.isDelivered &&
+                !order.orderStatus.isCancelled && (
+                  <>
+                    <button
+                      onClick={() => dispatch(cancelOrder(id))}
+                      type="button"
+                      aria-label="Hủy đơn đặt hàng"
+                      className="lowercase mt-8 w-full px-4 py-2 text-sm hover:underline border border-black"
+                    >
+                      Hủy đơn hàng.
+                    </button>
+                    <p className="mt-2 lowercase text-[13px]">
+                      Lưu ý: Nếu đơn hàng đang được giao thì không thể hủy!
+                    </p>
+                  </>
+                )}
             </section>
           </div>
         </div>

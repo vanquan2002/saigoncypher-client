@@ -8,6 +8,9 @@ import {
   ORDER_LIST_MY_REQUEST,
   ORDER_LIST_MY_SUCCESS,
   ORDER_LIST_MY_FAIL,
+  ORDER_UPDATE_CANCEL_REQUEST,
+  ORDER_UPDATE_CANCEL_SUCCESS,
+  ORDER_UPDATE_CANCEL_FAIL,
 } from "./../constants/OrderConstants";
 import axios from "axios";
 import { CART_CLEAR_ITEMS } from "./../constants/CartConstants";
@@ -113,6 +116,39 @@ export const listMyOrders = () => async (dispatch, getState) => {
     }
     dispatch({
       type: ORDER_LIST_MY_FAIL,
+      payload: message,
+    });
+  }
+};
+
+export const cancelOrder = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_UPDATE_CANCEL_REQUEST,
+    });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Content_type: "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    await axios.put(`/api/orders/${id}/cancel`, config);
+    dispatch({
+      type: ORDER_UPDATE_CANCEL_SUCCESS,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "Not authorized, token failed") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: ORDER_UPDATE_CANCEL_FAIL,
       payload: message,
     });
   }
