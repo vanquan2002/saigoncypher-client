@@ -62,6 +62,7 @@ const Contents = () => {
   };
 
   useEffect(() => {
+    window.scrollTo({ top: 0 });
     if (!hasDeliveryInformation) {
       toggleIsMassage("Bạn chưa nhập thông tin đặt hàng!");
       setTypeMessage("shipping");
@@ -129,7 +130,7 @@ const Contents = () => {
           )}
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-x-20 gap-y-10 mt-7">
+        <div className="flex flex-col lg:flex-row gap-x-20 gap-y-6 mt-6 md:mt-10">
           <section className="w-full">
             <span className="px-5 md:px-0 lowercase font-medium">
               Sản phẩm({totalQuantity})
@@ -179,71 +180,73 @@ const Contents = () => {
             </ul>
           </section>
 
-          <section className="flex flex-col gap-6 px-5 md:px-0 w-full">
-            <div>
-              <span className="lowercase font-medium">
-                Phương thức vận chuyển.
-              </span>
-              <div className="flex justify-between mt-2 px-4 py-2 border border-gray-300">
-                <span className="lowercase text-[15px]">
-                  Giao hàng tận nơi.
+          <section className="px-5 md:px-0 w-full">
+            <ul className="flex flex-col gap-6">
+              <li>
+                <span className="lowercase font-medium">
+                  Phương thức vận chuyển.
                 </span>
-                <span className="lowercase text-[15px]">
-                  {formatCurrency(shippingPrice)}
-                </span>
-              </div>
-            </div>
+                <div className="flex justify-between mt-2 px-4 py-2 border border-gray-300">
+                  <span className="lowercase text-[15px]">
+                    Giao hàng tận nơi.
+                  </span>
+                  <span className="lowercase text-[15px]">
+                    {formatCurrency(shippingPrice)}
+                  </span>
+                </div>
+              </li>
 
-            <div className="flex flex-col">
-              <span className="lowercase font-medium">
-                Phương thức thanh toán.
-              </span>
-              <span className="lowercase text-[15px] mt-2 px-4 py-2 border border-gray-300">
-                Thanh toán khi nhận hàng{" "}
-                <span className="uppercase">(COD)</span>.
-              </span>
-            </div>
+              <li className="flex flex-col">
+                <span className="lowercase font-medium">
+                  Phương thức thanh toán.
+                </span>
+                <span className="lowercase text-[15px] mt-2 px-4 py-2 border border-gray-300">
+                  Thanh toán khi nhận hàng{" "}
+                  <span className="uppercase">(COD)</span>.
+                </span>
+              </li>
 
-            <div className="relative">
-              <span className="lowercase font-medium">Lời nhắn.</span>
-              <textarea
-                aria-label="Nhập lời nhắn của bạn"
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
-                placeholder="Nhập lời nhắn"
-                className="mt-2 resize-none w-full px-3 py-2 border border-gray-300 bg-transparent text-sm outline-none placeholder:lowercase"
-                maxLength={200}
-                cols="30"
-                rows="3"
-              ></textarea>
-              <p className="text-xs text-gray-500 text-right">
-                {note.length}/200 ký tự
-              </p>
-            </div>
+              <li className="relative">
+                <span className="lowercase font-medium">Lời nhắn.</span>
+                <textarea
+                  aria-label="Nhập lời nhắn của bạn"
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                  placeholder="Nhập lời nhắn"
+                  className="mt-2 resize-none w-full px-3 py-2 border border-gray-300 bg-transparent text-sm outline-none placeholder:lowercase"
+                  maxLength={200}
+                  cols="30"
+                  rows="3"
+                ></textarea>
+                <p className="text-xs text-gray-500 text-right">
+                  {note.length}/200 ký tự
+                </p>
+              </li>
 
-            <div className="flex flex-col gap-1">
-              <span className="lowercase font-medium">
-                Chi tiết thanh toán.
-              </span>
-              <div className="flex justify-between">
-                <span className="lowercase text-[15px]">Giá sản phẩm</span>
-                <span className="lowercase text-[15px]">
-                  {formatCurrency(itemsPrice)}
+              <li className="flex flex-col gap-1">
+                <span className="lowercase font-medium">
+                  Chi tiết thanh toán.
                 </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="lowercase text-[15px]">Phí vận chuyển</span>
-                <span className="lowercase text-[15px]">
-                  {formatCurrency(shippingPrice)}
-                </span>
-              </div>
-              <div className="flex justify-between pt-2 mt-1 border-t border-gray-300">
-                <span className="lowercase text-[15px]">Tổng cộng</span>
-                <span className="lowercase text-[15px]">
-                  {formatCurrency(totalPrice)}
-                </span>
-              </div>
-            </div>
+                <div className="flex justify-between">
+                  <span className="lowercase text-[15px]">Giá sản phẩm</span>
+                  <span className="lowercase text-[15px]">
+                    {formatCurrency(itemsPrice)}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="lowercase text-[15px]">Phí vận chuyển</span>
+                  <span className="lowercase text-[15px]">
+                    {formatCurrency(shippingPrice)}
+                  </span>
+                </div>
+                <div className="flex justify-between pt-2 mt-1 border-t border-gray-300">
+                  <span className="lowercase text-[15px]">Tổng cộng</span>
+                  <span className="lowercase text-[15px]">
+                    {formatCurrency(totalPrice)}
+                  </span>
+                </div>
+              </li>
+            </ul>
           </section>
         </div>
       </div>

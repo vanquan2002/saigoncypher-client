@@ -6,8 +6,8 @@ import { listProduct } from "./../../redux/actions/ProductActions";
 import { LiaStarSolid } from "react-icons/lia";
 import { AppContext } from "../../AppContext";
 import { MdArrowOutward } from "react-icons/md";
-import ProductListHomeSkeleton from "../skeletons/ProductListHomeSkeleton";
 import Error from "../loadingError/Error";
+import ProductListSkeleton from "../skeletons/ProductListSkeleton";
 
 const Contents = () => {
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ const Contents = () => {
         Sản phẩm mới nhất.
       </h3>
       {loading ? (
-        <ProductListHomeSkeleton numberColList={numberColList} />
+        <ProductListSkeleton numberColList={numberColList} />
       ) : error ? (
         <div className="mx-5 md:mx-0 mt-5 md:mt-10">
           <Error error={error} />

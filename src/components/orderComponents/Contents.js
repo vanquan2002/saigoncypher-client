@@ -14,6 +14,7 @@ import SmallModal from "./../modals/SmallModal";
 import Error from "../loadingError/Error";
 import "moment/locale/vi";
 import MessageModal from "../modals/MessageModal";
+import OrderDetailSkeleton from "../skeletons/OrderDetailSkeleton";
 
 const Contents = () => {
   const namePages = [
@@ -53,6 +54,7 @@ const Contents = () => {
   };
 
   useEffect(() => {
+    window.scrollTo({ top: 0 });
     dispatch(detailsOrder(id));
   }, [id]);
 
@@ -97,7 +99,7 @@ const Contents = () => {
       </h3>
 
       {loadingDetailsOrder ? (
-        <span>Loading</span>
+        <OrderDetailSkeleton />
       ) : errorDetailsOrder ? (
         <div className="mx-5 md:mx-0 mt-5 md:mt-10">
           <Error error={errorDetailsOrder} />
@@ -182,7 +184,7 @@ const Contents = () => {
             </ul>
           </div>
 
-          <div className="flex flex-col lg:flex-row gap-x-20 gap-y-10 mt-10">
+          <div className="flex flex-col lg:flex-row gap-x-20 gap-y-7 mt-6 md:mt-10">
             <section className="w-full">
               <span className="px-5 md:px-0 lowercase font-medium">
                 Sản phẩm({totalQuantity})
@@ -331,6 +333,7 @@ const Contents = () => {
                   </div>
                 </li>
               </ul>
+
               {!order.orderStatus.isDelivered &&
                 !order.orderStatus.isCancelled && (
                   <>
@@ -338,7 +341,7 @@ const Contents = () => {
                       onClick={() => cancelOrderHandle()}
                       type="button"
                       aria-label="Hủy đơn đặt hàng"
-                      className="lowercase mt-8 w-full px-4 py-2 text-sm hover:underline border border-black"
+                      className="lowercase mt-10 w-full px-4 py-2 text-sm hover:underline border border-black"
                     >
                       {loadingCancelOrder
                         ? " Đang hủy đơn hàng..."

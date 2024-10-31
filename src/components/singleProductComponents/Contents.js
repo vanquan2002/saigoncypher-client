@@ -252,8 +252,6 @@ const Contents = () => {
               </div>
             </section>
           </div>
-
-          {/*  <Reviews product={product} /> */}
           <RelatedProducts productId={id} />
         </article>
       )}

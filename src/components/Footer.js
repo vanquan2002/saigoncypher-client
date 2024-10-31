@@ -41,11 +41,13 @@ const Footer = () => {
   return (
     <footer
       className={`${
-        lastSegment === "cart" || lastSegment === "shipping"
+        lastSegment === "cart" ||
+        lastSegment === "shipping" ||
+        lastSegment === "placeorder"
           ? "mb-[4.5rem] md:mb-28 lg:mb-20"
           : lastSegment === "detail"
           ? "mb-14 md:mb-0"
-          : "md:mb-0"
+          : "mb-0"
       }`}
     >
       <div className="px-5 md:px-20 mt-72 flex flex-col gap-20 md:gap-32">

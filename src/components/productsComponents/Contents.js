@@ -6,10 +6,10 @@ import Pagination from "./Pagination";
 import { listProduct } from "../../redux/actions/ProductActions";
 import { AppContext } from "../../AppContext";
 import { LiaStarSolid } from "react-icons/lia";
-import ProductListHomeSkeleton from "../skeletons/ProductListHomeSkeleton";
 import Breadcrumbs from "../Breadcrumbs";
 import debounce from "lodash.debounce";
 import Error from "./../loadingError/Error";
+import ProductListSkeleton from "../skeletons/ProductListSkeleton";
 
 const Contents = () => {
   const { keyword } = useParams();
@@ -67,7 +67,7 @@ const Contents = () => {
         Tất cả sản phẩm.
       </h3>
       {loading ? (
-        <ProductListHomeSkeleton numberColList={numberColList} />
+        <ProductListSkeleton numberColList={numberColList} />
       ) : error ? (
         <div className="mx-5 md:mx-0 mt-5 md:mt-10">
           <Error error={error} />

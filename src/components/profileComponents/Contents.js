@@ -7,6 +7,7 @@ import { RiAddLine } from "react-icons/ri";
 import { RiEditFill } from "react-icons/ri";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { logout } from "./../../redux/actions/UserActions";
+import { GrLogout } from "react-icons/gr";
 
 const Contents = () => {
   const namePages = [
@@ -18,6 +19,7 @@ const Contents = () => {
   const { user, loading, error } = userDetails;
   const [image, setImage] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [tabNumber, setTabNumber] = useState(1);
 
   const changeImgHandle = (e) => {
     const file = e.target.files[0];
@@ -49,12 +51,12 @@ const Contents = () => {
           <section className="mt-5 md:mt-10 pt-10 flex gap-10 items-center">
             <form className="relative h-32 min-w-32">
               <label
-                className="h-full w-full rounded-full overflow-hidden flex justify-center items-center bg-gray-100"
+                className="h-full rounded-full overflow-hidden flex justify-center items-center bg-gray-100"
                 htmlFor="file_input"
               >
                 {user.avatar || image ? (
                   <img
-                    className="object-cover h-full w-full"
+                    className="object-cover h-32 w-32"
                     src={image ? image : user.avatar}
                     alt=""
                   />
@@ -80,39 +82,70 @@ const Contents = () => {
             </form>
 
             <div className="w-full">
-              <div className="flex justify-between items-center mb-1 w-full">
+              <div className="flex justify-between items-center">
                 <h1 className="text-3xl font-semibold">{user.name}</h1>
                 <button
                   onClick={() => dispatch(logout())}
-                  aria-label="Các đơn hàng đã đặt"
+                  aria-label="Đăng xuất và đi đến trang đăng nhập"
                   type="button"
-                  className="lowercase border border-black px-2 py-1 text-sm hover:underline"
+                  className="flex items-center gap-1 hover:underline"
                 >
-                  Đăng xuất.
+                  <span className="lowercase text-[15px]">Đăng xuất</span>
+                  <GrLogout className="text-sm" />
                 </button>
               </div>
-              <span className="text-[15px]">{user.email}</span>
-
-              <div className="flex gap-3 mt-5">
-                <button
-                  aria-label="Chỉnh sửa thông tin cá nhân"
-                  type="button"
-                  className="lowercase border border-black px-4 py-2 hover:underline"
-                >
-                  Chỉnh sửa thông tin cá nhân.
-                </button>
-                <button
-                  aria-label="Các đơn hàng đã đặt"
-                  type="button"
-                  className="lowercase border border-black px-4 py-2 hover:underline"
-                >
-                  Đơn hàng đã đặt.
-                </button>
-              </div>
+              <p className="mt-1 text-[15px]">{user.email}</p>
             </div>
           </section>
 
-          <section className="w-full border-t border-gray-300 pt-5 md:pt-10 mt-5 md:mt-10"></section>
+          <section className="w-full mt-10">
+            <ul className="grid grid-cols-3 mt-5">
+              <li className="col-span-1">
+                <button
+                  aria-label="Chỉnh sửa thông tin cá nhân"
+                  type="button"
+                  onClick={() => setTabNumber(1)}
+                  className={`lowercase hover:underline w-full text-center pb-3 ${
+                    tabNumber === 1
+                      ? "border-b-2 border-black text-black"
+                      : "border-b-2 border-gray-200 text-gray-600"
+                  } duration-300`}
+                >
+                  Chỉnh sửa thông tin cá nhân.
+                </button>
+              </li>
+              <li className="text-center col-span-1">
+                <button
+                  aria-label="Chỉnh sửa địa chỉ đặt hàng"
+                  type="button"
+                  onClick={() => setTabNumber(2)}
+                  className={`lowercase hover:underline w-full text-center pb-3 ${
+                    tabNumber === 2
+                      ? "border-b-2 border-black text-black"
+                      : "border-b-2 border-gray-200 text-gray-600"
+                  } duration-300`}
+                >
+                  Chỉnh sửa địa chỉ đặt hàng.
+                </button>
+              </li>
+              <li className="text-center col-span-1">
+                <button
+                  aria-label="Các đơn hàng đã đặt"
+                  type="button"
+                  onClick={() => setTabNumber(3)}
+                  className={`lowercase hover:underline w-full text-center pb-3 ${
+                    tabNumber === 3
+                      ? "border-b-2 border-black text-black"
+                      : "border-b-2 border-gray-200 text-gray-600"
+                  } duration-300`}
+                >
+                  Đơn hàng đã đặt.
+                </button>
+              </li>
+            </ul>
+
+            <div className=""></div>
+          </section>
         </div>
       )}
     </main>

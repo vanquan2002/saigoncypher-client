@@ -36,7 +36,7 @@ const Contents = () => {
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
   const userUpdate = useSelector((state) => state.userUpdate);
-  const { success } = userUpdate;
+  const { loading, success } = userUpdate;
   const provinceList = useSelector((state) => state.provinceList);
   const { provinces, error: errorProvince } = provinceList;
   const districtList = useSelector((state) => state.districtList);
@@ -171,6 +171,7 @@ const Contents = () => {
   }, [provinces]);
 
   useEffect(() => {
+    window.scrollTo({ top: 0 });
     dispatch(listProvince());
   }, []);
 
@@ -404,7 +405,7 @@ const Contents = () => {
                 aria-label="Cập nhật thông tin đặt hàng và đi đến trang thanh toán"
                 className="flex items-center justify-center w-full h-full lowercase bg-black text-white text-lg hover:underline"
               >
-                Tiếp tục
+                {loading ? "Đang tiếp tục" : "Tiếp tục"}
                 <MdKeyboardArrowRight className="text-2xl ml-[-2px]" />
               </button>
             </div>

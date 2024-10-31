@@ -3,9 +3,9 @@ import Message from "../loadingError/Error";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { useDispatch, useSelector } from "react-redux";
 import { relatedProducts } from "./../../redux/actions/ProductActions";
-import ProductListHomeSkeleton from "../skeletons/ProductListHomeSkeleton";
 import { Link } from "react-router-dom";
 import { LiaStarSolid } from "react-icons/lia";
+import ProductListSkeleton from "../skeletons/ProductListSkeleton";
 
 const RelatedProducts = ({ productId }) => {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ const RelatedProducts = ({ productId }) => {
         Sản phẩm liên quan.
       </h3>
       {loading ? (
-        <ProductListHomeSkeleton numberColList={2} />
+        <ProductListSkeleton numberColList={2} />
       ) : error ? (
         <Message error={error} />
       ) : products.length > 0 ? (
