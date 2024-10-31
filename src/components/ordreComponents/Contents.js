@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import moment from "moment";
@@ -13,6 +13,7 @@ import { AppContext } from "../../AppContext";
 import SmallModal from "./../modals/SmallModal";
 import Error from "../loadingError/Error";
 import "moment/locale/vi";
+import MessageModal from "../modals/MessageModal";
 
 const Contents = () => {
   const namePages = [
@@ -22,14 +23,34 @@ const Contents = () => {
   ];
   const { id } = useParams();
   const orderDetails = useSelector((state) => state.orderDetails);
-  const { loading, order, error } = orderDetails;
+  const {
+    loading: loadingDetailsOrder,
+    order,
+    error: errorDetailsOrder,
+  } = orderDetails;
   const orderCreate = useSelector((state) => state.orderCreate);
   const { success: successCreateOrder } = orderCreate;
   const orderUpdateCancel = useSelector((state) => state.orderUpdateCancel);
-  const { success: successCancelOrder } = orderUpdateCancel;
+  const {
+    loading: loadingCancelOrder,
+    success: successCancelOrder,
+    error: errorCancelOrder,
+  } = orderUpdateCancel;
   const dispatch = useDispatch();
   const totalQuantity = order?.orderItems.reduce((a, i) => a + i.qty, 0);
-  const { isSmallModal, toggleIsSmallModal } = useContext(AppContext);
+  const { isSmallModal, toggleIsSmallModal, toggleIsMassage } =
+    useContext(AppContext);
+  const [typeModal, setTypeModal] = useState("");
+
+  const cancelOrderHandle = () => {
+    if (isSmallModal) {
+      toggleIsSmallModal("");
+    }
+    if (typeModal) {
+      setTypeModal("");
+    }
+    dispatch(cancelOrder(id));
+  };
 
   useEffect(() => {
     dispatch(detailsOrder(id));
@@ -38,6 +59,8 @@ const Contents = () => {
   useEffect(() => {
     if (successCancelOrder) {
       dispatch(detailsOrder(id));
+      toggleIsSmallModal("Hủy đơn hàng thành công!");
+      setTypeModal("cancel_order");
       dispatch({
         type: ORDER_UPDATE_CANCEL_RESET,
       });
@@ -46,12 +69,23 @@ const Contents = () => {
 
   useEffect(() => {
     if (successCreateOrder) {
+      toggleIsSmallModal("Đặt hàng thành công!");
+      setTypeModal("create_order");
       dispatch({
         type: ORDER_CREATE_RESET,
       });
-      toggleIsSmallModal("create_order");
     }
   }, [successCreateOrder]);
+
+  useEffect(() => {
+    if (errorCancelOrder) {
+      toggleIsMassage(errorCancelOrder);
+      dispatch(detailsOrder(id));
+      dispatch({
+        type: ORDER_UPDATE_CANCEL_RESET,
+      });
+    }
+  }, [errorCancelOrder]);
 
   return (
     <main className="md:px-20">
@@ -62,11 +96,11 @@ const Contents = () => {
         Chi tiết đơn hàng.
       </h3>
 
-      {loading ? (
+      {loadingDetailsOrder ? (
         <span>Loading</span>
-      ) : error ? (
+      ) : errorDetailsOrder ? (
         <div className="mx-5 md:mx-0 mt-5 md:mt-10">
-          <Error error={error} />
+          <Error error={errorDetailsOrder} />
         </div>
       ) : (
         <div className="mt-5 md:mt-10">
@@ -75,7 +109,7 @@ const Contents = () => {
             <ul className="flex flex-wrap gap-x-3 mt-1">
               <li className="flex items-center gap-1">
                 <span className="lowercase text-[15px]">Đang chuẩn bị</span>
-                <span className="lowercase text-sm text-gray-700">
+                <span className="lowercase text-[15px] text-gray-800">
                   ({moment(order.orderStatus.preparedAt).calendar()})
                 </span>
               </li>
@@ -87,7 +121,7 @@ const Contents = () => {
               {order.orderStatus.isCancelled ? (
                 <li className="flex items-center gap-1">
                   <span className="lowercase text-[15px]">Đã hủy</span>
-                  <span className="lowercase text-sm text-gray-700">
+                  <span className="lowercase text-[15px] text-gray-800">
                     ({moment(order.orderStatus.cancelledAt).calendar()})
                   </span>
                 </li>
@@ -102,7 +136,7 @@ const Contents = () => {
                   >
                     <span className="lowercase text-[15px]">Đang giao</span>
                     {order.orderStatus.deliveredAt && (
-                      <span className="lowercase text-sm text-gray-700">
+                      <span className="lowercase text-[15px] text-gray-800">
                         ({moment(order.orderStatus.deliveredAt).calendar()})
                       </span>
                     )}
@@ -121,7 +155,7 @@ const Contents = () => {
                   >
                     <span className="lowercase text-[15px]">Đã giao</span>
                     {order.orderStatus.receivedAt && (
-                      <span className="lowercase text-sm text-gray-700">
+                      <span className="lowercase text-[15px] text-gray-800">
                         ({moment(order.orderStatus.receivedAt).calendar()})
                       </span>
                     )}
@@ -138,7 +172,7 @@ const Contents = () => {
                   >
                     <span className="lowercase text-[15px]">Đã thanh toán</span>
                     {order.orderStatus.paidAt && (
-                      <span className="lowercase text-sm text-gray-700">
+                      <span className="lowercase text-[15px] text-gray-800">
                         ({moment(order.orderStatus.paidAt).calendar()})
                       </span>
                     )}
@@ -301,12 +335,14 @@ const Contents = () => {
                 !order.orderStatus.isCancelled && (
                   <>
                     <button
-                      onClick={() => dispatch(cancelOrder(id))}
+                      onClick={() => cancelOrderHandle()}
                       type="button"
                       aria-label="Hủy đơn đặt hàng"
                       className="lowercase mt-8 w-full px-4 py-2 text-sm hover:underline border border-black"
                     >
-                      Hủy đơn hàng.
+                      {loadingCancelOrder
+                        ? " Đang hủy đơn hàng..."
+                        : " Hủy đơn hàng."}
                     </button>
                     <p className="mt-2 lowercase text-[13px]">
                       Lưu ý: Nếu đơn hàng đang được giao thì không thể hủy!
@@ -317,10 +353,10 @@ const Contents = () => {
           </div>
         </div>
       )}
-      <SmallModal
-        result={isSmallModal === "create_order"}
-        text="Đặt hàng thành công!"
-      />
+
+      <MessageModal type="" />
+      <SmallModal result={typeModal === "create_order"} type="" />
+      <SmallModal result={typeModal === "cancel_order"} type="" />
     </main>
   );
 };

@@ -50,7 +50,7 @@ const Contents = () => {
 
   useEffect(() => {
     if (error) {
-      toggleIsMassage("login");
+      toggleIsMassage(error);
       dispatch({
         type: USER_LOGOUT,
       });
@@ -165,7 +165,7 @@ const Contents = () => {
         </Link>
       </section>
 
-      <MessageModal message="Email hoặc mật khẩu không đúng!" />
+      <MessageModal type="" />
     </main>
   );
 };

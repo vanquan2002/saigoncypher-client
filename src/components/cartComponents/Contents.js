@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { formatCurrency } from "../../utils/formatCurrency";
@@ -26,9 +26,15 @@ const Contents = () => {
     { name: "Giỏ hàng", url: "" },
   ];
   const { isSmallModal, toggleIsSmallModal } = useContext(AppContext);
+  const [typeModal, setTypeModal] = useState("");
 
   const removeFromCartHandle = (id, size) => {
-    toggleIsSmallModal("");
+    if (isSmallModal) {
+      toggleIsSmallModal("");
+    }
+    if (typeModal) {
+      setTypeModal("");
+    }
     dispatch(removeFromCart(id, size, 2));
   };
 
@@ -46,10 +52,11 @@ const Contents = () => {
 
   useEffect(() => {
     if (successType === 2) {
+      toggleIsSmallModal("Xóa khỏi giỏ hàng thành công!");
+      setTypeModal("remove_item_cart");
       dispatch({
         type: CART_ADD_ITEM_RESET,
       });
-      toggleIsSmallModal("remove_item_cart");
     }
   }, [successType]);
 
@@ -184,10 +191,7 @@ const Contents = () => {
         </div>
       </div>
 
-      <SmallModal
-        result={isSmallModal === "remove_item_cart"}
-        text="Xóa khỏi giỏ hàng thành công!"
-      />
+      <SmallModal result={typeModal === "remove_item_cart"} type="" />
     </main>
   );
 };

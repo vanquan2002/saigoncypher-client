@@ -30,6 +30,7 @@ const Contents = () => {
   const [isOverflowing, setIsOverflowing] = useState(false);
   const [isDescriptionMore, setIsDescriptionMore] = useState(false);
   const [isSelectSize, setIsSelectSize] = useState(false);
+  const [typeModal, setTypeModal] = useState("");
   const {
     toggleIsMassage,
     isCartModal,
@@ -55,13 +56,16 @@ const Contents = () => {
     if (isSmallModal) {
       toggleIsSmallModal("");
     }
+    if (typeModal) {
+      setTypeModal("");
+    }
     if (size) {
       debouncedAddCartProduct(id, 1, size, 1);
     } else {
       if (window.innerWidth < 768) {
         setIsSelectSize(true);
       } else {
-        toggleIsMassage("size");
+        toggleIsMassage("Quý khách chưa chọn size!");
       }
     }
   };
@@ -77,13 +81,14 @@ const Contents = () => {
   useEffect(() => {
     if (successType === 1) {
       setSize("");
+      toggleIsSmallModal("Thêm vào giỏ hàng thành công!");
+      setTypeModal("add_item_cart");
       dispatch({
         type: CART_ADD_ITEM_RESET,
       });
       if (window.innerWidth < 768) {
         toggleIsCartModal(false);
       }
-      toggleIsSmallModal("add_item_cart");
     }
   }, [successType]);
 
@@ -253,11 +258,8 @@ const Contents = () => {
         </article>
       )}
 
-      <MessageModal message="Quý khách chưa chọn size!" />
-      <SmallModal
-        result={isSmallModal === "add_item_cart"}
-        text="Thêm vào giỏ hàng thành công!"
-      />
+      <MessageModal type="" />
+      <SmallModal result={typeModal === "add_item_cart"} type={typeModal} />
     </main>
   );
 };

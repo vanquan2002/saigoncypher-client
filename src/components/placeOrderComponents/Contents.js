@@ -24,7 +24,7 @@ const Contents = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const orderCreate = useSelector((state) => state.orderCreate);
-  const { loading, success, order } = orderCreate;
+  const { loading, success, order, error } = orderCreate;
   const itemsPrice = cartItems
     .reduce((a, i) => a + i.qty * i.price, 0)
     .toFixed(0);
@@ -33,30 +33,38 @@ const Contents = () => {
   const totalPrice = Number(itemsPrice) + Number(shippingPrice);
   const { toggleIsMassage } = useContext(AppContext);
   const [note, setNote] = useState("");
+  const [typeMessage, setTypeMessage] = useState("");
   const hasDeliveryInformation =
     userInfo.deliveryInformation &&
     Object.values(userInfo.deliveryInformation).every((value) => value);
 
   const createOrderHandle = () => {
     if (!hasDeliveryInformation) {
-      toggleIsMassage("order");
+      toggleIsMassage("Bạn chưa nhập thông tin đặt hàng!");
+      setTypeMessage("shipping");
     } else {
-      dispatch(
-        createOrder({
-          orderItems: cartItems,
-          deliveryInformation: userInfo.deliveryInformation,
-          itemsPrice,
-          shippingPrice,
-          totalPrice,
-          note,
-        })
-      );
+      if (cartItems.length === 0) {
+        toggleIsMassage("Không có sản phẩm nào để đặt!");
+        setTypeMessage("");
+      } else {
+        dispatch(
+          createOrder({
+            orderItems: cartItems,
+            deliveryInformation: userInfo.deliveryInformation,
+            itemsPrice,
+            shippingPrice,
+            totalPrice,
+            note,
+          })
+        );
+      }
     }
   };
 
   useEffect(() => {
     if (!hasDeliveryInformation) {
-      toggleIsMassage("order");
+      toggleIsMassage("Bạn chưa nhập thông tin đặt hàng!");
+      setTypeMessage("shipping");
     }
   }, []);
 
@@ -65,6 +73,16 @@ const Contents = () => {
       navigate(`/order/${order._id}`);
     }
   }, [success]);
+
+  useEffect(() => {
+    if (error) {
+      toggleIsMassage(error);
+      setTypeMessage("");
+      dispatch({
+        type: ORDER_CREATE_RESET,
+      });
+    }
+  }, [error]);
 
   return (
     <main className="md:px-20">
@@ -87,22 +105,28 @@ const Contents = () => {
               Sửa
             </Link>
           </div>
-          <span className="text-[15px] mr-1">
-            {userInfo.deliveryInformation.fullName} (
-            {userInfo.deliveryInformation.phone}),
-          </span>
-          <span className="text-[15px] mr-1">
-            {userInfo.deliveryInformation.address},
-          </span>
-          <span className="text-[15px] mr-1">
-            {userInfo.deliveryInformation.ward},
-          </span>
-          <span className="text-[15px] mr-1">
-            {userInfo.deliveryInformation.district},
-          </span>
-          <span className="text-[15px]">
-            {userInfo.deliveryInformation.province}.
-          </span>
+          {hasDeliveryInformation ? (
+            <>
+              <span className="text-[15px] mr-1">
+                {userInfo.deliveryInformation.fullName} (
+                {userInfo.deliveryInformation.phone}),
+              </span>
+              <span className="text-[15px] mr-1">
+                {userInfo.deliveryInformation.address},
+              </span>
+              <span className="text-[15px] mr-1">
+                {userInfo.deliveryInformation.ward},
+              </span>
+              <span className="text-[15px] mr-1">
+                {userInfo.deliveryInformation.district},
+              </span>
+              <span className="text-[15px]">
+                {userInfo.deliveryInformation.province}.
+              </span>
+            </>
+          ) : (
+            <span className="lowercase text-[15px]">Chưa cập nhật!</span>
+          )}
         </div>
 
         <div className="flex flex-col lg:flex-row gap-x-20 gap-y-10 mt-7">
@@ -257,7 +281,7 @@ const Contents = () => {
         </div>
       </div>
 
-      <MessageModal message="Bạn chưa nhập thông tin đặt hàng!" />
+      <MessageModal type={typeMessage} />
     </main>
   );
 };

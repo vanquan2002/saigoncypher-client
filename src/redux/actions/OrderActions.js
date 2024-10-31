@@ -97,7 +97,6 @@ export const listMyOrders = () => async (dispatch, getState) => {
     } = getState();
     const config = {
       headers: {
-        Content_type: "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
@@ -131,11 +130,10 @@ export const cancelOrder = (id) => async (dispatch, getState) => {
     } = getState();
     const config = {
       headers: {
-        Content_type: "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    await axios.put(`/api/orders/${id}/cancel`, config);
+    await axios.put(`/api/orders/${id}/cancel`, {}, config);
     dispatch({
       type: ORDER_UPDATE_CANCEL_SUCCESS,
     });
