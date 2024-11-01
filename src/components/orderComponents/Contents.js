@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import moment from "moment";
@@ -15,6 +15,7 @@ import Error from "../loadingError/Error";
 import "moment/locale/vi";
 import MessageModal from "../modals/MessageModal";
 import OrderDetailSkeleton from "../skeletons/OrderDetailSkeleton";
+import debounce from "lodash.debounce";
 
 const Contents = () => {
   const namePages = [
@@ -43,6 +44,14 @@ const Contents = () => {
     useContext(AppContext);
   const [typeModal, setTypeModal] = useState("");
 
+  const debouncedCancelOrder = useMemo(
+    () =>
+      debounce(() => {
+        dispatch(cancelOrder(id));
+      }, 200),
+    []
+  );
+
   const cancelOrderHandle = () => {
     if (isSmallModal) {
       toggleIsSmallModal("");
@@ -50,7 +59,7 @@ const Contents = () => {
     if (typeModal) {
       setTypeModal("");
     }
-    dispatch(cancelOrder(id));
+    debouncedCancelOrder();
   };
 
   useEffect(() => {

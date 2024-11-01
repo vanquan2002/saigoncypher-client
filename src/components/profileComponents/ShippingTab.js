@@ -23,7 +23,7 @@ const ShippingTab = ({ result }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const userUpdate = useSelector((state) => state.userUpdate);
-  const { loading: loadingUserUpdate, success } = userUpdate;
+  const { loading: loadingUserUpdate, successType } = userUpdate;
   const provinceList = useSelector((state) => state.provinceList);
   const {
     loading: loadingProvinceList,
@@ -50,7 +50,7 @@ const ShippingTab = ({ result }) => {
   const debouncedUpdateProfile = useMemo(
     () =>
       debounce((result) => {
-        dispatch(updateProfile(result));
+        dispatch(updateProfile(result, 2));
       }, 200),
     []
   );
@@ -178,25 +178,29 @@ const ShippingTab = ({ result }) => {
   }, [result]);
 
   useEffect(() => {
-    if (success) {
+    if (successType === 2) {
       toggleIsSmallModal("Cập nhật địa chỉ đạt hàng thành công!");
       setTypeModal("update_shipping");
       dispatch({
         type: USER_UPDATE_PROFILE_RESET,
       });
+    } else {
+      if (typeModal) {
+        setTypeModal("");
+      }
     }
-  }, [success]);
+  }, [successType]);
 
   return (
     <section
-      className={`mx-5 md:mx-0 mt-7 md:mt-10  ${result ? "block" : "hidden"}`}
+      className={`mx-5 md:mx-0 mt-7 md:mt-10 ${result ? "block" : "hidden"}`}
     >
       {errorProvince || errorDistrict || errorWard ? (
         <div className="mt-5 md:mt-10">
           <Error error="API calling delivery location is having problems, please contact admin!" />
         </div>
       ) : (
-        <form className="grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-9 lg:gap-y-10">
+        <form className="grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10">
           <div className="relative h-11 col-span-1">
             <input
               type="text"
@@ -384,8 +388,8 @@ const ShippingTab = ({ result }) => {
             <button
               type="button"
               onClick={formik.handleSubmit}
-              aria-label="Cập nhật thông tin đặt hàng và đi đến trang thanh toán"
-              className="w-full lg:w-[calc(50%-40px)] h-10 lowercase bg-black text-white hover:underline"
+              aria-label="Cập nhật thông tin đặt hàng"
+              className="w-1/2 md:w-1/3 lg:w-1/6 py-2 lowercase bg-black text-white text-sm hover:underline"
             >
               {loadingUserUpdate ? "Đang cập nhật..." : "Cập nhật."}
             </button>

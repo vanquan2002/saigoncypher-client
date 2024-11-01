@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import Breadcrumbs from "../Breadcrumbs";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ import MessageModal from "../modals/MessageModal";
 import { AppContext } from "../../AppContext";
 import { createOrder } from "./../../redux/actions/OrderActions";
 import { ORDER_CREATE_RESET } from "../../redux/constants/OrderConstants";
+import debounce from "lodash.debounce";
 
 const Contents = () => {
   const namePages = [
@@ -38,28 +39,32 @@ const Contents = () => {
     userInfo.deliveryInformation &&
     Object.values(userInfo.deliveryInformation).every((value) => value);
 
-  const createOrderHandle = () => {
-    if (!hasDeliveryInformation) {
-      toggleIsMassage("Bạn chưa nhập thông tin đặt hàng!");
-      setTypeMessage("shipping");
-    } else {
-      if (cartItems.length === 0) {
-        toggleIsMassage("Không có sản phẩm nào để đặt!");
-        setTypeMessage("");
-      } else {
-        dispatch(
-          createOrder({
-            orderItems: cartItems,
-            deliveryInformation: userInfo.deliveryInformation,
-            itemsPrice,
-            shippingPrice,
-            totalPrice,
-            note,
-          })
-        );
-      }
-    }
-  };
+  const debouncedCreateOrder = useMemo(
+    () =>
+      debounce(() => {
+        if (!hasDeliveryInformation) {
+          toggleIsMassage("Bạn chưa nhập thông tin đặt hàng!");
+          setTypeMessage("shipping");
+        } else {
+          if (cartItems.length === 0) {
+            toggleIsMassage("Không có sản phẩm nào để đặt!");
+            setTypeMessage("");
+          } else {
+            dispatch(
+              createOrder({
+                orderItems: cartItems,
+                deliveryInformation: userInfo.deliveryInformation,
+                itemsPrice,
+                shippingPrice,
+                totalPrice,
+                note,
+              })
+            );
+          }
+        }
+      }, 200),
+    []
+  );
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -274,7 +279,7 @@ const Contents = () => {
 
         <div className="col-span-2 md:col-span-1 flex justify-end">
           <button
-            onClick={() => createOrderHandle()}
+            onClick={() => debouncedCreateOrder()}
             type="button"
             aria-label="Đặt hàng và đi đến trang chi tiết đơn hàng đã đặt"
             className="w-full h-full lowercase bg-black text-white text-lg hover:underline"

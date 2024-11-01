@@ -36,7 +36,7 @@ const Contents = () => {
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
   const userUpdate = useSelector((state) => state.userUpdate);
-  const { loading: loadingUserUpdate, success } = userUpdate;
+  const { loading: loadingUserUpdate, successType } = userUpdate;
   const provinceList = useSelector((state) => state.provinceList);
   const {
     loading: loadingProvinceList,
@@ -63,7 +63,7 @@ const Contents = () => {
   const debouncedUpdateProfile = useMemo(
     () =>
       debounce((result) => {
-        dispatch(updateProfile(result));
+        dispatch(updateProfile(result, 3));
       }, 200),
     []
   );
@@ -184,13 +184,13 @@ const Contents = () => {
   }, []);
 
   useEffect(() => {
-    if (success) {
+    if (successType === 3) {
       navigate("/placeorder");
       dispatch({
         type: USER_UPDATE_PROFILE_RESET,
       });
     }
-  }, [success]);
+  }, [successType]);
 
   return (
     <main className="px-5 md:px-20">
