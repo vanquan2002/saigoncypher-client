@@ -36,13 +36,21 @@ const Contents = () => {
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
   const userUpdate = useSelector((state) => state.userUpdate);
-  const { loading, success } = userUpdate;
+  const { loading: loadingUserUpdate, success } = userUpdate;
   const provinceList = useSelector((state) => state.provinceList);
-  const { provinces, error: errorProvince } = provinceList;
+  const {
+    loading: loadingProvinceList,
+    provinces,
+    error: errorProvince,
+  } = provinceList;
   const districtList = useSelector((state) => state.districtList);
-  const { districts, error: errorDistrict } = districtList;
+  const {
+    loading: loadingDistrictList,
+    districts,
+    error: errorDistrict,
+  } = districtList;
   const wardList = useSelector((state) => state.wardList);
-  const { wards, error: errorWard } = wardList;
+  const { loading: loadingWardList, wards, error: errorWard } = wardList;
   const [selectedProvince, setSelectedProvince] = useState(null);
   const [selectedDistrict, setSelectedDistrict] = useState(null);
   const total = cartItems.reduce((a, i) => a + i.qty * i.price, 0).toFixed(0);
@@ -52,7 +60,7 @@ const Contents = () => {
   const [isDistrict, setIsDistrict] = useState(false);
   const [isWard, setIsWard] = useState(false);
 
-  const debouncedAddCartProduct = useMemo(
+  const debouncedUpdateProfile = useMemo(
     () =>
       debounce((result) => {
         dispatch(updateProfile(result));
@@ -92,7 +100,7 @@ const Contents = () => {
     },
     validate,
     onSubmit: (values) => {
-      debouncedAddCartProduct(values);
+      debouncedUpdateProfile(values);
     },
   });
 
@@ -177,10 +185,10 @@ const Contents = () => {
 
   useEffect(() => {
     if (success) {
+      navigate("/placeorder");
       dispatch({
         type: USER_UPDATE_PROFILE_RESET,
       });
-      navigate("/placeorder");
     }
   }, [success]);
 
@@ -260,7 +268,11 @@ const Contents = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.province}
-                className="w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none"
+                className={`w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none ${
+                  loadingProvinceList
+                    ? "opacity-30 animate-pulse"
+                    : "opacity-100"
+                }`}
               >
                 {!formik.values.province && <option value="">--</option>}
                 {provinces.map((item) => (
@@ -292,7 +304,11 @@ const Contents = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.district}
-                className="w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none"
+                className={`w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none ${
+                  loadingDistrictList
+                    ? "opacity-30 animate-pulse"
+                    : "opacity-100"
+                }`}
               >
                 {!formik.values.district && <option value="">--</option>}
                 {districts.map((item) => (
@@ -324,7 +340,9 @@ const Contents = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.ward}
-                className="w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none"
+                className={`w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none ${
+                  loadingWardList ? "opacity-30 animate-pulse" : "opacity-100"
+                }`}
               >
                 {!formik.values.ward && <option value="">--</option>}
                 {wards.map((item) => (
@@ -405,7 +423,7 @@ const Contents = () => {
                 aria-label="Cập nhật thông tin đặt hàng và đi đến trang thanh toán"
                 className="flex items-center justify-center w-full h-full lowercase bg-black text-white text-lg hover:underline"
               >
-                {loading ? "Đang tiếp tục" : "Tiếp tục"}
+                {loadingUserUpdate ? "Đang tiếp tục" : "Tiếp tục"}
                 <MdKeyboardArrowRight className="text-2xl ml-[-2px]" />
               </button>
             </div>

@@ -8,6 +8,9 @@ import { RiEditFill } from "react-icons/ri";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { logout } from "./../../redux/actions/UserActions";
 import { GrLogout } from "react-icons/gr";
+import ShippingTab from "./ShippingTab";
+import EditProfileTab from "./EditProfileTab";
+import OrdersTab from "./OrdersTab";
 
 const Contents = () => {
   const namePages = [
@@ -48,7 +51,7 @@ const Contents = () => {
         <span>Error</span>
       ) : (
         <div>
-          <section className="mt-5 md:mt-10 pt-10 flex gap-10 items-center">
+          <div className="border-t border-gray-300 mt-5 md:mt-10 pt-10 flex gap-10 items-center">
             <form className="relative h-32 min-w-32">
               <label
                 className="h-full rounded-full overflow-hidden flex justify-center items-center bg-gray-100"
@@ -80,7 +83,6 @@ const Contents = () => {
                 </div>
               )}
             </form>
-
             <div className="w-full">
               <div className="flex justify-between items-center">
                 <h1 className="text-3xl font-semibold">{user.name}</h1>
@@ -96,16 +98,16 @@ const Contents = () => {
               </div>
               <p className="mt-1 text-[15px]">{user.email}</p>
             </div>
-          </section>
+          </div>
 
-          <section className="w-full mt-10">
+          <div className="w-full mt-10">
             <ul className="grid grid-cols-3 mt-5">
               <li className="col-span-1">
                 <button
                   aria-label="Chỉnh sửa thông tin cá nhân"
                   type="button"
                   onClick={() => setTabNumber(1)}
-                  className={`lowercase hover:underline w-full text-center pb-3 ${
+                  className={`lowercase w-full text-center py-2 ${
                     tabNumber === 1
                       ? "border-b-2 border-black text-black"
                       : "border-b-2 border-gray-200 text-gray-600"
@@ -119,7 +121,7 @@ const Contents = () => {
                   aria-label="Chỉnh sửa địa chỉ đặt hàng"
                   type="button"
                   onClick={() => setTabNumber(2)}
-                  className={`lowercase hover:underline w-full text-center pb-3 ${
+                  className={`lowercase w-full text-center py-2 ${
                     tabNumber === 2
                       ? "border-b-2 border-black text-black"
                       : "border-b-2 border-gray-200 text-gray-600"
@@ -133,7 +135,7 @@ const Contents = () => {
                   aria-label="Các đơn hàng đã đặt"
                   type="button"
                   onClick={() => setTabNumber(3)}
-                  className={`lowercase hover:underline w-full text-center pb-3 ${
+                  className={`lowercase w-full text-center py-2 ${
                     tabNumber === 3
                       ? "border-b-2 border-black text-black"
                       : "border-b-2 border-gray-200 text-gray-600"
@@ -144,8 +146,10 @@ const Contents = () => {
               </li>
             </ul>
 
-            <div className=""></div>
-          </section>
+            <EditProfileTab result={tabNumber === 1} />
+            <ShippingTab result={tabNumber === 2} />
+            <OrdersTab result={tabNumber === 3} />
+          </div>
         </div>
       )}
     </main>
