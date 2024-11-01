@@ -218,7 +218,7 @@ const Contents = () => {
                       />
                     </Link>
                     <div className="w-2/3 md:w-4/5 flex flex-col justify-between p-3 md:p-4">
-                      <div>
+                      <div className="flex flex-col items-start">
                         <Link to={`/products/${item.product}/detail`}>
                           <h2 className="lowercase text-lg leading-6 line-clamp-2 md:line-clamp-1 hover:underline">
                             {item.name}.
