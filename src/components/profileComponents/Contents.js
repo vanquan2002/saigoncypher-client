@@ -7,13 +7,18 @@ import { RiAddLine } from "react-icons/ri";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { logout } from "./../../redux/actions/UserActions";
 import ShippingTab from "./ShippingTab";
-import EditProfileTab from "./EditProfileTab";
+import ProfileTab from "./ProfileTab";
 import OrdersTab from "./OrdersTab";
 
 const Contents = () => {
   const namePages = [
     { name: "Trang chủ", url: "/" },
     { name: "Thông tin cá nhân", url: "" },
+  ];
+  const nameTabs = [
+    { title: "Chỉnh sửa thông tin cá nhân", sub: "thông tin" },
+    { title: "Chỉnh sửa điạ chỉ đặt hàng", sub: "Địa chỉ" },
+    { title: "Đơn hàng đã đặt", sub: "Đơn hàng" },
   ];
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.userDetails);
@@ -65,6 +70,7 @@ const Contents = () => {
                 ) : (
                   <FaUser className="text-2xl md:text-4xl text-gray-400" />
                 )}
+
                 <div className="absolute bottom-0 right-1 md:right-3 h-5 md:h-7 w-5 md:w-7 flex items-center justify-center bg-black rounded-full border-2 md:border-[3px] border-white">
                   {user.avatar || image ? (
                     <BiSolidEditAlt className="text-lg md:text-2xl p-0.5 text-white" />
@@ -106,66 +112,30 @@ const Contents = () => {
 
           <div className="w-full mt-10">
             <ul className="grid grid-cols-3 mt-5">
-              <li className="col-span-1">
-                <button
-                  aria-label="Chỉnh sửa thông tin cá nhân"
-                  type="button"
-                  onClick={() => setTabNumber(1)}
-                  className={`w-full flex justify-center py-2 border-b ${
-                    tabNumber === 1
-                      ? "border-black text-black"
-                      : "border-gray-200 text-gray-400"
-                  } duration-300`}
-                >
-                  <span className="lowercase text-[15px] hidden lg:block">
-                    Chỉnh sửa thông tin cá nhân.
-                  </span>
-                  <span className="lowercase text-[15px] lg:hidden">
-                    Thông tin.
-                  </span>
-                </button>
-              </li>
-              <li className="col-span-1">
-                <button
-                  aria-label="Chỉnh sửa địa chỉ đặt hàng"
-                  type="button"
-                  onClick={() => setTabNumber(2)}
-                  className={`w-full flex justify-center py-2 border-b ${
-                    tabNumber === 2
-                      ? "border-black text-black"
-                      : "border-gray-200 text-gray-400"
-                  } duration-300`}
-                >
-                  <span className="lowercase text-[15px] hidden lg:block">
-                    Chỉnh sửa địa chỉ đặt hàng.
-                  </span>
-                  <span className="lowercase text-[15px] lg:hidden">
-                    Địa chỉ.
-                  </span>
-                </button>
-              </li>
-              <li className="col-span-1">
-                <button
-                  aria-label="Các đơn hàng đã đặt"
-                  type="button"
-                  onClick={() => setTabNumber(3)}
-                  className={`w-full flex justify-center py-2 border-b ${
-                    tabNumber === 3
-                      ? "border-black text-black"
-                      : "border-gray-200 text-gray-400"
-                  } duration-300`}
-                >
-                  <span className="lowercase text-[15px] hidden lg:block">
-                    Đơn hàng đã đặt.
-                  </span>
-                  <span className="lowercase text-[15px] lg:hidden">
-                    Đã đặt.
-                  </span>
-                </button>
-              </li>
+              {nameTabs.map((item, i) => (
+                <li key={i} className="col-span-1">
+                  <button
+                    aria-label="Chỉnh sửa thông tin cá nhân"
+                    type="button"
+                    onClick={() => setTabNumber(i + 1)}
+                    className={`w-full text-center py-2 border-b ${
+                      tabNumber === i + 1
+                        ? "border-black text-black"
+                        : "border-gray-200 text-gray-400"
+                    } duration-300`}
+                  >
+                    <span className="lowercase text-[15px] hidden lg:block">
+                      {item.title}
+                    </span>
+                    <span className="lowercase text-[15px] lg:hidden">
+                      {item.sub}
+                    </span>
+                  </button>
+                </li>
+              ))}
             </ul>
 
-            <EditProfileTab result={tabNumber === 1} />
+            <ProfileTab result={tabNumber === 1} />
             <ShippingTab result={tabNumber === 2} />
             <OrdersTab result={tabNumber === 3} />
           </div>

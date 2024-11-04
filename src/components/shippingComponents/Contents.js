@@ -206,7 +206,7 @@ const Contents = () => {
         </div>
       ) : (
         <div className="mt-5 md:mt-10">
-          <form className="grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-9 lg:gap-y-10">
+          <form className="grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10">
             <div className="relative h-11 col-span-1">
               <input
                 type="text"

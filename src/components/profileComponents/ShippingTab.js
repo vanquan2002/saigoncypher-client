@@ -191,6 +191,54 @@ const ShippingTab = ({ result }) => {
     }
   }, [successType]);
 
+  const itemSelectForm = [
+    {
+      ariaLabel: "Chọn tỉnh/thành",
+      value: "province",
+      contents: "Tỉnh/Thành phố",
+      arrName: "provinces",
+      loadingList: loadingProvinceList,
+    },
+    {
+      ariaLabel: "Chọn quận/huyện",
+      value: "district",
+      contents: "Quận/huyện",
+      arrName: "districts",
+      loadingList: loadingDistrictList,
+    },
+    {
+      ariaLabel: "Chọn phường/xã",
+      value: "ward",
+      contents: "Phường/xã",
+      arrName: "wards",
+      loadingList: loadingWardList,
+    },
+  ];
+
+  const itemInputForm = [
+    {
+      type: "text",
+      ariaLabel: "Nhập họ và tên của bạn",
+      value: "fullName",
+      contents: "Họ và tên",
+      placeholderText: "Nguyễn văn A",
+    },
+    {
+      type: "tel",
+      ariaLabel: "Nhập số điện thoại của bạn",
+      value: "phone",
+      contents: "Số điện thoại",
+      placeholderText: "0123456789",
+    },
+    {
+      type: "text",
+      ariaLabel: "Nhập địa chỉ của bạn",
+      value: "address",
+      contents: "Địa chỉ",
+      placeholderText: "12/4 Phạm Văn B",
+    },
+  ];
+
   return (
     <section
       className={`mx-5 md:mx-0 mt-7 md:mt-10 ${result ? "block" : "hidden"}`}
@@ -200,196 +248,119 @@ const ShippingTab = ({ result }) => {
           <Error error="API calling delivery location is having problems, please contact admin!" />
         </div>
       ) : (
-        <form className="grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10">
-          <div className="relative h-11 col-span-1">
-            <input
-              type="text"
-              aria-label="Nhập họ và tên của bạn"
-              id="fullName"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.fullName}
-              placeholder="Nguyễn văn A"
-              className="w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none"
-            />
-            <label
-              htmlFor="fullName"
-              className="absolute left-0 -top-1.5 text-sm lowercase"
-            >
-              Họ và tên
-            </label>
-            {formik.touched.fullName && formik.errors.fullName && (
-              <div className="flex items-center gap-1 mt-1">
-                <PiWarningCircleLight className="text-red-500" />
-                <span className="text-xs text-red-500">
-                  {formik.errors.fullName}
-                </span>
-              </div>
-            )}
-          </div>
+        <form className="">
+          <ul className="grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10">
+            {itemInputForm.slice(0, 2).map((item, i) => (
+              <li key={i} className="relative h-11 col-span-1">
+                <input
+                  type={item.type}
+                  aria-label={item.ariaLabel}
+                  id={item.value}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values[item.value]}
+                  placeholder={item.placeholderText}
+                  className="w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none"
+                />
+                <label
+                  htmlFor={item.value}
+                  className="absolute left-0 -top-1.5 text-sm lowercase"
+                >
+                  {item.contents}
+                </label>
+                {formik.touched[item.value] && formik.errors[item.value] && (
+                  <div className="flex items-center gap-1 mt-1">
+                    <PiWarningCircleLight className="text-red-500" />
+                    <span className="text-xs text-red-500">
+                      {formik.errors[item.value]}
+                    </span>
+                  </div>
+                )}
+              </li>
+            ))}
 
-          <div className="relative h-11 col-span-1">
-            <input
-              type="tel"
-              aria-label="Nhập số điện thoại của bạn"
-              id="phone"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.phone}
-              placeholder="0123456789"
-              className="w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none"
-            />
-            <label
-              htmlFor="phone"
-              className="absolute left-0 -top-1.5 text-sm lowercase"
-            >
-              Số điện thoại
-            </label>
-            {formik.touched.phone && formik.errors.phone && (
-              <div className="flex items-center gap-1 mt-1">
-                <PiWarningCircleLight className="text-red-500" />
-                <span className="text-xs text-red-500">
-                  {formik.errors.phone}
-                </span>
-              </div>
-            )}
-          </div>
+            {itemSelectForm.map((item) => (
+              <li key={item.value} className="relative h-11 col-span-1">
+                <select
+                  aria-label={item.ariaLabel}
+                  id={item.value}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values[item.value]}
+                  className={`w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none ${
+                    item.loadingList
+                      ? "opacity-30 animate-pulse"
+                      : "opacity-100"
+                  }`}
+                >
+                  {!formik.values[item.value] && <option value="">--</option>}
+                  {(item.arrName === "provinces"
+                    ? provinces
+                    : item.arrName === "districts"
+                    ? districts
+                    : wards
+                  ).map((location) => (
+                    <option
+                      key={location[`${item.value}_id`]}
+                      value={location[`${item.value}_name`]}
+                    >
+                      {location[`${item.value}_name`]}
+                    </option>
+                  ))}
+                </select>
+                <label
+                  htmlFor={item.value}
+                  className="pointer-events-none absolute left-0 -top-1.5 text-sm lowercase"
+                >
+                  {item.contents}
+                </label>
+                {formik.touched[item.value] && formik.errors[item.value] && (
+                  <div className="flex items-center gap-1 mt-1">
+                    <PiWarningCircleLight className="text-red-500" />
+                    <span className="text-xs text-red-500">
+                      {formik.errors[item.value]}
+                    </span>
+                  </div>
+                )}
+              </li>
+            ))}
 
-          <div className="relative h-11 col-span-1">
-            <select
-              aria-label="Chọn tỉnh/thành"
-              id="province"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.province}
-              className={`w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none ${
-                loadingProvinceList ? "opacity-30 animate-pulse" : "opacity-100"
-              }`}
-            >
-              {!formik.values.province && <option value="">--</option>}
-              {provinces.map((item) => (
-                <option key={item.province_id} value={item.province_name}>
-                  {item.province_name}
-                </option>
-              ))}
-            </select>
-            <label
-              htmlFor="province"
-              className="pointer-events-none absolute left-0 -top-1.5 text-sm lowercase"
-            >
-              Tỉnh/Thành phố
-            </label>
-            {formik.touched.province && formik.errors.province && (
-              <div className="flex items-center gap-1 mt-1">
-                <PiWarningCircleLight className="text-red-500" />
-                <span className="text-xs text-red-500">
-                  {formik.errors.province}
-                </span>
-              </div>
-            )}
-          </div>
+            {itemInputForm.slice(-1).map((item, i) => (
+              <li key={i} className="relative h-11 col-span-1">
+                <input
+                  type={item.type}
+                  aria-label={item.ariaLabel}
+                  id={item.value}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values[item.value]}
+                  placeholder={item.placeholderText}
+                  className="w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none"
+                />
+                <label
+                  htmlFor={item.value}
+                  className="absolute left-0 -top-1.5 text-sm lowercase"
+                >
+                  {item.contents}
+                </label>
+                {formik.touched[item.value] && formik.errors[item.value] && (
+                  <div className="flex items-center gap-1 mt-1">
+                    <PiWarningCircleLight className="text-red-500" />
+                    <span className="text-xs text-red-500">
+                      {formik.errors[item.value]}
+                    </span>
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
 
-          <div className="relative h-11 col-span-1">
-            <select
-              aria-label="Chọn quận/huyện"
-              id="district"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.district}
-              className={`w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none ${
-                loadingDistrictList ? "opacity-30 animate-pulse" : "opacity-100"
-              }`}
-            >
-              {!formik.values.district && <option value="">--</option>}
-              {districts.map((item) => (
-                <option key={item.district_id} value={item.district_name}>
-                  {item.district_name}
-                </option>
-              ))}
-            </select>
-            <label
-              htmlFor="district"
-              className="pointer-events-none absolute left-0 -top-1.5 text-sm lowercase"
-            >
-              Quận/huyện
-            </label>
-            {formik.touched.district && formik.errors.district && (
-              <div className="flex items-center gap-1 mt-1">
-                <PiWarningCircleLight className="text-red-500" />
-                <span className="text-xs text-red-500">
-                  {formik.errors.district}
-                </span>
-              </div>
-            )}
-          </div>
-
-          <div className="relative h-11 col-span-1">
-            <select
-              aria-label="Chọn phường/xã"
-              id="ward"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.ward}
-              className={`w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none ${
-                loadingWardList ? "opacity-30 animate-pulse" : "opacity-100"
-              }`}
-            >
-              {!formik.values.ward && <option value="">--</option>}
-              {wards.map((item) => (
-                <option key={item.ward_id} value={item.ward_name}>
-                  {item.ward_name}
-                </option>
-              ))}
-            </select>
-            <label
-              htmlFor="ward"
-              className="pointer-events-none absolute left-0 -top-1.5 text-sm lowercase"
-            >
-              Phường/xã
-            </label>
-            {formik.touched.ward && formik.errors.ward && (
-              <div className="flex items-center gap-1 mt-1">
-                <PiWarningCircleLight className="text-red-500" />
-                <span className="text-xs text-red-500">
-                  {formik.errors.ward}
-                </span>
-              </div>
-            )}
-          </div>
-
-          <div className="relative h-11 col-span-1">
-            <input
-              type="text"
-              aria-label="Nhập địa chỉ của bạn"
-              id="address"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.address}
-              placeholder="12/4 Phạm Văn B"
-              className="w-full h-full border-b border-black bg-transparent pt-4 pb-1.5 text-sm outline-none"
-            />
-            <label
-              htmlFor="address"
-              className="absolute left-0 -top-1.5 text-sm lowercase"
-            >
-              Địa chỉ
-            </label>
-            {formik.touched.address && formik.errors.address && (
-              <div className="flex items-center gap-1 mt-1">
-                <PiWarningCircleLight className="text-red-500" />
-                <span className="text-xs text-red-500">
-                  {formik.errors.address}
-                </span>
-              </div>
-            )}
-          </div>
-
-          <div className="col-span-1 lg:col-span-2 flex justify-end">
+          <div className="mt-7 md:mt-10 flex justify-end">
             <button
               type="button"
               onClick={formik.handleSubmit}
               aria-label="Cập nhật thông tin đặt hàng"
-              className="w-1/2 md:w-1/3 lg:w-1/6 py-2 lowercase bg-black text-white text-sm hover:underline"
+              className="px-6 py-2 lowercase bg-black text-white text-sm hover:underline"
             >
               {loadingUserUpdate ? "Đang cập nhật..." : "Cập nhật."}
             </button>
