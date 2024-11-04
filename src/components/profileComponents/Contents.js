@@ -4,10 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { profile } from "../../redux/actions/UserActions";
 import { FaUser } from "react-icons/fa";
 import { RiAddLine } from "react-icons/ri";
-import { RiEditFill } from "react-icons/ri";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { logout } from "./../../redux/actions/UserActions";
-import { GrLogout } from "react-icons/gr";
 import ShippingTab from "./ShippingTab";
 import EditProfileTab from "./EditProfileTab";
 import OrdersTab from "./OrdersTab";
@@ -50,22 +48,30 @@ const Contents = () => {
       ) : error ? (
         <span>Error</span>
       ) : (
-        <div>
-          <div className="border-t border-gray-300 mt-5 md:mt-10 pt-10 flex gap-10 items-center">
-            <form className="relative h-32 min-w-32">
+        <div className="border-t border-gray-300 mt-5 md:mt-10 pt-5 md:pt-10">
+          <div className="mx-5 md:mx-0 flex gap-5 md:gap-10">
+            <form className="relative h-20 min-w-20 md:h-32 md:min-w-32">
               <label
                 className="h-full rounded-full overflow-hidden flex justify-center items-center bg-gray-100"
                 htmlFor="file_input"
+                title="Chọn ảnh đại diện"
               >
                 {user.avatar || image ? (
                   <img
-                    className="object-cover h-32 w-32"
+                    className="object-cover h-full max-w-20 md:max-w-32"
                     src={image ? image : user.avatar}
                     alt=""
                   />
                 ) : (
-                  <FaUser size="2.3rem" className="text-gray-500" />
+                  <FaUser className="text-2xl md:text-4xl text-gray-400" />
                 )}
+                <div className="absolute bottom-0 right-1 md:right-3 h-5 md:h-7 w-5 md:w-7 flex items-center justify-center bg-black rounded-full border-2 md:border-[3px] border-white">
+                  {user.avatar || image ? (
+                    <BiSolidEditAlt className="text-lg md:text-2xl p-0.5 text-white" />
+                  ) : (
+                    <RiAddLine className="text-xl md:text-3xl p-0.5 text-white" />
+                  )}
+                </div>
               </label>
               <input
                 onChange={changeImgHandle}
@@ -73,30 +79,28 @@ const Contents = () => {
                 type="file"
                 id="file_input"
               />
-              {user.avatar || image ? (
-                <div className="absolute bottom-0 right-4 h-7 w-7 flex items-center justify-center bg-gray-500 rounded-full">
-                  <BiSolidEditAlt className="text-2xl p-0.5 text-gray-100" />
-                </div>
-              ) : (
-                <div className="absolute bottom-0 right-4 h-7 w-7 flex items-center justify-center bg-gray-500 rounded-full">
-                  <RiAddLine className="text-3xl p-0.5 text-gray-100" />
-                </div>
-              )}
             </form>
-            <div className="w-full">
-              <div className="flex justify-between items-center">
-                <h1 className="text-3xl font-semibold">{user.name}</h1>
+
+            <div className="w-full overflow-hidden">
+              <div className="flex justify-end">
                 <button
                   onClick={() => dispatch(logout())}
                   aria-label="Đăng xuất và đi đến trang đăng nhập"
                   type="button"
-                  className="flex items-center gap-1 hover:underline"
+                  className="underline text-[15px] lowercase"
                 >
-                  <span className="lowercase text-[15px]">Đăng xuất</span>
-                  <GrLogout className="text-sm" />
+                  Đăng xuất
                 </button>
               </div>
-              <p className="mt-1 text-[15px]">{user.email}</p>
+
+              <div className="mt-1.5">
+                <h1 className="text-2xl md:text-3xl font-semibold line-clamp-1">
+                  {user.name}
+                </h1>
+                <span className="text-[13px] md:text-[15px] line-clamp-1">
+                  {user.email}
+                </span>
+              </div>
             </div>
           </div>
 
@@ -107,41 +111,56 @@ const Contents = () => {
                   aria-label="Chỉnh sửa thông tin cá nhân"
                   type="button"
                   onClick={() => setTabNumber(1)}
-                  className={`lowercase w-full text-center py-2 ${
+                  className={`w-full flex justify-center py-2 border-b ${
                     tabNumber === 1
-                      ? "border-b-2 border-black text-black"
-                      : "border-b-2 border-gray-200 text-gray-600"
+                      ? "border-black text-black"
+                      : "border-gray-200 text-gray-400"
                   } duration-300`}
                 >
-                  Chỉnh sửa thông tin cá nhân.
+                  <span className="lowercase text-[15px] hidden lg:block">
+                    Chỉnh sửa thông tin cá nhân.
+                  </span>
+                  <span className="lowercase text-[15px] lg:hidden">
+                    Thông tin.
+                  </span>
                 </button>
               </li>
-              <li className="text-center col-span-1">
+              <li className="col-span-1">
                 <button
                   aria-label="Chỉnh sửa địa chỉ đặt hàng"
                   type="button"
                   onClick={() => setTabNumber(2)}
-                  className={`lowercase w-full text-center py-2 ${
+                  className={`w-full flex justify-center py-2 border-b ${
                     tabNumber === 2
-                      ? "border-b-2 border-black text-black"
-                      : "border-b-2 border-gray-200 text-gray-600"
+                      ? "border-black text-black"
+                      : "border-gray-200 text-gray-400"
                   } duration-300`}
                 >
-                  Chỉnh sửa địa chỉ đặt hàng.
+                  <span className="lowercase text-[15px] hidden lg:block">
+                    Chỉnh sửa địa chỉ đặt hàng.
+                  </span>
+                  <span className="lowercase text-[15px] lg:hidden">
+                    Địa chỉ.
+                  </span>
                 </button>
               </li>
-              <li className="text-center col-span-1">
+              <li className="col-span-1">
                 <button
                   aria-label="Các đơn hàng đã đặt"
                   type="button"
                   onClick={() => setTabNumber(3)}
-                  className={`lowercase w-full text-center py-2 ${
+                  className={`w-full flex justify-center py-2 border-b ${
                     tabNumber === 3
-                      ? "border-b-2 border-black text-black"
-                      : "border-b-2 border-gray-200 text-gray-600"
+                      ? "border-black text-black"
+                      : "border-gray-200 text-gray-400"
                   } duration-300`}
                 >
-                  Đơn hàng đã đặt.
+                  <span className="lowercase text-[15px] hidden lg:block">
+                    Đơn hàng đã đặt.
+                  </span>
+                  <span className="lowercase text-[15px] lg:hidden">
+                    Đã đặt.
+                  </span>
                 </button>
               </li>
             </ul>
