@@ -1,6 +1,6 @@
 import React from "react";
-import { FaRegStar } from "react-icons/fa";
-import { FaStar } from "react-icons/fa";
+import { LiaStar } from "react-icons/lia";
+import { LiaStarSolid } from "react-icons/lia";
 
 const RatingIconChange = ({ rating, setRating }) => {
   return (
@@ -14,9 +14,9 @@ const RatingIconChange = ({ rating, setRating }) => {
           }}
         >
           {rating >= star ? (
-            <FaStar className="text-yellow-400" />
+            <LiaStarSolid className="text-black" />
           ) : (
-            <FaRegStar className="text-gray-400" />
+            <LiaStar className="text-black" />
           )}
         </span>
       ))}

@@ -7,11 +7,15 @@ export const AppProvider = ({ children }) => {
   const [isSmallModal, setIsSmallModal] = useState("");
   const [isCartModal, setIsCartModal] = useState(false);
   const [numberColList, setNumberColList] = useState(1);
+  const [numberTabNumber, setNumberTabNumber] = useState(1);
+  const [isReviewModal, setIsReviewModal] = useState(false);
 
   const toggleIsMassage = (text) => setIsMassage(text);
-  const toggleIsCartModal = (bol) => setIsCartModal(bol);
   const toggleIsSmallModal = (text) => setIsSmallModal(text);
+  const toggleIsCartModal = (bol) => setIsCartModal(bol);
   const toggleNumberColList = (num) => setNumberColList(num);
+  const toggleNumberTabNumber = (num) => setNumberTabNumber(num);
+  const toggleIsReviewModal = (bol) => setIsReviewModal(bol);
 
   useEffect(() => {
     if (isSmallModal) {
@@ -41,6 +45,10 @@ export const AppProvider = ({ children }) => {
         toggleNumberColList,
         isSmallModal,
         toggleIsSmallModal,
+        numberTabNumber,
+        toggleNumberTabNumber,
+        isReviewModal,
+        toggleIsReviewModal,
       }}
     >
       {children}

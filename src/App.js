@@ -45,7 +45,7 @@ function App() {
         />
         <Route
           path="/order/:id"
-          element={<PrivateRouter comp={<OrderScreen />} />}
+          element={<PrivateRouter navig="order" comp={<OrderScreen />} />}
         />
         <Route path="*" element={<NotFound />} />
       </Routes>

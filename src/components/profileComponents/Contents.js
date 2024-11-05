@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Breadcrumbs from "../Breadcrumbs";
 import { useDispatch, useSelector } from "react-redux";
 import { profile } from "../../redux/actions/UserActions";
@@ -9,6 +9,7 @@ import { logout } from "./../../redux/actions/UserActions";
 import ShippingTab from "./ShippingTab";
 import ProfileTab from "./ProfileTab";
 import OrdersTab from "./OrdersTab";
+import { AppContext } from "../../AppContext";
 
 const Contents = () => {
   const namePages = [
@@ -20,12 +21,12 @@ const Contents = () => {
     { title: "Chỉnh sửa điạ chỉ đặt hàng", sub: "Địa chỉ" },
     { title: "Đơn hàng đã đặt", sub: "Đơn hàng" },
   ];
+  const { numberTabNumber, toggleNumberTabNumber } = useContext(AppContext);
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.userDetails);
   const { user, loading, error } = userDetails;
   const [image, setImage] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [tabNumber, setTabNumber] = useState(1);
 
   const changeImgHandle = (e) => {
     const file = e.target.files[0];
@@ -117,9 +118,9 @@ const Contents = () => {
                   <button
                     aria-label="Chỉnh sửa thông tin cá nhân"
                     type="button"
-                    onClick={() => setTabNumber(i + 1)}
+                    onClick={() => toggleNumberTabNumber(i + 1)}
                     className={`w-full text-center py-2 border-b ${
-                      tabNumber === i + 1
+                      numberTabNumber === i + 1
                         ? "border-black text-black"
                         : "border-gray-200 text-gray-400"
                     } duration-300`}
@@ -135,9 +136,9 @@ const Contents = () => {
               ))}
             </ul>
 
-            <ProfileTab result={tabNumber === 1} />
-            <ShippingTab result={tabNumber === 2} />
-            <OrdersTab result={tabNumber === 3} />
+            <ProfileTab result={numberTabNumber === 1} />
+            <ShippingTab result={numberTabNumber === 2} />
+            <OrdersTab result={numberTabNumber === 3} />
           </div>
         </div>
       )}

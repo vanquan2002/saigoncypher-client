@@ -1,10 +1,9 @@
 import React, { useContext, useEffect } from "react";
-import Footer from "../components/Footer";
-import Header from "./../components/headerComponents/Header";
 import Contents from "../components/singleProductComponents/Contents";
-import Breadcrumbs from "../components/Breadcrumbs";
 import { AppContext } from "../AppContext";
 import { Helmet } from "react-helmet";
+import Header from "../components/headerComponents/Header";
+import Footer from "../components/footerComponents/Footer";
 
 const SingleProductScreen = () => {
   const { isCartModal, toggleIsCartModal } = useContext(AppContext);

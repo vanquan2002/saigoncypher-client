@@ -1,8 +1,8 @@
 import React from "react";
-import Footer from "../components/Footer";
-import Header from "../components/headerComponents/Header";
 import Contents from "../components/loginComponents/Contents";
 import { Helmet } from "react-helmet";
+import Header from "../components/headerComponents/Header";
+import Footer from "../components/footerComponents/Footer";
 
 const Login = () => {
   return (

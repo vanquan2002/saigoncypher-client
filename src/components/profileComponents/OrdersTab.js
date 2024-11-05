@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { listMyOrders } from "../../redux/actions/OrderActions";
 import moment from "moment";
@@ -6,15 +6,26 @@ import "moment/locale/vi";
 import { Link } from "react-router-dom";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { MdArrowOutward } from "react-icons/md";
+import ReviewModal from "../modals/ReviewModal";
+import { AppContext } from "../../AppContext";
 
 const OrdersTab = ({ result }) => {
   const dispatch = useDispatch();
   const orderListMy = useSelector((state) => state.orderListMy);
   const { loading, orders, error } = orderListMy;
+  const { toggleIsReviewModal } = useContext(AppContext);
+  const [numberOpenReviewModal, setNumberOpenReviewModal] = useState(null);
+
+  const openReviewModalHandle = (num) => {
+    setNumberOpenReviewModal(num);
+    toggleIsReviewModal(true);
+  };
 
   useEffect(() => {
-    dispatch(listMyOrders());
-  }, []);
+    if (result) {
+      dispatch(listMyOrders());
+    }
+  }, [result]);
 
   return (
     <section className={`lg:mt-10 ${result ? "block" : "hidden"}`}>
@@ -84,14 +95,15 @@ const OrdersTab = ({ result }) => {
                   <div className="flex gap-[6px] md:gap-3">
                     <button
                       type="button"
-                      aria-label="Hủy đơn đặt hàng"
+                      aria-label="Đi đến trang sản phẩm chi tiết và mua lại"
                       className="lowercase px-2 md:px-4 py-2 text-sm hover:underline border border-black"
                     >
                       Mua lại
                     </button>
                     <button
                       type="button"
-                      aria-label="Hủy đơn đặt hàng"
+                      aria-label="Mở modal đánh giá sản phẩm"
+                      onClick={() => openReviewModalHandle(i)}
                       className="lowercase px-2 md:px-4 py-2 text-sm hover:underline text-white bg-black"
                     >
                       Đánh giá
@@ -107,6 +119,11 @@ const OrdersTab = ({ result }) => {
                     <MdArrowOutward />
                   </Link>
                 </div>
+
+                <ReviewModal
+                  isOpen={i === numberOpenReviewModal}
+                  products={item.orderItems}
+                />
               </li>
             ))
           )}

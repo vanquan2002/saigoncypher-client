@@ -11,7 +11,6 @@ import RelatedProducts from "./RelatedProducts";
 import { PiWarningCircleLight } from "react-icons/pi";
 import Breadcrumbs from "../Breadcrumbs";
 import { LiaStarSolid } from "react-icons/lia";
-import { LiaStar } from "react-icons/lia";
 import { CART_ADD_ITEM_RESET } from "../../redux/constants/CartConstants";
 import MessageModal from "../modals/MessageModal";
 import ProductDetailSkeleton from "../skeletons/ProductDetailSkeleton";

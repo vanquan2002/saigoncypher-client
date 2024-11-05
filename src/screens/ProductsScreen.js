@@ -1,4 +1,4 @@
-import Footer from "../components/Footer";
+import Footer from "../components/footerComponents/Footer";
 import Header from "../components/headerComponents/Header";
 import Contents from "./../components/productsComponents/Contents";
 import { Helmet } from "react-helmet";

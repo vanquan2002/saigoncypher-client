@@ -1,9 +1,9 @@
 import React from "react";
-import Footer from "../components/Footer";
 import Contents from "../components/homeComponents/Contents";
-import Header from "../components/headerComponents/Header";
 import { Helmet } from "react-helmet";
 import Banner from "../components/homeComponents/Banner";
+import Header from "../components/headerComponents/Header";
+import Footer from "../components/footerComponents/Footer";
 
 export default function HomeScreen() {
   return (

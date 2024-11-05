@@ -1,8 +1,8 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import Header from "../components/headerComponents/Header";
-import Footer from "../components/Footer";
 import Contents from "../components/orderComponents/Contents";
+import Header from "../components/headerComponents/Header";
+import Footer from "../components/footerComponents/Footer";
 
 const OrderScreen = () => {
   return (
