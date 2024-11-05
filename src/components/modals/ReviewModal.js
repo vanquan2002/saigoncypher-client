@@ -6,6 +6,7 @@ import "moment/locale/vi";
 import { PRODUCT_CREATE_REVIEW_RESET } from "../../redux/constants/ProductConstants";
 import RatingIconChange from "../singleProductComponents/RatingIconChange";
 import { AppContext } from "../../AppContext";
+import { formatCurrency } from "../../utils/formatCurrency";
 
 const ReviewModal = ({ isOpen, products }) => {
   moment.locale("vi");
@@ -61,38 +62,75 @@ const ReviewModal = ({ isOpen, products }) => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white border border-black"
+        className=" bg-white border border-black w-2/5 h-2/3 overflow-auto scrollbar-thin"
       >
-        <div className="flex flex-col border-b border-black">
+        <div className="pt-3 pb-2 px-5 sticky top-0 left-0 w-full backdrop-blur-sm bg-white/30">
           <span className="lowercase text-lg font-medium">
             Đánh giá sản phẩm.
           </span>
-          <div className="flex items-center gap-2">
-            <span className="text-[15px]">Xếp hạng:</span>
-            <RatingIconChange rating={rating} setRating={setRating} />
-            <span className="text-sm">({desc[rating - 1]})</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-[15px]">Nội dung:</span>
-            <textarea
-              aria-label="Nhập lời nhắn của bạn"
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              placeholder="Nhập lời nhắn"
-              className="mt-2 resize-none w-full px-3 py-2 border border-gray-300 bg-transparent text-sm outline-none placeholder:lowercase"
-              maxLength={200}
-              cols="30"
-              rows="3"
-            ></textarea>
-            <p className="text-xs text-gray-500 text-right">
-              {comment.length}/200 ký tự
-            </p>
-          </div>
         </div>
-        <button className="flex">
-          <span className="lowercase text-[15px]">Hủy.</span>
-          <span className="lowercase text-[15px]">Đăng.</span>
-        </button>
+        <ul className="mt-3 pb-7 px-5 flex flex-col gap-5">
+          {products.map((item, i) => (
+            <li
+              key={i}
+              className={`${
+                products.length - 1 !== i && "border-b border-gray-300 pb-5"
+              }`}
+            >
+              <div className="flex items-start gap-3">
+                <img
+                  src={item.thumbImage}
+                  title={item.name}
+                  alt={`Hình ảnh của ${item.name}`}
+                  className="w-9"
+                />
+                <div className="flex flex-col">
+                  <h2 className="lowercase text-sm">{item.name}.</h2>
+                  <span className="lowercase text-sm">
+                    {item.color} | {formatCurrency(item.price)}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 mt-2">
+                <span className="lowercase text-sm mr-1">Xếp hạng:</span>
+                <RatingIconChange rating={rating} setRating={setRating} />
+                <span className="lowercase text-xs text-gray-600">
+                  ({desc[rating - 1]})
+                </span>
+              </div>
+
+              <div className="flex items-start gap-4 mt-0.5">
+                <span className="lowercase text-sm text-nowrap">Nội dung:</span>
+                <textarea
+                  aria-label="Nhập lời nhắn của bạn"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  placeholder="Nhập lời nhắn"
+                  className="mt-2 resize-none w-full px-2 py-1 border border-black bg-transparent text-sm outline-none placeholder:lowercase scrollbar-thin"
+                  maxLength={500}
+                  cols="30"
+                  rows="3"
+                ></textarea>
+              </div>
+
+              <div className="flex justify-end gap-3 mt-3">
+                <button
+                  type="button"
+                  className="lowercase text-[13px] hover:underline text-center px-6 py-1.5 border border-black"
+                >
+                  Hủy.
+                </button>
+                <button
+                  type="button"
+                  className="lowercase text-[13px] hover:underline text-center px-6 py-1.5 bg-black text-white"
+                >
+                  Đăng.
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

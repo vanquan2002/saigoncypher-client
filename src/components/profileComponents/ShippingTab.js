@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Error from "../loadingError/Error";
 import { useFormik } from "formik";
 import debounce from "lodash.debounce";
-import { updateProfile } from "../../redux/actions/UserActions";
+import { profile, updateProfile } from "../../redux/actions/UserActions";
 import {
   DISTRICT_DATA_RESET,
   WARD_DATA_RESET,
@@ -15,13 +15,20 @@ import {
 } from "../../redux/actions/FormActions";
 import SmallModal from "../modals/SmallModal";
 import { AppContext } from "../../AppContext";
-import { USER_UPDATE_PROFILE_RESET } from "../../redux/constants/UserConstants";
+import {
+  USER_DETAILS_RESET,
+  USER_UPDATE_PROFILE_RESET,
+} from "../../redux/constants/UserConstants";
 import FormFields from "./../shippingComponents/FormFields";
 
 const ShippingTab = ({ result }) => {
   const dispatch = useDispatch();
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const userDetails = useSelector((state) => state.userDetails);
+  const {
+    user,
+    loading: loadingUserDetails,
+    error: errorUserDetails,
+  } = userDetails;
   const userUpdate = useSelector((state) => state.userUpdate);
   const { loading: loadingUserUpdate, successType } = userUpdate;
   const provinceList = useSelector((state) => state.provinceList);
@@ -92,7 +99,6 @@ const ShippingTab = ({ result }) => {
       placeholderText: "12/4 Phạm Văn B",
     },
   ];
-
   const debouncedUpdateProfile = useMemo(
     () =>
       debounce((result) => {
@@ -124,9 +130,9 @@ const ShippingTab = ({ result }) => {
   };
   const formik = useFormik({
     initialValues: {
-      fullName: userInfo.deliveryInformation.fullName ?? "",
-      address: userInfo.deliveryInformation.address ?? "",
-      phone: userInfo.deliveryInformation.phone ?? "",
+      fullName: "",
+      address: "",
+      phone: "",
       province: "",
       district: "",
       ward: "",
@@ -144,21 +150,28 @@ const ShippingTab = ({ result }) => {
   });
 
   useEffect(() => {
-    if (districts.length > 0 && isDistrict) {
-      formik.setFieldValue(
-        "district",
-        userInfo.deliveryInformation.district ?? ""
-      );
+    if (
+      districts.length > 0 &&
+      isDistrict &&
+      user.deliveryInformation &&
+      user.deliveryInformation.district
+    ) {
+      formik.setFieldValue("district", user.deliveryInformation.district ?? "");
       setIsDistrict(false);
     }
-  }, [districts, isDistrict]);
+  }, [districts, isDistrict, user]);
 
   useEffect(() => {
-    if (wards.length > 0 && isWard) {
-      formik.setFieldValue("ward", userInfo.deliveryInformation.ward ?? "");
+    if (
+      wards.length > 0 &&
+      isWard &&
+      user.deliveryInformation &&
+      user.deliveryInformation.ward
+    ) {
+      formik.setFieldValue("ward", user.deliveryInformation.ward ?? "");
       setIsWard(false);
     }
-  }, [wards, isWard]);
+  }, [wards, isWard, user]);
 
   useEffect(() => {
     if (formik.values.province) {
@@ -209,19 +222,14 @@ const ShippingTab = ({ result }) => {
   }, [selectedDistrict]);
 
   useEffect(() => {
-    if (provinces.length > 0 && result) {
-      formik.setFieldValue(
-        "province",
-        userInfo.deliveryInformation.province ?? ""
-      );
+    if (
+      provinces.length > 0 &&
+      user.deliveryInformation &&
+      user.deliveryInformation.province
+    ) {
+      formik.setFieldValue("province", user.deliveryInformation.province ?? "");
     }
-  }, [provinces, result]);
-
-  useEffect(() => {
-    if (result) {
-      dispatch(listProvince());
-    }
-  }, [result]);
+  }, [provinces, user]);
 
   useEffect(() => {
     if (successType === 2) {
@@ -237,34 +245,63 @@ const ShippingTab = ({ result }) => {
     }
   }, [successType]);
 
+  useEffect(() => {
+    if (user.deliveryInformation && user.deliveryInformation.fullName) {
+      formik.setFieldValue("fullName", user.deliveryInformation.fullName);
+    }
+    if (user.deliveryInformation && user.deliveryInformation.address) {
+      formik.setFieldValue("address", user.deliveryInformation.address);
+    }
+    if (user.deliveryInformation && user.deliveryInformation.phone) {
+      formik.setFieldValue("phone", user.deliveryInformation.phone);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (result) {
+      if (user.deliveryInformation) {
+        dispatch({ type: USER_DETAILS_RESET });
+      }
+      dispatch(profile());
+      dispatch(listProvince());
+    }
+  }, [result]);
+
   return (
     <section
       className={`mx-5 md:mx-0 mt-7 md:mt-10 ${result ? "block" : "hidden"}`}
     >
-      {errorProvince || errorDistrict || errorWard ? (
+      {loadingUserDetails ? (
+        <span>loading</span>
+      ) : errorUserDetails ? (
+        <span>error</span>
+      ) : errorProvince || errorDistrict || errorWard ? (
         <div className="mt-5 md:mt-10">
           <Error error="API calling delivery location is having problems, please contact admin!" />
         </div>
       ) : (
-        <FormFields
-          itemInputForm={itemInputForm}
-          itemSelectForm={itemSelectForm}
-          formik={formik}
-          provinces={provinces}
-          districts={districts}
-          wards={wards}
-        />
+        <>
+          <FormFields
+            itemInputForm={itemInputForm}
+            itemSelectForm={itemSelectForm}
+            formik={formik}
+            provinces={provinces}
+            districts={districts}
+            wards={wards}
+          />
+
+          <div className="mt-7 md:mt-10 flex justify-end">
+            <button
+              type="button"
+              onClick={formik.handleSubmit}
+              aria-label="Cập nhật thông tin đặt hàng"
+              className="w-2/5 md:w-1/5 lg:w-1/6 py-2 lowercase bg-black text-white text-sm hover:underline"
+            >
+              {loadingUserUpdate ? "Đang cập nhật..." : "Cập nhật."}
+            </button>
+          </div>
+        </>
       )}
-      <div className="mt-7 md:mt-10 flex justify-end">
-        <button
-          type="button"
-          onClick={formik.handleSubmit}
-          aria-label="Cập nhật thông tin đặt hàng"
-          className="px-6 py-2 lowercase bg-black text-white text-sm hover:underline"
-        >
-          {loadingUserUpdate ? "Đang cập nhật..." : "Cập nhật."}
-        </button>
-      </div>
 
       <SmallModal result={typeModal === "update_shipping"} type="" />
     </section>

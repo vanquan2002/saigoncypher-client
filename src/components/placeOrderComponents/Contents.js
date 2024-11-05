@@ -63,7 +63,7 @@ const Contents = () => {
           }
         }
       }, 200),
-    []
+    [note]
   );
 
   useEffect(() => {
@@ -218,7 +218,7 @@ const Contents = () => {
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
                   placeholder="Nhập lời nhắn"
-                  className="mt-2 resize-none w-full px-3 py-2 border border-gray-300 bg-transparent text-sm outline-none placeholder:lowercase"
+                  className="mt-2 resize-none w-full px-3 py-2 border border-gray-300 bg-transparent text-sm outline-none placeholder:lowercase scrollbar-thin"
                   maxLength={200}
                   cols="30"
                   rows="3"
