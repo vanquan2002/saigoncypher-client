@@ -19,6 +19,9 @@ const ReviewModal = ({ isOpen, products }) => {
   const productCreateReview = useSelector((state) => state.productCreateReview);
   const { loading, success, error } = productCreateReview;
   const { isReviewModal, toggleIsReviewModal } = useContext(AppContext);
+  const uniqueProducts = [
+    ...new Map(products.map((item) => [item.product, item])).values(),
+  ];
 
   const submitReviewHandle = (e) => {
     e.preventDefault();
@@ -62,7 +65,7 @@ const ReviewModal = ({ isOpen, products }) => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className=" bg-white border border-black w-2/5 h-2/3 overflow-auto scrollbar-thin"
+        className=" bg-white border border-black w-full md:w-2/3 lg:w-1/2 h-[calc(30%+40px)] md:h-1/4 lg:h-2/5 mx-2 md:mx-0 overflow-auto scrollbar-thin"
       >
         <div className="pt-3 pb-2 px-5 sticky top-0 left-0 w-full backdrop-blur-sm bg-white/30">
           <span className="lowercase text-lg font-medium">
@@ -70,11 +73,12 @@ const ReviewModal = ({ isOpen, products }) => {
           </span>
         </div>
         <ul className="mt-3 pb-7 px-5 flex flex-col gap-5">
-          {products.map((item, i) => (
+          {uniqueProducts.map((item, i) => (
             <li
               key={i}
               className={`${
-                products.length - 1 !== i && "border-b border-gray-300 pb-5"
+                uniqueProducts.length - 1 !== i &&
+                "border-b border-gray-300 pb-5"
               }`}
             >
               <div className="flex items-start gap-3">
@@ -92,42 +96,50 @@ const ReviewModal = ({ isOpen, products }) => {
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 mt-2">
-                <span className="lowercase text-sm mr-1">Xếp hạng:</span>
-                <RatingIconChange rating={rating} setRating={setRating} />
-                <span className="lowercase text-xs text-gray-600">
-                  ({desc[rating - 1]})
-                </span>
-              </div>
+              {item.isReview ? (
+                <span>Bạn đã đánh giá sản phẩm này</span>
+              ) : (
+                <>
+                  <div className="flex items-center gap-2 mt-2">
+                    <span className="lowercase text-sm mr-1">Xếp hạng:</span>
+                    <RatingIconChange rating={rating} setRating={setRating} />
+                    <span className="lowercase text-xs text-gray-600">
+                      ({desc[rating - 1]})
+                    </span>
+                  </div>
 
-              <div className="flex items-start gap-4 mt-0.5">
-                <span className="lowercase text-sm text-nowrap">Nội dung:</span>
-                <textarea
-                  aria-label="Nhập lời nhắn của bạn"
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-                  placeholder="Nhập lời nhắn"
-                  className="mt-2 resize-none w-full px-2 py-1 border border-black bg-transparent text-sm outline-none placeholder:lowercase scrollbar-thin"
-                  maxLength={500}
-                  cols="30"
-                  rows="3"
-                ></textarea>
-              </div>
+                  <div className="flex items-start gap-4 mt-0.5">
+                    <span className="lowercase text-sm text-nowrap">
+                      Nội dung:
+                    </span>
+                    <textarea
+                      aria-label="Nhập lời nhắn của bạn"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                      placeholder="Nhập lời nhắn"
+                      className="mt-2 resize-none w-full px-2 py-1 border border-black bg-transparent text-sm outline-none placeholder:lowercase scrollbar-thin"
+                      maxLength={500}
+                      cols="30"
+                      rows="3"
+                    ></textarea>
+                  </div>
 
-              <div className="flex justify-end gap-3 mt-3">
-                <button
-                  type="button"
-                  className="lowercase text-[13px] hover:underline text-center px-6 py-1.5 border border-black"
-                >
-                  Hủy.
-                </button>
-                <button
-                  type="button"
-                  className="lowercase text-[13px] hover:underline text-center px-6 py-1.5 bg-black text-white"
-                >
-                  Đăng.
-                </button>
-              </div>
+                  <div className="flex justify-end gap-3 mt-3">
+                    <button
+                      type="button"
+                      className="lowercase text-[13px] hover:underline text-center px-6 py-1.5 border border-black"
+                    >
+                      Hủy.
+                    </button>
+                    <button
+                      type="button"
+                      className="lowercase text-[13px] hover:underline text-center px-6 py-1.5 bg-black text-white"
+                    >
+                      Đăng.
+                    </button>
+                  </div>
+                </>
+              )}
             </li>
           ))}
         </ul>
