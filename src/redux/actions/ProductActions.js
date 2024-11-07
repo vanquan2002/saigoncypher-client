@@ -83,7 +83,7 @@ export const relatedProducts = (id) => async (dispatch) => {
 };
 
 export const createProductReview =
-  (productId, review) => async (dispatch, getState) => {
+  (id, review) => async (dispatch, getState) => {
     try {
       dispatch({
         type: PRODUCT_CREATE_REVIEW_REQUEST,
@@ -97,7 +97,7 @@ export const createProductReview =
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
-      await axios.post(`/api/products/${productId}/review`, review, config);
+      await axios.post(`/api/products/${id}/review`, review, config);
       dispatch({
         type: PRODUCT_CREATE_REVIEW_SUCCESS,
       });

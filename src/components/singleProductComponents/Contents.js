@@ -16,6 +16,7 @@ import MessageModal from "../modals/MessageModal";
 import ProductDetailSkeleton from "../skeletons/ProductDetailSkeleton";
 import SmallModal from "../modals/SmallModal";
 import debounce from "lodash.debounce";
+import Comments from "./Comments";
 
 const Contents = () => {
   const { id } = useParams();
@@ -166,7 +167,10 @@ const Contents = () => {
                   {isOverflowing && (
                     <button
                       type="button"
-                      className="underline"
+                      aria-label={`${
+                        isDescriptionMore ? "Rút gọn" : "Xem thêm"
+                      } nội dung mô tả`}
+                      className="lowercase underline"
                       onClick={() => setIsDescriptionMore(!isDescriptionMore)}
                     >
                       {isDescriptionMore ? "Rút gọn" : "Xem thêm"}
@@ -251,6 +255,7 @@ const Contents = () => {
               </div>
             </section>
           </div>
+          <Comments product={product} />
           <RelatedProducts productId={id} />
         </article>
       )}

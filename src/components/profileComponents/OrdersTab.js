@@ -1,25 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { listMyOrders } from "../../redux/actions/OrderActions";
-import moment from "moment";
 import "moment/locale/vi";
 import { Link } from "react-router-dom";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { MdArrowOutward } from "react-icons/md";
-import ReviewModal from "../modals/ReviewModal";
-import { AppContext } from "../../AppContext";
 
 const OrdersTab = ({ result }) => {
   const dispatch = useDispatch();
   const orderListMy = useSelector((state) => state.orderListMy);
   const { loading, orders, error } = orderListMy;
-  const { toggleIsReviewModal } = useContext(AppContext);
-  const [numberOpenReviewModal, setNumberOpenReviewModal] = useState(null);
-
-  const openReviewModalHandle = (num) => {
-    setNumberOpenReviewModal(num);
-    toggleIsReviewModal(true);
-  };
 
   useEffect(() => {
     if (result) {
@@ -45,65 +35,57 @@ const OrdersTab = ({ result }) => {
             </span>
           ) : (
             orders.map((item, i) => (
-              <li key={i} className="col-span-1 flex border-b border-gray-300">
-                <div className="w-4/5 flex items-center">
+              <li
+                key={i}
+                className="col-span-1 gap-4 md:gap-4 flex border-b border-gray-300"
+              >
+                <div className="w-4/5 md:w-full lg:w-4/5 flex items-center">
                   <img
-                    className="h-[88px] md:h-32 lg:h-20"
+                    className="h-20 md:h-20 lg:h-16"
                     src={item.orderItems[0].thumbImage}
                     alt={item.orderItems[0].name}
                   />
                   {item.orderItems.length > 1 && (
                     <span className="text-sm ml-2 md:ml-3">
-                      +{item.orderItems.length - 1}
+                      +{item.orderItems.length - 1} sản phẩm khác
                     </span>
                   )}
                 </div>
 
-                <div className="w-full pt-3 md:pt-5 lg:pt-1 pb-2 md:pb-4 lg:pb-2 flex justify-center">
-                  <div className="flex flex-col justify-between items-start">
-                    {item.orderStatus.isCancelled ? (
-                      <span className="lowercase font-medium text-sm line-clamp-1 bg-red-100">
-                        Đã hủy
-                      </span>
-                    ) : item.orderStatus.isPaid ? (
-                      <span className="lowercase font-medium text-sm line-clamp-1 bg-green-100">
-                        Đã thanh toán
-                      </span>
-                    ) : item.orderStatus.isReceived ? (
-                      <span className="lowercase font-medium text-sm line-clamp-1 bg-green-100">
-                        Đã nhận
-                      </span>
-                    ) : item.orderStatus.isDelivered ? (
-                      <span className="lowercase font-medium text-sm line-clamp-1 bg-green-100">
-                        Đang giao
-                      </span>
-                    ) : (
-                      <span className="lowercase font-medium text-sm line-clamp-1 bg-green-100">
-                        Đang chuẩn bị
-                      </span>
-                    )}
-
-                    <div className="flex flex-col">
-                      <span className="text-[13px] lowercase">
-                        {item.orderItems.reduce((a, i) => a + i.qty, 0)} sản
-                        phẩm
-                      </span>
-                      <span className="text-sm lowercase line-clamp-1">
-                        Tổng: {formatCurrency(item.totalPrice)}
-                      </span>
-                    </div>
-                  </div>
+                <div className="w-3/5 flex flex-col gap-2 justify-center">
+                  <span className="text-sm lowercase">
+                    {item.orderItems.reduce((a, i) => a + i.qty, 0)} sản phẩm
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <span className="text-sm lowercase hidden md:block">
+                      Tổng:
+                    </span>
+                    {formatCurrency(item.totalPrice)}
+                  </span>
                 </div>
 
-                <div className="w-full pt-3 md:pt-5 lg:pt-1 pb-2 md:pb-4 lg:pb-2 flex flex-col justify-between items-end mr-2 md:mr-0">
-                  <button
-                    type="button"
-                    aria-label="Mở modal đánh giá sản phẩm"
-                    onClick={() => openReviewModalHandle(i)}
-                    className="lowercase px-2 md:px-4 py-2 text-sm hover:underline text-white bg-black"
-                  >
-                    Đánh giá
-                  </button>
+                <div className="w-3/5 flex flex-col gap-2 justify-center items-end mr-2 md:mr-0">
+                  {item.orderStatus.isCancelled ? (
+                    <span className="lowercase font-medium text-sm line-clamp-1 bg-red-100">
+                      Đã hủy
+                    </span>
+                  ) : item.orderStatus.isPaid ? (
+                    <span className="lowercase font-medium text-sm line-clamp-1 bg-green-100">
+                      Đã thanh toán
+                    </span>
+                  ) : item.orderStatus.isReceived ? (
+                    <span className="lowercase font-medium text-sm line-clamp-1 bg-green-100">
+                      Đã nhận
+                    </span>
+                  ) : item.orderStatus.isDelivered ? (
+                    <span className="lowercase font-medium text-sm line-clamp-1 bg-green-100">
+                      Đang giao
+                    </span>
+                  ) : (
+                    <span className="lowercase font-medium text-sm line-clamp-1 bg-green-100">
+                      Đang chuẩn bị
+                    </span>
+                  )}
 
                   <Link
                     to={`/order/${item._id}`}
@@ -114,11 +96,6 @@ const OrdersTab = ({ result }) => {
                     <MdArrowOutward />
                   </Link>
                 </div>
-
-                <ReviewModal
-                  isOpen={i === numberOpenReviewModal}
-                  products={item.orderItems}
-                />
               </li>
             ))
           )}

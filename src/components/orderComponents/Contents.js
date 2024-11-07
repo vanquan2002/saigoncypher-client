@@ -16,6 +16,8 @@ import "moment/locale/vi";
 import MessageModal from "../modals/MessageModal";
 import OrderDetailSkeleton from "../skeletons/OrderDetailSkeleton";
 import debounce from "lodash.debounce";
+import ReviewModal from "./../modals/ReviewModal";
+import { PRODUCT_CREATE_REVIEW_RESET } from "../../redux/constants/ProductConstants";
 
 const Contents = () => {
   const namePages = [
@@ -38,11 +40,20 @@ const Contents = () => {
     success: successCancelOrder,
     error: errorCancelOrder,
   } = orderUpdateCancel;
+  const productCreateReview = useSelector((state) => state.productCreateReview);
+  const { success: successCreateReview } = productCreateReview;
   const dispatch = useDispatch();
   const totalQuantity = order?.orderItems.reduce((a, i) => a + i.qty, 0);
   const { isSmallModal, toggleIsSmallModal, toggleIsMassage } =
     useContext(AppContext);
   const [typeModal, setTypeModal] = useState("");
+  const { toggleIsReviewModal } = useContext(AppContext);
+  const [numberOpenReviewModal, setNumberOpenReviewModal] = useState(null);
+
+  const openReviewModalHandle = (num) => {
+    setNumberOpenReviewModal(num);
+    toggleIsReviewModal(true);
+  };
 
   const debouncedCancelOrder = useMemo(
     () =>
@@ -72,9 +83,7 @@ const Contents = () => {
       dispatch(detailsOrder(id));
       toggleIsSmallModal("Hủy đơn hàng thành công!");
       setTypeModal("cancel_order");
-      dispatch({
-        type: ORDER_UPDATE_CANCEL_RESET,
-      });
+      dispatch({ type: ORDER_UPDATE_CANCEL_RESET });
     }
   }, [successCancelOrder]);
 
@@ -82,16 +91,27 @@ const Contents = () => {
     if (successCreateOrder) {
       toggleIsSmallModal("Đặt hàng thành công!");
       setTypeModal("create_order");
-      dispatch({
-        type: ORDER_CREATE_RESET,
-      });
+      dispatch({ type: ORDER_CREATE_RESET });
     }
   }, [successCreateOrder]);
 
   useEffect(() => {
+    if (successCreateReview) {
+      dispatch(detailsOrder(id));
+      toggleIsSmallModal("Đánh giá thành công!");
+      setTypeModal("review_success");
+      dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
+    }
+  }, [successCreateReview]);
+
+  useEffect(() => {
     if (errorCancelOrder) {
       toggleIsMassage(errorCancelOrder);
-      dispatch(detailsOrder(id));
+      if (
+        errorCancelOrder === "Đơn hàng đang được vận chuyển, không thể hủy!"
+      ) {
+        dispatch(detailsOrder(id));
+      }
       dispatch({
         type: ORDER_UPDATE_CANCEL_RESET,
       });
@@ -240,15 +260,22 @@ const Contents = () => {
                       <button
                         type="button"
                         aria-label="Mở ô đánh giá sản phẩm"
+                        onClick={() => openReviewModalHandle(i)}
                         className={`w-full px-4 py-2  text-sm hover:underline ${
-                          order.orderStatus.isReceived
+                          order.orderStatus.isReceived && !item.isReview
                             ? "bg-black text-white"
                             : "text-black border border-black pointer-events-none opacity-30"
                         }`}
                       >
-                        Đánh giá.
+                        {item.isReview ? "Đã đánh giá." : "Đánh giá."}
                       </button>
                     </div>
+
+                    <ReviewModal
+                      id={id}
+                      isOpen={i === numberOpenReviewModal}
+                      product={item}
+                    />
                   </li>
                 ))}
               </ul>
@@ -369,6 +396,7 @@ const Contents = () => {
       <MessageModal type="" />
       <SmallModal result={typeModal === "create_order"} type="" />
       <SmallModal result={typeModal === "cancel_order"} type="" />
+      <SmallModal result={typeModal === "review_success"} type="" />
     </main>
   );
 };
