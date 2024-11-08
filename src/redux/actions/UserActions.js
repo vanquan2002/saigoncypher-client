@@ -14,6 +14,9 @@ import {
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_PROFILE_FAIL,
   USER_UPDATE_PROFILE_RESET,
+  USER_UPDATE_AVATAR_REQUEST,
+  USER_UPDATE_AVATAR_SUCCESS,
+  USER_UPDATE_AVATAR_FAIL,
 } from "../constants/UserConstants.js";
 import axios from "axios";
 import {
@@ -181,3 +184,35 @@ export const updateProfile =
       });
     }
   };
+
+const preset_key = "hu9yg0hm";
+const cloud_name = "dfavmxigs";
+
+export const updateAvatar = (url) => async (dispatch) => {
+  try {
+    dispatch({
+      type: USER_UPDATE_AVATAR_REQUEST,
+    });
+
+    const formData = new FormData();
+    formData.append("file", url);
+    formData.append("upload_preset", preset_key);
+    const response = await axios.post(
+      `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
+      formData
+    );
+
+    dispatch(updateProfile({ avatar: `${response.data.url}` }, 3));
+    dispatch({
+      type: USER_UPDATE_AVATAR_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_UPDATE_AVATAR_FAIL,
+      payload:
+        error.response && error.response.data.error.message
+          ? error.response.data.error.message
+          : error.message,
+    });
+  }
+};

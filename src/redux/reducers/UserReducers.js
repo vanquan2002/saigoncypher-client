@@ -14,6 +14,10 @@ import {
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_PROFILE_FAIL,
   USER_UPDATE_PROFILE_RESET,
+  USER_UPDATE_AVATAR_REQUEST,
+  USER_UPDATE_AVATAR_SUCCESS,
+  USER_UPDATE_AVATAR_FAIL,
+  USER_UPDATE_AVATAR_RESET,
 } from "../constants/UserConstants.js";
 
 export const userLoginReducer = (state = {}, action) => {
@@ -70,6 +74,21 @@ export const userUpdateReducer = (state = {}, action) => {
     case USER_UPDATE_PROFILE_FAIL:
       return { loading: false, error: action.payload };
     case USER_UPDATE_PROFILE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const userUpdateAvatarReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_UPDATE_AVATAR_REQUEST:
+      return { loading: true };
+    case USER_UPDATE_AVATAR_SUCCESS:
+      return { loading: false };
+    case USER_UPDATE_AVATAR_FAIL:
+      return { loading: false, error: action.payload };
+    case USER_UPDATE_AVATAR_RESET:
       return {};
     default:
       return state;

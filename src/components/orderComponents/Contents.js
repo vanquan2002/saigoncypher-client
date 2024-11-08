@@ -272,7 +272,6 @@ const Contents = () => {
                     </div>
 
                     <ReviewModal
-                      id={id}
                       isOpen={i === numberOpenReviewModal}
                       product={item}
                     />

@@ -6,13 +6,8 @@ import { BsEyeSlash } from "react-icons/bs";
 import debounce from "lodash.debounce";
 import { profile, updateProfile } from "../../redux/actions/UserActions";
 import { useDispatch, useSelector } from "react-redux";
+import { USER_DETAILS_RESET } from "../../redux/constants/UserConstants";
 import { AppContext } from "../../AppContext";
-import {
-  USER_DETAILS_RESET,
-  USER_UPDATE_PROFILE_RESET,
-} from "../../redux/constants/UserConstants";
-import SmallModal from "../modals/SmallModal";
-import MessageModal from "../modals/MessageModal";
 
 const ProfileTab = ({ result }) => {
   const dispatch = useDispatch();
@@ -24,14 +19,8 @@ const ProfileTab = ({ result }) => {
     error: errorDetailsUser,
   } = userDetails;
   const userUpdate = useSelector((state) => state.userUpdate);
-  const {
-    loading: loadingUpdateUser,
-    successType,
-    error: errorUpdateUser,
-  } = userUpdate;
-  const [typeModal, setTypeModal] = useState("");
-  const { toggleIsMassage, isSmallModal, toggleIsSmallModal } =
-    useContext(AppContext);
+  const { loading: loadingUpdateUser } = userUpdate;
+  const { isSmallModal, toggleIsSmallModal } = useContext(AppContext);
   const itemInputForm = [
     {
       type: "text",
@@ -85,35 +74,9 @@ const ProfileTab = ({ result }) => {
       if (isSmallModal) {
         toggleIsSmallModal("");
       }
-      if (typeModal) {
-        setTypeModal("");
-      }
       debouncedUpdateProfile(values);
     },
   });
-
-  useEffect(() => {
-    if (successType === 1) {
-      toggleIsSmallModal("Cập nhật thông tin cá nhân thành công!");
-      setTypeModal("update_info");
-      dispatch({
-        type: USER_UPDATE_PROFILE_RESET,
-      });
-    } else {
-      if (typeModal) {
-        setTypeModal("");
-      }
-    }
-  }, [successType]);
-
-  useEffect(() => {
-    if (errorUpdateUser) {
-      toggleIsMassage(errorUpdateUser);
-      dispatch({
-        type: USER_UPDATE_PROFILE_RESET,
-      });
-    }
-  }, [errorUpdateUser]);
 
   useEffect(() => {
     if (user.name) {
@@ -203,9 +166,6 @@ const ProfileTab = ({ result }) => {
           </div>
         </form>
       )}
-
-      <MessageModal type="" />
-      <SmallModal result={typeModal === "update_info"} type="" />
     </section>
   );
 };

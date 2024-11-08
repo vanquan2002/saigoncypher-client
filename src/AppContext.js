@@ -9,6 +9,7 @@ export const AppProvider = ({ children }) => {
   const [numberColList, setNumberColList] = useState(1);
   const [numberTabNumber, setNumberTabNumber] = useState(1);
   const [isReviewModal, setIsReviewModal] = useState(false);
+  const [isUpAvatarModal, setIsUpAvatarModal] = useState(false);
 
   const toggleIsMassage = (text) => setIsMassage(text);
   const toggleIsSmallModal = (text) => setIsSmallModal(text);
@@ -16,6 +17,7 @@ export const AppProvider = ({ children }) => {
   const toggleNumberColList = (num) => setNumberColList(num);
   const toggleNumberTabNumber = (num) => setNumberTabNumber(num);
   const toggleIsReviewModal = (bol) => setIsReviewModal(bol);
+  const toggleIsUpAvatarModal = (bol) => setIsUpAvatarModal(bol);
 
   useEffect(() => {
     if (isSmallModal) {
@@ -49,6 +51,8 @@ export const AppProvider = ({ children }) => {
         toggleNumberTabNumber,
         isReviewModal,
         toggleIsReviewModal,
+        isUpAvatarModal,
+        toggleIsUpAvatarModal,
       }}
     >
       {children}

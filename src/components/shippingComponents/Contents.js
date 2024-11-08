@@ -110,7 +110,7 @@ const Contents = () => {
   const debouncedUpdateProfile = useMemo(
     () =>
       debounce((result) => {
-        dispatch(updateProfile(result, 3));
+        dispatch(updateProfile(result, 4));
       }, 200),
     []
   );

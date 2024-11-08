@@ -30,7 +30,7 @@ const ShippingTab = ({ result }) => {
     error: errorUserDetails,
   } = userDetails;
   const userUpdate = useSelector((state) => state.userUpdate);
-  const { loading: loadingUserUpdate, successType } = userUpdate;
+  const { loading: loadingUserUpdate } = userUpdate;
   const provinceList = useSelector((state) => state.provinceList);
   const {
     loading: loadingProvinceList,
@@ -45,14 +45,13 @@ const ShippingTab = ({ result }) => {
   } = districtList;
   const wardList = useSelector((state) => state.wardList);
   const { loading: loadingWardList, wards, error: errorWard } = wardList;
+  const { isSmallModal, toggleIsSmallModal } = useContext(AppContext);
   const [isInitialDistrict, setIsInitialDistrict] = useState(true);
   const [isInitialWard, setIsInitialWard] = useState(true);
   const [isDistrict, setIsDistrict] = useState(false);
   const [isWard, setIsWard] = useState(false);
   const [selectedProvince, setSelectedProvince] = useState(null);
   const [selectedDistrict, setSelectedDistrict] = useState(null);
-  const [typeModal, setTypeModal] = useState("");
-  const { isSmallModal, toggleIsSmallModal } = useContext(AppContext);
   const itemSelectForm = [
     {
       ariaLabel: "Chọn tỉnh/thành",
@@ -142,9 +141,6 @@ const ShippingTab = ({ result }) => {
       if (isSmallModal) {
         toggleIsSmallModal("");
       }
-      if (typeModal) {
-        setTypeModal("");
-      }
       debouncedUpdateProfile(values);
     },
   });
@@ -232,20 +228,6 @@ const ShippingTab = ({ result }) => {
   }, [provinces, user]);
 
   useEffect(() => {
-    if (successType === 2) {
-      toggleIsSmallModal("Cập nhật địa chỉ đạt hàng thành công!");
-      setTypeModal("update_shipping");
-      dispatch({
-        type: USER_UPDATE_PROFILE_RESET,
-      });
-    } else {
-      if (typeModal) {
-        setTypeModal("");
-      }
-    }
-  }, [successType]);
-
-  useEffect(() => {
     if (user.deliveryInformation && user.deliveryInformation.fullName) {
       formik.setFieldValue("fullName", user.deliveryInformation.fullName);
     }
@@ -302,8 +284,6 @@ const ShippingTab = ({ result }) => {
           </div>
         </>
       )}
-
-      <SmallModal result={typeModal === "update_shipping"} type="" />
     </section>
   );
 };
