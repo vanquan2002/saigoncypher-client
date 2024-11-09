@@ -89,9 +89,6 @@ const ProfileTab = ({ result }) => {
 
   useEffect(() => {
     if (result) {
-      if (user.name || user.email) {
-        dispatch({ type: USER_DETAILS_RESET });
-      }
       dispatch(profile());
     }
   }, [result]);

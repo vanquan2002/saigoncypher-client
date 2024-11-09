@@ -231,7 +231,7 @@ const Contents = () => {
   }, []);
 
   useEffect(() => {
-    if (successType === 3) {
+    if (successType === 4) {
       navigate("/placeorder");
       dispatch({
         type: USER_UPDATE_PROFILE_RESET,

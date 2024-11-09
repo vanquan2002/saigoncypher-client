@@ -241,9 +241,6 @@ const ShippingTab = ({ result }) => {
 
   useEffect(() => {
     if (result) {
-      if (user.deliveryInformation) {
-        dispatch({ type: USER_DETAILS_RESET });
-      }
       dispatch(profile());
       dispatch(listProvince());
     }

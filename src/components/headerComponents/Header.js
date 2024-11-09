@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RiSearchLine } from "react-icons/ri";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { AppContext } from "../../AppContext";
@@ -8,6 +8,7 @@ import { RxDividerVertical } from "react-icons/rx";
 import { RxSquare } from "react-icons/rx";
 import { GrSplit } from "react-icons/gr";
 import { FaRegUser } from "react-icons/fa";
+import { logout } from "./../../redux/actions/UserActions";
 
 const Header = ({ isTypeCol }) => {
   const { toggleNumberColList } = useContext(AppContext);
@@ -16,7 +17,11 @@ const Header = ({ isTypeCol }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const [keyword, setKeyword] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isDropdown, setIsDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+  const buttonRef = useRef(null);
 
   const submitHandle = (e) => {
     e.preventDefault();
@@ -26,6 +31,37 @@ const Header = ({ isTypeCol }) => {
       navigate(`/products`);
     }
   };
+
+  const openDropdownHandle = () => {
+    if (userInfo) {
+      setIsDropdown(!isDropdown);
+    } else {
+      navigate(`/login`);
+    }
+  };
+
+  const handleClickOutside = (e) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(e.target) &&
+      buttonRef.current &&
+      !buttonRef.current.contains(e.target)
+    ) {
+      setIsDropdown(false);
+    }
+  };
+
+  const logoutHandle = () => {
+    dispatch(logout());
+    setIsDropdown(false);
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <header
@@ -43,22 +79,52 @@ const Header = ({ isTypeCol }) => {
 
       <nav className="order-none md:order-last">
         <ul className="flex justify-end items-center gap-4 md:gap-5">
-          <li>
-            <Link
-              to={`${userInfo ? "/profile" : "/login"}`}
-              aria-label={`${
-                userInfo
-                  ? `Xem thông tin của ${userInfo.name}`
-                  : "Chưa đăng nhập. Đi đến trang đăng nhập."
-              }`}
-              className="hover:underline"
+          <li className="w-28 flex justify-end relative">
+            <button
+              ref={buttonRef}
+              type="button"
+              aria-label="Mở tùy chọn"
+              aria-haspopup="true"
+              className="hover:underline line-clamp-1 min-w-1"
+              onClick={() => openDropdownHandle()}
             >
               <FaRegUser className="text-[1.2rem] md:hidden" />
-              <span className="lowercase hidden md:block text-nowrap line-clamp-1 md:max-w-[120px] lg:max-w-[200px]">
-                {userInfo ? `${userInfo.name}.` : "Đăng nhập."}
+              <span className="hidden md:block lowercase">
+                {userInfo ? `${userInfo.name}` : "Đăng nhập."}
               </span>
-            </Link>
+            </button>
+
+            <ul
+              ref={dropdownRef}
+              className={`bg-white border border-black absolute top-8 right-0 py-2 px-3 ${
+                isDropdown
+                  ? "pointer-events-auto opacity-100"
+                  : "pointer-events-none opacity-0"
+              } duration-200`}
+              role="menu"
+            >
+              <li>
+                <Link
+                  to="/profile"
+                  aria-label="Đi đến trang thông tin cá nhân"
+                  className="hover:underline lowercase text-nowrap"
+                >
+                  Thông tin cá nhân
+                </Link>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  aria-label="Đăng xuất"
+                  onClick={() => logoutHandle()}
+                  className="hover:underline lowercase"
+                >
+                  Đăng xuất.
+                </button>
+              </li>
+            </ul>
           </li>
+
           <li>
             <Link
               to="/cart"

@@ -102,9 +102,6 @@ export const logout = () => (dispatch) => {
     type: USER_DETAILS_RESET,
   });
   dispatch({
-    type: USER_UPDATE_PROFILE_RESET,
-  });
-  dispatch({
     type: ORDER_DETAILS_RESET,
   });
   dispatch({
