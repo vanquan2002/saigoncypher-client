@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { RiSearchLine } from "react-icons/ri";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { AppContext } from "../../AppContext";
-import { RxDividerVertical } from "react-icons/rx";
 import { RxSquare } from "react-icons/rx";
 import { GrSplit } from "react-icons/gr";
 import { FaRegUser } from "react-icons/fa";
 import { logout } from "./../../redux/actions/UserActions";
+import { MdClose } from "react-icons/md";
 
 const Header = ({ isTypeCol }) => {
   const { toggleNumberColList } = useContext(AppContext);
@@ -64,9 +64,7 @@ const Header = ({ isTypeCol }) => {
   }, []);
 
   return (
-    <header
-      className={`z-10 fixed top-0 left-0 w-full flex flex-wrap justify-between items-center p-5 backdrop-blur-sm bg-white/30`}
-    >
+    <header className="z-10 fixed top-0 left-0 w-full flex flex-wrap justify-between items-center p-5 backdrop-blur-sm bg-white/30">
       <Link
         to="/"
         aria-label="Logo của Saigoncypher. Đi đến trang chủ"
@@ -144,7 +142,7 @@ const Header = ({ isTypeCol }) => {
       </nav>
 
       <form
-        title="Form tìm kiếm sản phẩm"
+        title="Ô tìm kiếm sản phẩm"
         className="mt-4 md:mt-0 py-[6px] w-full md:w-[36%] lg:w-[28%] flex items-center border border-black"
         onSubmit={(e) => submitHandle(e)}
       >
@@ -155,18 +153,27 @@ const Header = ({ isTypeCol }) => {
           id="search-input"
           autoComplete="off"
           onChange={(e) => setKeyword(e.target.value)}
-          className="w-full bg-transparent outline-none placeholder:text-sm"
-          type="search"
+          className="w-full bg-transparent outline-none text-[15px]"
+          type="text"
           placeholder="tìm kiếm sản phẩm..."
           aria-label="Ô tìm kiếm sản phẩm"
           value={keyword}
         />
         <div className="flex items-center">
-          <RxDividerVertical className="text-xl text-gray-400" />
+          {keyword && (
+            <button
+              type="button"
+              onClick={() => setKeyword("")}
+              aria-label="Xóa nội dung tìm kiếm"
+              className="px-1"
+            >
+              <MdClose className="text-lg" />
+            </button>
+          )}
           <button
             type="submit"
             aria-label={`Tìm kiếm sản phẩm với từ khóa ${keyword}`}
-            className="lowercase text-nowrap pr-2 hover:underline"
+            className="lowercase text-nowrap px-2 hover:underline border-l border-black text-[15px]"
           >
             Tìm kiếm.
           </button>

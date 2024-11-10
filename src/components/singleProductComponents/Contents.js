@@ -118,147 +118,152 @@ const Contents = () => {
   }, [size]);
 
   return (
-    <main className="md:px-20">
-      <div className="mx-5 md:mx-0 mt-32 md:mt-28">
+    <main>
+      <div className="mx-5 mt-32 md:mt-28">
         <Breadcrumbs namePages={namePages} />
       </div>
-      {loading ? (
-        <ProductDetailSkeleton />
-      ) : error ? (
-        <div className="mx-5 md:mx-0 mt-5 md:mt-10">
-          <Error error={error} />
-        </div>
-      ) : (
-        <article>
-          <div className="mt-5 md:mt-10 flex flex-col lg:flex-row gap-4 md:gap-10 lg:gap-20">
-            <section className="w-full lg:w-2/5">
-              <ImageList images={product.images} />
-            </section>
 
-            <section className="px-5 md:px-0 flex flex-col gap-[10px] w-full lg:w-3/5">
-              <h1 className="lowercase text-2xl font-medium">
-                {product.name}.{" "}
-                <span className="bg-yellow-400 text-black text-xs font-medium px-1.5 py-1">
-                  freeship tp.<span className="uppercase">hcm</span>.
-                </span>
-              </h1>
-              <div className="grid grid-cols-3">
-                <span className="lowercase col-span-1">Giá:</span>
-                <p className="lowercase col-span-2 font-medium">
-                  {formatCurrency(product.price)}
-                </p>
-              </div>
-              <div className="grid grid-cols-3">
-                <span className="lowercase col-span-1">Màu:</span>
-                <p className="lowercase col-span-2">{product.color}.</p>
-              </div>
-              <div className="grid grid-cols-3">
-                <span className="lowercase col-span-1">Mô tả:</span>
-                <div className="flex flex-col items-start col-span-2">
-                  <p
-                    ref={descriptionRef}
-                    className={`lowercase ${
-                      isDescriptionMore ? "line-clamp-none" : "line-clamp-3"
-                    }`}
-                  >
-                    {product.description}.
+      <article>
+        {loading ? (
+          <div className="md:mx-20 mt-5 md:mt-10">
+            <ProductDetailSkeleton />
+          </div>
+        ) : error ? (
+          <div className="mx-5 mt-5 md:mt-10">
+            <Error error={error} />
+          </div>
+        ) : (
+          <div className="md:mx-20 mt-5 md:mt-10">
+            <div className="flex flex-col lg:flex-row gap-4 md:gap-10 lg:gap-20">
+              <section className="w-full lg:w-2/5">
+                <ImageList images={product.images} />
+              </section>
+
+              <section className="px-5 md:px-0 flex flex-col gap-[10px] w-full lg:w-3/5">
+                <h1 className="lowercase text-2xl font-medium">
+                  {product.name}{" "}
+                  <span className="ml-1 bg-yellow-400 text-black text-xs font-medium px-1.5 py-1">
+                    freeship tp.<span className="uppercase">hcm</span>.
+                  </span>
+                </h1>
+                <div className="grid grid-cols-3">
+                  <span className="lowercase col-span-1">Giá:</span>
+                  <p className="lowercase col-span-2 font-medium">
+                    {formatCurrency(product.price)}
                   </p>
-
-                  {isOverflowing && (
-                    <button
-                      type="button"
-                      aria-label={`${
-                        isDescriptionMore ? "Rút gọn" : "Xem thêm"
-                      } nội dung mô tả`}
-                      className="lowercase underline"
-                      onClick={() => setIsDescriptionMore(!isDescriptionMore)}
+                </div>
+                <div className="grid grid-cols-3">
+                  <span className="lowercase col-span-1">Màu:</span>
+                  <p className="lowercase col-span-2">{product.color}.</p>
+                </div>
+                <div className="grid grid-cols-3">
+                  <span className="lowercase col-span-1">Mô tả:</span>
+                  <div className="flex flex-col items-start col-span-2">
+                    <p
+                      ref={descriptionRef}
+                      className={`lowercase ${
+                        isDescriptionMore ? "line-clamp-none" : "line-clamp-3"
+                      }`}
                     >
-                      {isDescriptionMore ? "Rút gọn" : "Xem thêm"}
-                    </button>
-                  )}
-                </div>
-              </div>
-              <div className="grid grid-cols-3">
-                <span className="lowercase col-span-1">Chính sách:</span>
-                <p className="lowercase col-span-2">
-                  Đổi trả miễn phí trong 7 ngày.
-                </p>
-              </div>
-              <div className="grid grid-cols-3">
-                <span className="lowercase col-span-1">Đánh giá:</span>
-                <div className="flex items-center gap-1">
-                  <div className="flex items-center gap-[2px]">
-                    <LiaStarSolid />
-                    <span>{product.rating}/5</span>
-                  </div>
-                  <span>({product.numReviews} lượt)</span>
-                </div>
-              </div>
+                      {product.description}.
+                    </p>
 
-              <div
-                className={`w-full ${
-                  isCartModal ? "block z-30 p-5" : "hidden"
-                } md:block mt-8 bg-white w-full fixed left-0 bottom-0 md:static`}
-              >
-                <ul className="grid grid-cols-2 gap-3">
-                  {product.sizes?.map((item, i) => (
-                    <li key={i}>
+                    {isOverflowing && (
                       <button
                         type="button"
-                        aria-label={`Nhấn chọn size ${item.size}`}
-                        onClick={() => setSize(item.size)}
-                        className={`text-lg border border-black flex w-full items-center justify-center h-10 ${
-                          item.size === size
-                            ? "bg-black text-white"
-                            : "text-black hover:underline"
-                        }`}
+                        aria-label={`${
+                          isDescriptionMore ? "Rút gọn" : "Xem thêm"
+                        } nội dung mô tả`}
+                        className="lowercase underline"
+                        onClick={() => setIsDescriptionMore(!isDescriptionMore)}
                       >
-                        <span className="lowercase">{item.size}</span>
+                        {isDescriptionMore ? "Rút gọn" : "Xem thêm"}
                       </button>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mt-2">
-                  {isSelectSize && (
-                    <div className="flex items-center gap-1">
-                      <PiWarningCircleLight className="text-red-500" />
-                      <span className="md:hidden text-[13px] text-red-500">
-                        Qúy khách chưa chọn size!
-                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="grid grid-cols-3">
+                  <span className="lowercase col-span-1">Chính sách:</span>
+                  <p className="lowercase col-span-2">
+                    Đổi trả miễn phí trong 7 ngày.
+                  </p>
+                </div>
+                <div className="grid grid-cols-3">
+                  <span className="lowercase col-span-1">Đánh giá:</span>
+                  <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-[2px]">
+                      <LiaStarSolid />
+                      <span>{product.rating}/5</span>
                     </div>
-                  )}
-                  <button
-                    type="button"
-                    className="lowercase underline text-[13px]"
-                  >
-                    Hướng dẫn chọn size.
-                  </button>
+                    <span>({product.numReviews} lượt)</span>
+                  </div>
                 </div>
 
-                <button
-                  type="button"
-                  aria-label="Nhấn thêm vào giỏ hàng"
-                  className={`w-full h-14 mt-10 duration-300 flex justify-center items-center border border-black hover:underline ${
-                    size ? "bg-black text-white" : "text-black"
-                  }`}
-                  onClick={() => addToCartHandle()}
+                <div
+                  className={`w-full ${
+                    isCartModal ? "block z-30 p-5" : "hidden"
+                  } md:block mt-8 bg-white w-full fixed left-0 bottom-0 md:static`}
                 >
-                  {loadingAddCart ? (
-                    <span className="lowercase text-lg">
-                      Đang thêm vào giỏ...
-                    </span>
-                  ) : (
-                    <span className="lowercase text-lg">Thêm vào giỏ.</span>
-                  )}
-                </button>
-              </div>
-            </section>
+                  <ul className="grid grid-cols-2 gap-3">
+                    {product.sizes?.map((item, i) => (
+                      <li key={i}>
+                        <button
+                          type="button"
+                          aria-label={`Nhấn chọn size ${item.size}`}
+                          onClick={() => setSize(item.size)}
+                          className={`text-lg border border-black flex w-full items-center justify-center h-10 ${
+                            item.size === size
+                              ? "bg-black text-white"
+                              : "text-black hover:underline"
+                          }`}
+                        >
+                          <span className="lowercase">{item.size}</span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="mt-2">
+                    {isSelectSize && (
+                      <div className="flex items-center gap-1">
+                        <PiWarningCircleLight className="text-red-500" />
+                        <span className="md:hidden text-[13px] text-red-500">
+                          Qúy khách chưa chọn size!
+                        </span>
+                      </div>
+                    )}
+                    <button
+                      type="button"
+                      className="lowercase underline text-[13px]"
+                    >
+                      Hướng dẫn chọn size.
+                    </button>
+                  </div>
+
+                  <button
+                    type="button"
+                    aria-label="Nhấn thêm vào giỏ hàng"
+                    className={`w-full h-14 mt-10 duration-300 flex justify-center items-center border border-black hover:underline ${
+                      size ? "bg-black text-white" : "text-black"
+                    }`}
+                    onClick={() => addToCartHandle()}
+                  >
+                    {loadingAddCart ? (
+                      <span className="lowercase text-lg">
+                        Đang thêm vào giỏ...
+                      </span>
+                    ) : (
+                      <span className="lowercase text-lg">Thêm vào giỏ.</span>
+                    )}
+                  </button>
+                </div>
+              </section>
+            </div>
+            <Comments product={product} />
           </div>
-          <Comments product={product} />
-          <RelatedProducts productId={id} />
-        </article>
-      )}
+        )}
+        <RelatedProducts productId={id} />
+      </article>
 
       <MessageModal type="" />
       <SmallModal result={typeModal === "add_item_cart"} type={typeModal} />

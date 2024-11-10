@@ -2,7 +2,7 @@ import React from "react";
 
 const ProductDetailSkeleton = () => {
   return (
-    <div className="mt-5 md:mt-10 flex flex-col lg:flex-row gap-5 md:gap-10 lg:gap-20 animate-pulse">
+    <div className="flex flex-col lg:flex-row gap-5 md:gap-10 lg:gap-20 animate-pulse">
       <div className="lg:w-2/5 h-[550px] bg-slate-100"></div>
       <div className="lg:w-3/5 px-5 md:px-0">
         <div className="flex flex-col gap-[13px]">

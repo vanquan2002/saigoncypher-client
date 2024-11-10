@@ -59,7 +59,7 @@ const Contents = () => {
   }, [keyword]);
 
   return (
-    <main className="md:px-20">
+    <main className="md:px-5">
       <div className="mx-5 md:mx-0 mt-40 md:mt-28">
         <Breadcrumbs namePages={updatedPages} />
       </div>
@@ -67,7 +67,9 @@ const Contents = () => {
         Tất cả sản phẩm.
       </h3>
       {loading ? (
-        <ProductListSkeleton numberColList={numberColList} />
+        <div className="mt-5 md:mt-10">
+          <ProductListSkeleton numberColList={numberColList} />
+        </div>
       ) : error ? (
         <div className="mx-5 md:mx-0 mt-5 md:mt-10">
           <Error error={error} />
@@ -80,9 +82,9 @@ const Contents = () => {
                 numberColList === 2
                   ? "gap-x-[2px] gap-y-5 border-x-2 border-white"
                   : "gap-5"
-              } md:gap-x-5 md:gap-y-8`}
+              } md:gap-x-4 md:gap-y-8`}
             >
-              {products.map((product, i) => (
+              {products.slice(0, 8).map((product, i) => (
                 <li key={i}>
                   <Link to={`/products/${product._id}/detail`}>
                     <img
@@ -93,36 +95,26 @@ const Contents = () => {
                     />
                   </Link>
                   <div
-                    className={`mt-1 ${
-                      numberColList === 2 ? "px-2" : "px-[10px]"
+                    className={`mt-1 md:mt-2 flex flex-col md:gap-0.5 ${
+                      numberColList === 2 ? "px-2" : "px-2.5"
                     } md:px-0`}
                   >
                     <Link to={`/products/${product._id}/detail`}>
                       <h2
                         className={`${
-                          numberColList === 2 ? "text-base" : "text-[19px]"
-                        } md:text-[19px] cursor-pointer line-clamp-1 hover:underline lowercase`}
+                          numberColList === 2 ? "text-base" : "text-lg"
+                        } md:text-base cursor-pointer line-clamp-1 hover:underline lowercase`}
                       >
                         {product.name}.
                       </h2>
                     </Link>
-                    <div className="flex justify-between items-end">
-                      <span
-                        className={`${
-                          numberColList === 2 ? "text-sm" : "text-base"
-                        } md:text-base font-medium line-clamp-1 lowercase`}
-                      >
-                        {formatCurrency(product.price)}
-                      </span>
-                      <div
-                        className={`${
-                          numberColList === 2 ? "text-sm" : "text-[15px]"
-                        } md:text-[15px] flex items-center gap-[2px]`}
-                      >
-                        <LiaStarSolid />
-                        <span>{product.rating}/5</span>
-                      </div>
-                    </div>
+                    <span
+                      className={`${
+                        numberColList === 2 ? "text-sm" : "text-base"
+                      } md:text-sm lowercase`}
+                    >
+                      {formatCurrency(product.price)}
+                    </span>
                   </div>
                 </li>
               ))}

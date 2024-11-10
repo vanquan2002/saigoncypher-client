@@ -104,9 +104,11 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="flex justify-center py-2 mt-16 bg-gray-100">
-        <span className="text-sm">@2024.</span>
-        <span className="text-sm">Thiết kế web bởi Phạm Văn Quân</span>
+      <div className="flex justify-center mt-16 pb-2">
+        <span className="text-sm text-gray-400">@2024.</span>
+        <span className="text-sm text-gray-400">
+          Thiết kế web bởi Phạm Văn Quân
+        </span>
       </div>
     </footer>
   );
