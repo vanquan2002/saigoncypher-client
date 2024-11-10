@@ -91,7 +91,7 @@ const Contents = () => {
                       className="w-full cursor-pointer"
                       src={product.thumbImage}
                       alt={`Hình ảnh của sản phẩm ${product.name}`}
-                      title={`Nhấn để xem chi tiết về ${product.name}`}
+                      title={`Xem chi tiết ${product.name}`}
                     />
                   </Link>
                   <div

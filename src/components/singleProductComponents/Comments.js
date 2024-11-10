@@ -31,15 +31,14 @@ const Comments = ({ product }) => {
         Đánh giá về sản phẩm.
       </h3>
 
-      <ul className="mt-5 md:mt-10 grid grid-cols-1 lg:grid-cols-2 border-dashed md:border-l border-t border-gray-300">
+      <ul className="mt-5 md:mt-10 grid grid-cols-1 lg:grid-cols-2 gap-5">
         {product.reviews.length === 0 ? (
-          <li className="text-gray-700">Chưa có đánh giá nào cả!</li>
+          <li className="text-gray-700 border border-gray-300 p-4">
+            Chưa có đánh giá nào cả!
+          </li>
         ) : (
           product.reviews.map((review, i) => (
-            <li
-              key={i}
-              className="flex gap-3 border-dashed md:border-r border-b border-gray-300 p-4"
-            >
+            <li key={i} className="flex gap-3 border border-gray-300 p-4">
               <div className="h-10 min-w-10 text-white bg-black rounded-full flex justify-center items-center mt-2">
                 {review.name.substring(0, 2)}
               </div>

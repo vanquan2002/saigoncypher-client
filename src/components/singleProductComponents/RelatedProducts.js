@@ -38,7 +38,7 @@ const RelatedProducts = ({ productId }) => {
                     className="w-full cursor-pointer"
                     src={product.thumbImage}
                     alt={`Hình ảnh của sản phẩm ${product.name}`}
-                    title={`Nhấn để xem chi tiết về ${product.name}`}
+                    title={`Xem chi tiết ${product.name}`}
                   />
                 </Link>
                 <div className="mt-1 md:mt-2 flex flex-col md:gap-0.5 px-2 md:px-0">

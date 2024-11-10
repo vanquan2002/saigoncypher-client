@@ -40,13 +40,15 @@ export const orderDetailsReducer = (
 ) => {
   switch (action.type) {
     case ORDER_DETAILS_REQUEST:
-      return { loading: true };
+      return { ...state, loading: true };
     case ORDER_DETAILS_SUCCESS:
       return { loading: false, order: action.payload };
     case ORDER_DETAILS_FAIL:
       return { loading: false, error: action.payload };
     case ORDER_DETAILS_RESET:
-      return {};
+      return {
+        order: { orderItems: [], deliveryInformation: {}, orderStatus: {} },
+      };
     default:
       return state;
   }
