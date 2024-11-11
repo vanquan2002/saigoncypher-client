@@ -26,7 +26,7 @@ const Footer = () => {
       link: "/",
     },
     {
-      name: "Đổi, trả hàng và hoàn tiền",
+      name: "Chính sách đổi, trả hàng",
       link: "/",
     },
     {
@@ -40,7 +40,7 @@ const Footer = () => {
 
   return (
     <footer
-      className={`${
+      className={`md:px-5 ${
         lastSegment === "cart" ||
         lastSegment === "shipping" ||
         lastSegment === "placeorder"
@@ -50,7 +50,7 @@ const Footer = () => {
           : "mb-0"
       }`}
     >
-      <div className="px-5 md:px-20 mt-72 flex flex-col gap-20 md:gap-32">
+      <div className="border-t border-gray-300 pt-5 md:pt-10 mt-72 flex flex-col gap-20 md:gap-32">
         <div className="flex justify-center gap-5 md:gap-8">
           {socials.map((item, i) => (
             <a
@@ -59,34 +59,37 @@ const Footer = () => {
               rel="noopener noreferrer"
               href={item.link}
               aria-label={`Đi đến trang ${item.name}`}
-              className="lowercase hover:underline cursor-pointer flex items-center"
+              className="lowercase text-[15px] hover:underline cursor-pointer flex items-center"
             >
-              {item.name}.
+              {item.name}
             </a>
           ))}
         </div>
 
         <div className="flex gap-1 flex-col items-center">
           <div>
-            <span className="lowercase">Phone:</span>
+            <span className="lowercase text-[15px]">SĐT / Zalo:</span>
             <a
               aria-label="Truy cập số điện thoại của SaigonCypher: 0905260554"
               href="tel:0905260554"
-              className="hover:underline cursor-pointer ml-1"
+              className="text-[15px] hover:underline cursor-pointer ml-1"
             >
               0905260554
             </a>
           </div>
           <div>
-            <span className="lowercase">Email:</span>
+            <span className="lowercase text-[15px]">Email:</span>
             <a
               aria-label="Truy cập email của SaigonCypher: support.saigoncypher@gmail.com"
               href="mailto:saigoncyphersupport@gmail.com"
-              className="hover:underline cursor-pointer ml-1"
+              className="text-[15px] hover:underline cursor-pointer ml-1"
             >
               saigoncyphersupport@gmail.com
             </a>
           </div>
+          <span className="mt-0.5 lowercase text-[13px] text-gray-400">
+            Hoạt động từ thứ 2 - thứ 7, 8am - 10pm
+          </span>
         </div>
 
         <div className="flex justify-center flex-wrap gap-x-5 md:gap-x-8 gap-y-1">
@@ -96,19 +99,18 @@ const Footer = () => {
               to={item.link}
               target="_blank"
               aria-label={`Đi đến trang ${item.name}`}
-              className="lowercase hover:underline cursor-pointer flex items-center"
+              className="lowercase text-[15px] hover:underline cursor-pointer flex items-center"
             >
-              {item.name}.
+              {item.name}
             </Link>
           ))}
         </div>
       </div>
 
-      <div className="flex justify-center mt-16 pb-2">
-        <span className="text-sm text-gray-400">@2024.</span>
-        <span className="text-sm text-gray-400">
-          Thiết kế web bởi Phạm Văn Quân
-        </span>
+      <div className="flex justify-center gap-2 mt-16 pb-2">
+        <span className="text-sm text-gray-400">@2024</span>
+        <span className="text-sm text-gray-400">-</span>
+        <span className="text-sm text-gray-400">SAIGONCYPHER</span>
       </div>
     </footer>
   );

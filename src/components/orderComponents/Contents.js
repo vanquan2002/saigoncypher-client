@@ -241,13 +241,19 @@ const Contents = () => {
                       <div className="flex flex-col items-start">
                         <Link to={`/products/${item.product}/detail`}>
                           <h2 className="lowercase text-lg leading-6 line-clamp-2 md:line-clamp-1 hover:underline">
-                            {item.name}.
+                            {item.name}
                           </h2>
                         </Link>
 
-                        <span className="lowercase text-[15px] mt-1">
-                          {item.size} - {item.color}.
-                        </span>
+                        <div className="mt-1 flex items-center gap-2">
+                          <span className="uppercase text-[15px]">
+                            {item.size}
+                          </span>
+                          <span className="text-xs">|</span>
+                          <span className="lowercase text-[15px]">
+                            {item.color}
+                          </span>
+                        </div>
                       </div>
                       <div className="flex justify-between items-end">
                         <span className="lowercase text-[15px]">
@@ -298,7 +304,7 @@ const Contents = () => {
                     {order.deliveryInformation.district},
                   </span>
                   <span className="text-[15px]">
-                    {order.deliveryInformation.province}.
+                    {order.deliveryInformation.province}
                   </span>
                 </li>
 

@@ -44,7 +44,7 @@ const RelatedProducts = ({ productId }) => {
                 <div className="mt-1 md:mt-2 flex flex-col md:gap-0.5 px-2 md:px-0">
                   <Link to={`/products/${product._id}/detail`}>
                     <h2 className="cursor-pointer line-clamp-1 hover:underline lowercase">
-                      {product.name}.
+                      {product.name}
                     </h2>
                   </Link>
                   <span className="text-sm">
@@ -56,7 +56,7 @@ const RelatedProducts = ({ productId }) => {
           </ul>
         </div>
       ) : (
-        <h5 className="lowercase text-gray-600 text-lg py-4 px-6 mt-5 md:mt-10 border-y md:border border-gray-300">
+        <h5 className="lowercase text-gray-600 mt-5 md:mt-10 px-5 md:px-0">
           Không có sản phẩm liên quan!
         </h5>
       )}

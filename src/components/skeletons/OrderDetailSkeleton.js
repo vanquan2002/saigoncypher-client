@@ -20,13 +20,12 @@ const OrderDetailSkeleton = () => {
                 <div className="col-span-2 md:col-span-4 flex flex-col justify-between p-4">
                   <div className="">
                     <div className="bg-gray-100 h-5 w-full"></div>
-                    <div className="bg-gray-100 h-5 w-1/3 mt-[2px] md:mt-0 block md:hidden"></div>
-                    <div className="bg-gray-100 h-[18px] w-1/3 mt-2"></div>
+                    <div className="bg-gray-100 h-[18px] w-1/2 md:w-1/3 mt-2.5"></div>
                   </div>
 
                   <div className="flex justify-between items-end">
-                    <div className="bg-gray-100 h-[18px] w-1/4"></div>
-                    <div className="bg-gray-100 h-6 w-1/4"></div>
+                    <div className="bg-gray-100 h-4 w-1/3"></div>
+                    <div className="bg-gray-100 h-6 w-1/3"></div>
                   </div>
 
                   <div className="bg-gray-100 h-9 w-full"></div>

@@ -100,7 +100,7 @@ const ReviewModal = ({ isOpen, product }) => {
             className="w-9"
           />
           <div className="flex flex-col">
-            <span className="lowercase text-sm">{product.name}.</span>
+            <span className="lowercase text-sm">{product.name}</span>
             <span className="lowercase text-sm">
               {product.color} | {formatCurrency(product.price)}
             </span>

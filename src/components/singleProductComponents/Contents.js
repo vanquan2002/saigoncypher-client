@@ -16,6 +16,8 @@ import ProductDetailSkeleton from "../skeletons/ProductDetailSkeleton";
 import SmallModal from "../modals/SmallModal";
 import debounce from "lodash.debounce";
 import Comments from "./Comments";
+import { IoAddSharp } from "react-icons/io5";
+import { VscAdd } from "react-icons/vsc";
 
 const Contents = () => {
   const { id } = useParams();
@@ -27,6 +29,7 @@ const Contents = () => {
   const [size, setSize] = useState("");
   const [isSelectSize, setIsSelectSize] = useState(false);
   const [typeModal, setTypeModal] = useState("");
+  const [numTab, setNumTab] = useState(null);
   const {
     toggleIsMassage,
     isCartModal,
@@ -38,6 +41,11 @@ const Contents = () => {
     { name: "Trang chủ", url: "/" },
     { name: "Tất cả sản phẩm", url: "/products" },
     { name: "Thông tin sản phẩm", url: "" },
+  ];
+  const informationTab = [
+    { title: "Mô tả sản phẩm", contents: product.description },
+    { title: "Chính sách đổi, trả", contents: product.returnPolicy },
+    { title: "Hướng dẫn bảo quản", contents: product.storageInstructions },
   ];
 
   const debouncedAddCartProduct = useMemo(
@@ -63,6 +71,14 @@ const Contents = () => {
       } else {
         toggleIsMassage("Quý khách chưa chọn size!");
       }
+    }
+  };
+
+  const openTabHandle = (num) => {
+    if (numTab === num) {
+      setNumTab(null);
+    } else {
+      setNumTab(num);
     }
   };
 
@@ -135,12 +151,11 @@ const Contents = () => {
                 <div className="mt-1 flex gap-2 items-center">
                   <p className="lowercase">{formatCurrency(product.price)}</p>
                   <span className="text-sm">|</span>
-                  <p className="lowercase">{product.color}.</p>
+                  <p className="lowercase">{product.color}</p>
                 </div>
-
                 <div
                   className={`w-full ${
-                    isCartModal ? "block z-30 p-5" : "hidden"
+                    isCartModal ? "block z-30 p-4" : "hidden"
                   } md:block md:mt-8 bg-white fixed left-0 bottom-0 md:static`}
                 >
                   <span className="lowercase">Chọn kích cỡ</span>
@@ -170,19 +185,21 @@ const Contents = () => {
                       </span>
                     </div>
                   )}
-                  <div className="flex flex-col md:flex-row items-start justify-between gap-x-2 gap-y-0.5 mt-2">
+                  <div className="flex flex-col md:flex-row items-start md:items-center gap-x-2 gap-y-0.5 mt-2">
                     <button
                       type="button"
                       className="lowercase underline text-sm"
                     >
                       Hướng dẫn chọn kích cỡ.
                     </button>
-                    <p className="lowercase text-sm text-gray-500">
-                      Thông số người mẫu: cỡ{" "}
-                      <span className="uppercase">S</span>, cao 160cm
+                    <p className="lowercase text-xs text-gray-400">
+                      (Số đo người mẫu: cỡ
+                      <span className="uppercase ml-1">
+                        {product.model.size}
+                      </span>
+                      , cao {product.model.height})
                     </p>
                   </div>
-
                   <button
                     type="button"
                     aria-label="Nhấn thêm vào giỏ hàng"
@@ -192,14 +209,47 @@ const Contents = () => {
                     onClick={() => addToCartHandle()}
                   >
                     {loadingAddCart ? (
-                      <span className="lowercase text-lg">
+                      <span className="lowercase text-[17px]">
                         Đang thêm vào giỏ...
                       </span>
                     ) : (
-                      <span className="lowercase text-lg">Thêm vào giỏ.</span>
+                      <span className="lowercase text-[17px]">
+                        Thêm vào giỏ.
+                      </span>
                     )}
                   </button>
                 </div>
+
+                <ul className="mt-10 border-t border-gray-300">
+                  {informationTab.map((item, i) => (
+                    <li key={i} className="border-b border-gray-300">
+                      <button
+                        type="button"
+                        aria-label="Hiển thị nội dung của mô tả sản phẩm"
+                        onClick={() => openTabHandle(i + 1)}
+                        className="w-full flex items-center justify-between py-2"
+                      >
+                        <span className="text-[15px] lowercase">
+                          {item.title}
+                        </span>
+                        <VscAdd
+                          className={`text-lg transform transition-transform duration-300 ${
+                            numTab === i + 1 ? "rotate-45" : "rotate-0"
+                          }`}
+                        />
+                      </button>
+                      <p
+                        className={`text-sm font-light duration-300 ${
+                          numTab === i + 1
+                            ? "max-h-[250px] pb-3"
+                            : "max-h-0 overflow-hidden "
+                        }`}
+                      >
+                        {item.contents}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
               </section>
             </div>
             <Comments product={product} />

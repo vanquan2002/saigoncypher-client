@@ -98,7 +98,7 @@ const Contents = () => {
                   <div className="w-full flex justify-between items-start">
                     <Link to={`/products/${item.product}/detail`}>
                       <h2 className="lowercase text-lg font-medium leading-6 line-clamp-2 hover:underline">
-                        {item.name}.
+                        {item.name}
                       </h2>
                     </Link>
                     <button
@@ -112,9 +112,11 @@ const Contents = () => {
                     </button>
                   </div>
 
-                  <span className="lowercase text-[15px] mt-1 md:mt-2">
-                    {item.size} - {item.color}.
-                  </span>
+                  <div className="mt-1 flex items-center gap-2">
+                    <span className="uppercase text-[15px]">{item.size}</span>
+                    <span className="text-xs">|</span>
+                    <span className="lowercase text-[15px]">{item.color}</span>
+                  </div>
 
                   <span className="lowercase text-lg">
                     {formatCurrency(item.price * item.qty)}

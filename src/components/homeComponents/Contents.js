@@ -63,7 +63,7 @@ const Contents = () => {
                           numberColList === 2 ? "text-base" : "text-lg"
                         } md:text-base cursor-pointer line-clamp-1 hover:underline lowercase`}
                       >
-                        {product.name}.
+                        {product.name}
                       </h2>
                     </Link>
                     <span
@@ -90,7 +90,7 @@ const Contents = () => {
           </div>
         </div>
       ) : (
-        <h5 className="lowercase text-gray-600 text-lg py-4 px-6 mt-5 md:mt-10 border-y md:border border-gray-300">
+        <h5 className="lowercase text-gray-600 mt-5 md:mt-10 px-5 md:px-0">
           Chưa có sản phẩm nào cả!
         </h5>
       )}

@@ -12,11 +12,11 @@ const Pagination = ({ page, pages, keyword }) => {
   };
   return (
     pages > 1 && (
-      <div className="flex justify-center items-center gap-3">
+      <div className="flex justify-center items-center gap-2.5">
         <button
           type="button"
           onClick={() => handlePageClick(Math.max(1, page - 1))}
-          className={`text-black text-lg font-medium ${
+          className={`text-black text-[15px] font-medium hover:underline ${
             page === 1 && "text-opacity-30 pointer-events-none"
           } `}
         >
@@ -28,7 +28,7 @@ const Pagination = ({ page, pages, keyword }) => {
               type="button"
               key={x + 1}
               onClick={() => handlePageClick(x)}
-              className={`flex items-center justify-center font-medium text-lg px-2 w-[26px] h-[26px] ${
+              className={`flex items-center justify-center font-medium px-2 w-[26px] h-[26px] ${
                 x === page && "bg-gray-100"
               }`}
             >
@@ -39,7 +39,7 @@ const Pagination = ({ page, pages, keyword }) => {
         <button
           type="button"
           onClick={() => handlePageClick(Math.min(pages, page + 1))}
-          className={`text-black text-lg font-medium ${
+          className={`text-black text-[15px] font-medium hover:underline ${
             page === pages && "text-opacity-30 pointer-events-none"
           }`}
         >
