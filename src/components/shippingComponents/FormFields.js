@@ -10,30 +10,32 @@ const FormFields = ({
   districts,
   wards,
 }) => (
-  <ul className="grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10">
-    {itemInputForm.slice(0, 2).map((item, i) => (
-      <InputField key={i} item={item} formik={formik} />
-    ))}
+  <form aria-label="Form Chỉnh sửa địa chỉ đặt hàng">
+    <ul className="grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10">
+      {itemInputForm.slice(0, 2).map((item, i) => (
+        <InputField key={i} item={item} formik={formik} />
+      ))}
 
-    {itemSelectForm.map((item) => (
-      <SelectField
-        key={item.value}
-        item={item}
-        formik={formik}
-        options={
-          item.arrName === "provinces"
-            ? provinces
-            : item.arrName === "districts"
-            ? districts
-            : wards
-        }
-      />
-    ))}
+      {itemSelectForm.map((item) => (
+        <SelectField
+          key={item.value}
+          item={item}
+          formik={formik}
+          options={
+            item.arrName === "provinces"
+              ? provinces
+              : item.arrName === "districts"
+              ? districts
+              : wards
+          }
+        />
+      ))}
 
-    {itemInputForm.slice(-1).map((item, i) => (
-      <InputField key={i} item={item} formik={formik} />
-    ))}
-  </ul>
+      {itemInputForm.slice(-1).map((item, i) => (
+        <InputField key={i} item={item} formik={formik} />
+      ))}
+    </ul>
+  </form>
 );
 
 export default FormFields;

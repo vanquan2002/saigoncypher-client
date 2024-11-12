@@ -102,7 +102,7 @@ const ProfileTab = ({ result }) => {
       ) : errorDetailsUser ? (
         <span>error</span>
       ) : (
-        <form className="">
+        <form aria-label="Form chỉnh sửa thông tin cá nhân">
           <ul className="grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10">
             {itemInputForm.map((item, i) => (
               <li key={i} className="relative h-11 col-span-1">

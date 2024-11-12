@@ -24,10 +24,10 @@ function App() {
           path="/products/search/:keyword/page/:pageNumber"
           element={<ProductsScreen />}
         />
-        <Route path="/products/:id/detail" element={<SingleProductScreen />} />
+        <Route path="/product/:slug" element={<SingleProductScreen />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/cart/:id?" element={<CartScreen />} />
+        <Route path="/cart" element={<CartScreen />} />
 
         <Route
           path="/shipping"

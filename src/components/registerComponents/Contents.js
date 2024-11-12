@@ -70,7 +70,10 @@ const Contents = () => {
         <h2 className="lowercase text-center text-lg md:text-xl lg:text-2xl">
           Nhập thông tin cá nhân.
         </h2>
-        <form className="w-ful flex flex-col gap-12 mt-6">
+        <form
+          aria-label="Form đăng kí tài khoản"
+          className="w-ful flex flex-col gap-12 mt-6"
+        >
           <div className="relative h-11 w-full">
             <input
               type="text"
@@ -166,7 +169,7 @@ const Contents = () => {
           </div>
 
           <button
-            type="button"
+            type="submit"
             onClick={formik.handleSubmit}
             className="mt-6 py-2.5 lowercase hover:underline border border-black"
           >

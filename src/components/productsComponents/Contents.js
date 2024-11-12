@@ -45,7 +45,6 @@ const Contents = () => {
     } else {
       debouncedListProduct(keyword, pageNumber);
     }
-
     return () => {
       debouncedListProduct.cancel();
     };
@@ -63,7 +62,7 @@ const Contents = () => {
 
   return (
     <main className="md:px-5">
-      <div className="mx-5 md:mx-0 mt-40 md:mt-28">
+      <div className="px-5 md:px-0 mt-40 md:mt-28">
         <Breadcrumbs namePages={updatedPages} />
       </div>
       <h3 className="border-t border-gray-300 pt-5 md:pt-10 mt-3 md:mt-6 text-center lowercase text-2xl md:text-3xl">
@@ -74,7 +73,7 @@ const Contents = () => {
           <ProductListSkeleton numberColList={numberColList} />
         </div>
       ) : error ? (
-        <div className="mx-5 md:mx-0 mt-5 md:mt-10">
+        <div className="px-5 md:px-0 mt-5 md:mt-10">
           <Error error={error} />
         </div>
       ) : products.length > 0 ? (
@@ -89,7 +88,7 @@ const Contents = () => {
             >
               {products.slice(0, 8).map((product, i) => (
                 <li key={i}>
-                  <Link to={`/products/${product._id}/detail`}>
+                  <Link to={`/product/${product.slug}`}>
                     <img
                       className="w-full cursor-pointer"
                       src={product.thumbImage}
@@ -102,7 +101,7 @@ const Contents = () => {
                       numberColList === 2 ? "px-2" : "px-2.5"
                     } md:px-0`}
                   >
-                    <Link to={`/products/${product._id}/detail`}>
+                    <Link to={`/product/${product.slug}`}>
                       <h2
                         className={`${
                           numberColList === 2 ? "text-base" : "text-lg"

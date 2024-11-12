@@ -17,7 +17,7 @@ const RelatedProducts = ({ productId }) => {
 
   return (
     <section className="md:px-5 mt-40">
-      <h3 className="mx-5 md:mx-0 lowercase text-xl font-medium">
+      <h3 className="px-5 md:px-0 lowercase text-xl font-medium">
         Sản phẩm liên quan.
       </h3>
       {loading ? (
@@ -25,7 +25,7 @@ const RelatedProducts = ({ productId }) => {
           <ProductListSkeleton numberColList={2} />
         </div>
       ) : error ? (
-        <div className="mt-5 md:mt-10">
+        <div className="px-5 md:px-0 mt-5 md:mt-10">
           <Error error={error} />
         </div>
       ) : products.length > 0 ? (
@@ -33,7 +33,7 @@ const RelatedProducts = ({ productId }) => {
           <ul className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-x-[2px] gap-y-5 border-x-2 border-white md:gap-x-4 md:gap-y-8">
             {products.map((product, i) => (
               <li key={i}>
-                <Link to={`/products/${product._id}/detail`}>
+                <Link to={`/product/${product.slug}`}>
                   <img
                     className="w-full cursor-pointer"
                     src={product.thumbImage}
@@ -42,7 +42,7 @@ const RelatedProducts = ({ productId }) => {
                   />
                 </Link>
                 <div className="mt-1 md:mt-2 flex flex-col md:gap-0.5 px-2 md:px-0">
-                  <Link to={`/products/${product._id}/detail`}>
+                  <Link to={`/product/${product.slug}`}>
                     <h2 className="cursor-pointer line-clamp-1 hover:underline lowercase">
                       {product.name}
                     </h2>

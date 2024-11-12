@@ -50,7 +50,7 @@ const Footer = () => {
           : "mb-0"
       }`}
     >
-      <div className="border-t border-gray-300 pt-5 md:pt-10 mt-72 flex flex-col gap-20 md:gap-32">
+      <div className="mt-72 flex flex-col gap-20 md:gap-32">
         <div className="flex justify-center gap-5 md:gap-8">
           {socials.map((item, i) => (
             <a

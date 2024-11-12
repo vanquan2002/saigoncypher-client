@@ -40,12 +40,12 @@ const Comments = ({ product }) => {
           product.reviews.map((review, i) => (
             <li key={i} className="flex gap-3 border border-gray-300 p-4">
               <div className="h-10 min-w-10 text-white bg-black rounded-full flex justify-center items-center mt-2">
-                {review.name.substring(0, 2)}
+                {review.user.name.substring(0, 2)}
               </div>
               <div className="flex flex-col gap-1 w-full">
                 <div className="flex justify-between items-center">
                   <span className="font-medium line-clamp-1 overflow-hidden">
-                    {review.name}
+                    {review.user.name}
                   </span>
                   <span className="text-[13px] text-gray-800">
                     {moment(review.createdAt).startOf("hour").fromNow()}

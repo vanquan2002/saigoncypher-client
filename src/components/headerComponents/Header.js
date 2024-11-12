@@ -146,7 +146,7 @@ const Header = ({ isTypeCol }) => {
         className="mt-4 md:mt-0 py-[6px] w-full md:w-[36%] lg:w-[28%] flex items-center border border-black"
         onSubmit={(e) => submitHandle(e)}
       >
-        <label aria-hidden="true" htmlFor="search-input" className="px-2">
+        <label htmlFor="search-input" className="px-2">
           <RiSearchLine className="text-lg" />
         </label>
         <input

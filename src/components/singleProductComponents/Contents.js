@@ -16,11 +16,10 @@ import ProductDetailSkeleton from "../skeletons/ProductDetailSkeleton";
 import SmallModal from "../modals/SmallModal";
 import debounce from "lodash.debounce";
 import Comments from "./Comments";
-import { IoAddSharp } from "react-icons/io5";
 import { VscAdd } from "react-icons/vsc";
 
 const Contents = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
@@ -43,15 +42,15 @@ const Contents = () => {
     { name: "Thông tin sản phẩm", url: "" },
   ];
   const informationTab = [
-    { title: "Mô tả sản phẩm", contents: product.description },
-    { title: "Chính sách đổi, trả", contents: product.returnPolicy },
-    { title: "Hướng dẫn bảo quản", contents: product.storageInstructions },
+    { title: "Mô tả sản phẩm", contents: product?.description },
+    { title: "Chính sách đổi, trả", contents: product?.returnPolicy },
+    { title: "Hướng dẫn bảo quản", contents: product?.storageInstructions },
   ];
 
   const debouncedAddCartProduct = useMemo(
     () =>
-      debounce((id, qty, size, type) => {
-        dispatch(addToCart(id, qty, size, type));
+      debounce((slug, qty, size, type) => {
+        dispatch(addToCart(slug, qty, size, type));
       }, 200),
     []
   );
@@ -64,7 +63,7 @@ const Contents = () => {
       setTypeModal("");
     }
     if (size) {
-      debouncedAddCartProduct(id, 1, size, 1);
+      debouncedAddCartProduct(slug, 1, size, 1);
     } else {
       if (window.innerWidth < 768) {
         setIsSelectSize(true);
@@ -86,8 +85,8 @@ const Contents = () => {
     window.scrollTo({ top: 0 });
     setSize("");
     setIsSelectSize(false);
-    dispatch(detailsProduct(id));
-  }, [id]);
+    dispatch(detailsProduct(slug));
+  }, [slug]);
 
   useEffect(() => {
     if (successType === 1) {
@@ -121,21 +120,21 @@ const Contents = () => {
 
   return (
     <main>
-      <div className="mx-5 mt-32 md:mt-28">
+      <div className="px-5 mt-32 md:mt-28">
         <Breadcrumbs namePages={namePages} />
       </div>
 
       <article>
         {loading ? (
-          <div className="md:mx-20 mt-5 md:mt-10">
+          <div className="md:px-20 mt-5 md:mt-10">
             <ProductDetailSkeleton />
           </div>
         ) : error ? (
-          <div className="mx-5 mt-5 md:mt-10">
+          <div className="px-5 mt-5 md:mt-10">
             <Error error={error} />
           </div>
         ) : (
-          <div className="md:mx-20 mt-5 md:mt-10">
+          <div className="md:px-20 mt-5 md:mt-10">
             <div className="flex flex-col lg:flex-row gap-4 md:gap-10 lg:gap-20">
               <section className="w-full lg:w-2/5">
                 <ImageList images={product.images} />
@@ -160,7 +159,7 @@ const Contents = () => {
                 >
                   <span className="lowercase">Chọn kích cỡ</span>
                   <ul className="mt-2 grid grid-cols-2 gap-3">
-                    {product.sizes?.map((item, i) => (
+                    {product.sizes.map((item, i) => (
                       <li key={i}>
                         <button
                           type="button"
@@ -255,7 +254,7 @@ const Contents = () => {
             <Comments product={product} />
           </div>
         )}
-        <RelatedProducts productId={id} />
+        <RelatedProducts productId={product?._id} />
       </article>
 
       <MessageModal type="" />

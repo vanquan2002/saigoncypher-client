@@ -148,10 +148,7 @@ const Contents = () => {
                     cartItems.length > i && "border-r border-b border-gray-300"
                   }`}
                 >
-                  <Link
-                    to={`/products/${item.product}/detail`}
-                    className="w-1/4 md:w-1/6"
-                  >
+                  <Link to={`/product/${item.slug}`} className="w-1/4 md:w-1/6">
                     <img
                       className="w-full"
                       src={item.thumbImage}
@@ -161,7 +158,7 @@ const Contents = () => {
                   </Link>
                   <div className="w-3/4 md:w-5/6 flex flex-col justify-between py-3 px-4 md:py-4 md:px-5">
                     <div>
-                      <Link to={`/products/${item.product}/detail`}>
+                      <Link to={`/product/${item.slug}`}>
                         <h2 className="lowercase text-lg font-medium leading-6 line-clamp-2 md:line-clamp-1 hover:underline">
                           {item.name}
                         </h2>

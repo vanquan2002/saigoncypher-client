@@ -69,7 +69,10 @@ const Contents = () => {
         <h2 className="lowercase text-center text-lg md:text-xl lg:text-2xl">
           Truy cập vào tài khoản của bạn.
         </h2>
-        <form className="w-ful flex flex-col gap-12 mt-6">
+        <form
+          aria-label="Form đăng nhập tài khoản"
+          className="w-ful flex flex-col gap-12 mt-6"
+        >
           <div className="relative h-11 w-full">
             <input
               type="email"

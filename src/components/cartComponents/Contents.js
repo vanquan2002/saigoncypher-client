@@ -40,8 +40,8 @@ const Contents = () => {
 
   const debouncedChangeQtyProduct = useMemo(
     () =>
-      debounce((id, qty, size, type) => {
-        dispatch(addToCart(id, qty, size, type));
+      debounce((slug, qty, size, type) => {
+        dispatch(addToCart(slug, qty, size, type));
       }, 200),
     []
   );
@@ -82,7 +82,7 @@ const Contents = () => {
               }`}
             >
               <Link
-                to={`/products/${item.product}/detail`}
+                to={`/product/${item.slug}`}
                 className="w-1/3 md:w-1/5 lg:w-1/4"
               >
                 <img
@@ -96,7 +96,7 @@ const Contents = () => {
               <div className="w-2/3 md:w-4/5 lg:w-3/4 flex flex-col justify-between h-full py-3 px-4 md:p-5">
                 <div className="flex flex-col gap-1">
                   <div className="w-full flex justify-between items-start">
-                    <Link to={`/products/${item.product}/detail`}>
+                    <Link to={`/product/${item.slug}`}>
                       <h2 className="lowercase text-lg font-medium leading-6 line-clamp-2 hover:underline">
                         {item.name}
                       </h2>
@@ -129,7 +129,7 @@ const Contents = () => {
                     aria-label="Nhấn giảm số lượng đặt sản phẩm"
                     className={`flex w-9 h-8 justify-center items-center border-l border-t border-b border-black hover:bg-gray-100`}
                     onClick={() =>
-                      debouncedChangeQtyProduct(item.product, -1, item.size, 3)
+                      debouncedChangeQtyProduct(item.slug, -1, item.size, 3)
                     }
                   >
                     <AiOutlineMinus className="text-xs" />
@@ -150,7 +150,7 @@ const Contents = () => {
                         : "opacity-100 pointer-events-auto"
                     }`}
                     onClick={() =>
-                      debouncedChangeQtyProduct(item.product, 1, item.size, 3)
+                      debouncedChangeQtyProduct(item.slug, 1, item.size, 3)
                     }
                   >
                     <AiOutlinePlus className="text-xs" />
