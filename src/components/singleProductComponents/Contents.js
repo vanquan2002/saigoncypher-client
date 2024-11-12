@@ -191,7 +191,7 @@ const Contents = () => {
                     >
                       Hướng dẫn chọn kích cỡ.
                     </button>
-                    <p className="lowercase text-xs text-gray-400">
+                    <p className="lowercase text-[13px] text-gray-400">
                       (Số đo người mẫu: cỡ
                       <span className="uppercase ml-1">
                         {product.model.size}
@@ -254,7 +254,7 @@ const Contents = () => {
             <Comments product={product} />
           </div>
         )}
-        <RelatedProducts productId={product?._id} />
+        <RelatedProducts productId={product._id} />
       </article>
 
       <MessageModal type="" />

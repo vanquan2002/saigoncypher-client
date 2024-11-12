@@ -1,6 +1,6 @@
 import React from "react";
-import { FaRegStar } from "react-icons/fa";
-import { FaStar } from "react-icons/fa";
+import { LiaStar } from "react-icons/lia";
+import { LiaStarSolid } from "react-icons/lia";
 
 const RatingIconReadonly = ({ rating }) => {
   return (
@@ -8,9 +8,9 @@ const RatingIconReadonly = ({ rating }) => {
       {[1, 2, 3, 4, 5].map((star) => (
         <span key={star} className="text-xl">
           {rating >= star ? (
-            <FaStar className="text-yellow-400" />
+            <LiaStarSolid className="text-yellow-400" />
           ) : (
-            <FaRegStar className="text-gray-400" />
+            <LiaStar className="text-yellow-400" />
           )}
         </span>
       ))}

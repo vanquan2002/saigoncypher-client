@@ -12,7 +12,9 @@ const RelatedProducts = ({ productId }) => {
   const { loading, error, products } = productsRelated;
 
   useEffect(() => {
-    dispatch(relatedProducts(productId));
+    if (productId) {
+      dispatch(relatedProducts(productId));
+    }
   }, [productId]);
 
   return (
