@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const socials = [
@@ -35,23 +35,13 @@ const Footer = () => {
     },
   ];
 
-  const { pathname } = useLocation();
-  const lastSegment = pathname.split("/").pop();
-
   return (
-    <footer
-      className={`md:px-5 ${
-        lastSegment === "cart" ||
-        lastSegment === "shipping" ||
-        lastSegment === "placeorder"
-          ? "mb-[4.5rem] md:mb-28 lg:mb-20"
-          : lastSegment === "detail"
-          ? "mb-14 md:mb-0"
-          : "mb-0"
-      }`}
-    >
+    <footer aria-label="Chân trang của SaigonCypher">
       <div className="mt-72 flex flex-col gap-20 md:gap-32">
-        <div className="flex justify-center gap-5 md:gap-8">
+        <nav
+          aria-label="Liên kết mạng xã hội"
+          className="flex justify-center gap-5 md:gap-8"
+        >
           {socials.map((item, i) => (
             <a
               key={i}
@@ -59,52 +49,60 @@ const Footer = () => {
               rel="noopener noreferrer"
               href={item.link}
               aria-label={`Đi đến trang ${item.name}`}
-              className="lowercase text-[15px] hover:underline cursor-pointer flex items-center"
+              className="lowercase text-[15px] hover:underline cursor-pointer flex items-center font-light"
             >
               {item.name}
             </a>
           ))}
-        </div>
+        </nav>
 
-        <div className="flex gap-1 flex-col items-center">
+        <section
+          aria-label="Thông tin liên hệ"
+          className="flex gap-1 flex-col items-center"
+        >
           <div>
-            <span className="lowercase text-[15px]">SĐT / Zalo:</span>
+            <span className="lowercase text-[15px] font-light">
+              SĐT / Zalo:
+            </span>
             <a
               aria-label="Truy cập số điện thoại của SaigonCypher: 0905260554"
               href="tel:0905260554"
-              className="text-[15px] hover:underline cursor-pointer ml-1"
+              className="text-[15px] hover:underline cursor-pointer ml-1 font-light"
             >
               0905260554
             </a>
           </div>
           <div>
-            <span className="lowercase text-[15px]">Email:</span>
+            <span className="lowercase text-[15px] font-light">Email:</span>
             <a
               aria-label="Truy cập email của SaigonCypher: support.saigoncypher@gmail.com"
               href="mailto:saigoncyphersupport@gmail.com"
-              className="text-[15px] hover:underline cursor-pointer ml-1"
+              className="text-[15px] hover:underline cursor-pointer ml-1 font-light"
             >
               saigoncyphersupport@gmail.com
             </a>
           </div>
-          <span className="mt-0.5 lowercase text-[13px] text-gray-400">
-            Hoạt động từ thứ 2 - thứ 7, 8am - 10pm
+          <span className="mt-0.5 lowercase text-[13px] font-light">
+            (Hoạt động từ thứ 2 - thứ 7, 8am - 10pm)
           </span>
-        </div>
+        </section>
 
-        <div className="flex justify-center flex-wrap gap-x-5 md:gap-x-8 gap-y-1">
+        <nav
+          aria-label="Liên kết khác"
+          className="flex justify-center flex-wrap gap-x-5 md:gap-x-8 gap-y-1"
+        >
           {others.map((item, i) => (
             <Link
               key={i}
               to={item.link}
               target="_blank"
               aria-label={`Đi đến trang ${item.name}`}
-              className="lowercase text-[15px] hover:underline cursor-pointer flex items-center"
+              className="lowercase text-[15px] hover:underline cursor-pointer flex items-center font-light"
             >
               {item.name}
             </Link>
           ))}
-        </div>
+        </nav>
       </div>
 
       <div className="flex justify-center gap-2 mt-16 pb-2">

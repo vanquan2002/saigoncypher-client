@@ -187,17 +187,17 @@ const Contents = () => {
                   <div className="flex flex-col md:flex-row items-start md:items-center gap-x-2 gap-y-0.5 mt-2">
                     <button
                       type="button"
-                      className="lowercase underline text-sm"
+                      className="lowercase underline text-[13px] font-light"
                     >
                       Hướng dẫn chọn kích cỡ.
                     </button>
-                    <p className="lowercase text-[13px] text-gray-400">
+                    <span className="lowercase text-[13px] text-gray-500 font-light">
                       (Số đo người mẫu: cỡ
                       <span className="uppercase ml-1">
                         {product.model.size}
                       </span>
                       , cao {product.model.height})
-                    </p>
+                    </span>
                   </div>
                   <button
                     type="button"
@@ -232,7 +232,7 @@ const Contents = () => {
                           {item.title}
                         </span>
                         <VscAdd
-                          className={`text-lg transform transition-transform duration-300 ${
+                          className={`transform transition-transform duration-300 ${
                             numTab === i + 1 ? "rotate-45" : "rotate-0"
                           }`}
                         />

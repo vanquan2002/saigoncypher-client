@@ -10,7 +10,7 @@ const RatingIconReadonly = ({ rating }) => {
           {rating >= star ? (
             <LiaStarSolid className="text-yellow-400" />
           ) : (
-            <LiaStar className="text-yellow-400" />
+            <LiaStar className="text-yellow-300" />
           )}
         </span>
       ))}

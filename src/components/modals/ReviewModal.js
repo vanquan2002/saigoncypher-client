@@ -107,26 +107,28 @@ const ReviewModal = ({ isOpen, product }) => {
           </div>
         </div>
 
-        <div className="flex items-center gap-2 mt-4">
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-1.5 md:gap-2 mt-4">
           <span className="lowercase text-sm mr-1">Xếp hạng:</span>
-          <RatingIconChange rating={rating} setRating={setRating} />
-          <span className="lowercase text-xs text-gray-600">
-            ({desc[rating - 1]})
-          </span>
+          <div className="flex items-center gap-2">
+            <RatingIconChange rating={rating} setRating={setRating} />
+            <span className="lowercase text-xs text-gray-600">
+              ({desc[rating - 1]})
+            </span>
+          </div>
         </div>
 
         <form
           title="Form đánh giá sản phẩm"
           onSubmit={(e) => submitReviewHandle(e)}
         >
-          <div className="flex items-start gap-3 md:gap-4 mt-1.5">
+          <div className="flex flex-col md:flex-row items-start gap-1 md:gap-4 mt-2">
             <span className="lowercase text-sm text-nowrap">Nội dung:</span>
             <div className="w-full flex flex-col gap-1.5">
               <textarea
-                aria-label="Nhập lời nhắn của bạn"
+                aria-label="Nhập nội dung đánh giá"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
-                placeholder="Nhập lời nhắn"
+                placeholder="Nhập nội dung"
                 className="mt-2 resize-none w-full px-2 py-1 border border-black bg-transparent text-sm outline-none placeholder:lowercase scrollbar-thin"
                 maxLength={500}
                 cols="30"

@@ -20,7 +20,7 @@ const RelatedProducts = ({ productId }) => {
   return (
     <section className="md:px-5 mt-40">
       <h3 className="px-5 md:px-0 lowercase text-xl font-medium">
-        Sản phẩm liên quan.
+        Có thể bạn cũng thích.
       </h3>
       {loading ? (
         <div className="mt-5 md:mt-10">

@@ -11,19 +11,26 @@ const Comments = ({ product }) => {
   const [isCommentMore, setIsCommentMore] = useState(null);
 
   useEffect(() => {
-    commentRefs.current.forEach((descriptionElement, index) => {
-      if (descriptionElement) {
-        const computedStyle = window.getComputedStyle(descriptionElement);
-        const lineHeight = parseFloat(computedStyle.lineHeight);
-        const totalHeight = descriptionElement.scrollHeight;
-        const lines = Math.round(totalHeight / lineHeight);
-        const isOverflowing = lines > 3;
-        setIsOverflowing((prev) => ({
-          ...prev,
-          [index]: isOverflowing,
-        }));
-      }
-    });
+    const checkOverflowingHandle = () => {
+      commentRefs.current.forEach((descriptionElement, index) => {
+        if (descriptionElement) {
+          const computedStyle = window.getComputedStyle(descriptionElement);
+          const lineHeight = parseFloat(computedStyle.lineHeight);
+          const totalHeight = descriptionElement.scrollHeight;
+          const lines = Math.round(totalHeight / lineHeight);
+          const isOverflowing = lines > 3;
+          setIsOverflowing((prev) => ({
+            ...prev,
+            [index]: isOverflowing,
+          }));
+        }
+      });
+    };
+    checkOverflowingHandle();
+    window.addEventListener("resize", checkOverflowingHandle);
+    return () => {
+      window.removeEventListener("resize", checkOverflowingHandle);
+    };
   }, [product]);
 
   return (
@@ -45,14 +52,19 @@ const Comments = ({ product }) => {
         )
       </div>
 
-      <ul className="mt-5 md:mt-10 grid grid-cols-1 lg:grid-cols-2 gap-5">
-        {product.reviews.length === 0 ? (
-          <li className="text-gray-700 px-5 md:px-0 lowercase">
-            Chưa có đánh giá nào cả!
-          </li>
-        ) : (
-          product.reviews.map((review, i) => (
-            <li key={i} className="flex gap-3 border border-gray-300 p-4">
+      {product.reviews.length === 0 ? (
+        <span className="text-gray-700 px-5 md:px-0 lowercase">
+          Chưa có đánh giá nào cả!
+        </span>
+      ) : (
+        <ul className="mt-5 md:mt-10 grid grid-cols-1 lg:grid-cols-2 md:gap-5 overflow-hidden">
+          {product.reviews.map((review, i) => (
+            <li
+              key={i}
+              className={`flex gap-3 ${
+                product.reviews.length - 1 !== i && "border-b-0 md:border-b"
+              } border border-gray-300 p-4`}
+            >
               {review.user.avatar ? (
                 <img
                   src={review.user.avatar}
@@ -69,11 +81,11 @@ const Comments = ({ product }) => {
               )}
 
               <div className="flex flex-col gap-1 w-full">
-                <div className="flex justify-between items-center">
-                  <span className="line-clamp-1 overflow-hidden">
+                <div className="flex justify-between items-center gap-2">
+                  <h2 className="line-clamp-1 overflow-hidden">
                     {review.user.name}
-                  </span>
-                  <span className="text-[13px] lowercase text-gray-800">
+                  </h2>
+                  <span className="text-xs text-nowrap lowercase text-gray-500">
                     {moment(review.createdAt).calendar()}
                   </span>
                 </div>
@@ -105,9 +117,9 @@ const Comments = ({ product }) => {
                 </div>
               </div>
             </li>
-          ))
-        )}
-      </ul>
+          ))}
+        </ul>
+      )}
     </section>
   );
 };

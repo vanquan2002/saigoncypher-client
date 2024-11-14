@@ -83,6 +83,7 @@ const Header = ({ isTypeCol }) => {
               type="button"
               aria-label="Mở tùy chọn"
               aria-haspopup="true"
+              aria-expanded={isDropdown ? "true" : "false"}
               className="hover:underline line-clamp-1 min-w-1"
               onClick={() => openDropdownHandle()}
             >
@@ -94,7 +95,7 @@ const Header = ({ isTypeCol }) => {
 
             <ul
               ref={dropdownRef}
-              className={`bg-white border border-black absolute top-8 right-0 py-2 px-3 ${
+              className={`bg-white flex flex-col border border-black absolute top-7 right-0 py-1.5 px-3 ${
                 isDropdown
                   ? "pointer-events-auto opacity-100"
                   : "pointer-events-none opacity-0"
@@ -105,7 +106,7 @@ const Header = ({ isTypeCol }) => {
                 <Link
                   to="/profile"
                   aria-label="Đi đến trang thông tin cá nhân"
-                  className="hover:underline lowercase text-nowrap"
+                  className="hover:underline lowercase text-nowrap text-sm"
                 >
                   Thông tin cá nhân
                 </Link>
@@ -115,7 +116,7 @@ const Header = ({ isTypeCol }) => {
                   type="button"
                   aria-label="Đăng xuất"
                   onClick={() => logoutHandle()}
-                  className="hover:underline lowercase"
+                  className="hover:underline lowercase text-sm"
                 >
                   Đăng xuất.
                 </button>
@@ -142,6 +143,7 @@ const Header = ({ isTypeCol }) => {
       </nav>
 
       <form
+        role="search"
         title="Ô tìm kiếm sản phẩm"
         className="mt-4 md:mt-0 py-[6px] w-full md:w-[36%] lg:w-[28%] flex items-center border border-black"
         onSubmit={(e) => submitHandle(e)}
