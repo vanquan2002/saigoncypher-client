@@ -2,10 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import Breadcrumbs from "../Breadcrumbs";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { PiWarningCircleLight } from "react-icons/pi";
 import { useFormik } from "formik";
-import { MdChevronLeft } from "react-icons/md";
-import { MdKeyboardArrowRight } from "react-icons/md";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { Link } from "react-router-dom";
 import {
@@ -22,6 +19,8 @@ import { updateProfile } from "../../redux/actions/UserActions";
 import { USER_UPDATE_PROFILE_RESET } from "../../redux/constants/UserConstants";
 import debounce from "lodash.debounce";
 import FormFields from "./FormFields";
+import { MdArrowBackIos } from "react-icons/md";
+import { MdArrowForwardIos } from "react-icons/md";
 
 const Contents = () => {
   const namePages = [
@@ -262,36 +261,34 @@ const Contents = () => {
             wards={wards}
           />
 
-          <div className="z-10 h-[4.5rem] md:h-28 lg:h-20 fixed bottom-0 left-0 grid grid-cols-5 md:grid-cols-4 lg:grid-cols-7 w-full backdrop-blur-sm bg-white/60 border-t border-gray-300">
-            <div className="hidden md:col-span-1 md:flex items-center ml-5">
-              <Link
-                to="/cart"
-                aria-label="Đi đến trang giỏ hàng"
-                className="lowercase font-medium text-gray-700 hover:underline flex items-center"
-              >
-                <MdChevronLeft className="text-2xl mr-[-2px]" />
-                Giỏ hàng
-              </Link>
-            </div>
+          <div className="z-10 h-[4.4rem] fixed bottom-0 left-0 flex justify-end md:justify-between w-full backdrop-blur-sm bg-white/60 border-t border-gray-300">
+            <Link
+              to="/cart"
+              aria-label="Đi đến trang giỏ hàng"
+              className="hidden md:flex items-center ml-5 gap-0.5 lowercase font-medium text-gray-700 hover:underline"
+            >
+              <MdArrowBackIos className="text-sm" />
+              Giỏ hàng
+            </Link>
 
-            <div className="col-span-3 md:col-span-2 lg:col-span-5 flex flex-col items-end justify-center mr-4 md:mr-6 lg:mr-10">
-              <span className="lowercase text-[15px]">
-                {quantity} sản phẩm.
-              </span>
-              <span className="lowercase text-lg font-semibold">
-                Tổng: {formatCurrency(total)}
-              </span>
-            </div>
+            <div className="flex justify-end w-full md:w-2/3">
+              <div className="flex flex-col items-end justify-center mr-4 md:mr-6 lg:mr-8">
+                <span className="lowercase text-[15px]">
+                  {quantity} sản phẩm.
+                </span>
+                <span className="lowercase text-[17px] font-medium">
+                  Tổng: {formatCurrency(total)}
+                </span>
+              </div>
 
-            <div className="col-span-2 md:col-span-1 flex justify-end">
               <button
                 type="button"
                 onClick={formik.handleSubmit}
                 aria-label="Cập nhật thông tin đặt hàng và đi đến trang thanh toán"
-                className="flex items-center justify-center w-full h-full lowercase bg-black text-white text-lg hover:underline"
+                className="w-[42%] md:w-1/3 lg:w-1/4 flex items-center justify-center gap-0.5 lowercase text-white bg-black hover:underline"
               >
                 {loadingUserUpdate ? "Đang tiếp tục" : "Tiếp tục"}
-                <MdKeyboardArrowRight className="text-2xl ml-[-2px]" />
+                <MdArrowForwardIos className="text-sm" />
               </button>
             </div>
           </div>

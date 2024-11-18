@@ -246,20 +246,20 @@ const Contents = () => {
                         </Link>
 
                         <div className="mt-1 flex items-center gap-2">
-                          <span className="uppercase text-[15px]">
+                          <span className="uppercase text-[13px]">
                             {item.size}
                           </span>
                           <span className="text-xs">|</span>
-                          <span className="lowercase text-[15px]">
+                          <span className="lowercase text-[13px]">
                             {item.color}
                           </span>
                         </div>
                       </div>
                       <div className="flex justify-between items-end">
-                        <span className="lowercase text-[15px]">
+                        <span className="lowercase text-[13px]">
                           {formatCurrency(item.price)} x {item.qty}
                         </span>
-                        <span className="lowercase text-lg">
+                        <span className="lowercase text-[17px]">
                           {formatCurrency(item.price * item.qty)}
                         </span>
                       </div>
@@ -267,7 +267,7 @@ const Contents = () => {
                         type="button"
                         aria-label="Mở ô đánh giá sản phẩm"
                         onClick={() => openReviewModalHandle(i)}
-                        className={`w-full px-4 py-2  text-sm hover:underline ${
+                        className={`w-full px-4 py-2 lowercase text-sm hover:underline ${
                           order.orderStatus.isReceived && !item.isReview
                             ? "bg-black text-white"
                             : "text-black border border-black pointer-events-none opacity-30"
@@ -388,8 +388,9 @@ const Contents = () => {
                         ? " Đang hủy đơn hàng..."
                         : " Hủy đơn hàng."}
                     </button>
-                    <p className="mt-2 lowercase text-[13px]">
-                      Lưu ý: Nếu đơn hàng đang được giao thì không thể hủy!
+                    <p className="mt-2 lowercase text-[13px] font-light">
+                      Lưu ý: Nếu đơn hàng đang được giao thì quý khách không thể
+                      hủy!
                     </p>
                   </>
                 )}

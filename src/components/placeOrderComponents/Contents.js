@@ -9,6 +9,8 @@ import { AppContext } from "../../AppContext";
 import { createOrder } from "./../../redux/actions/OrderActions";
 import { ORDER_CREATE_RESET } from "../../redux/constants/OrderConstants";
 import debounce from "lodash.debounce";
+import { MdArrowBackIos } from "react-icons/md";
+import { MdArrowForwardIos } from "react-icons/md";
 
 const Contents = () => {
   const namePages = [
@@ -165,11 +167,11 @@ const Contents = () => {
                       </Link>
 
                       <div className="mt-1 flex items-center gap-2">
-                        <span className="uppercase text-[15px]">
+                        <span className="uppercase text-[13px]">
                           {item.size}
                         </span>
                         <span className="text-xs">|</span>
-                        <span className="lowercase text-[15px]">
+                        <span className="lowercase text-[13px]">
                           {item.color}
                         </span>
                       </div>
@@ -178,7 +180,7 @@ const Contents = () => {
                       <span className="lowercase text-[13px]">
                         {formatCurrency(item.price)} x {item.qty}
                       </span>
-                      <span className="lowercase text-lg">
+                      <span className="lowercase text-[17px]">
                         {formatCurrency(item.price * item.qty)}
                       </span>
                     </div>
@@ -259,33 +261,31 @@ const Contents = () => {
         </div>
       </div>
 
-      <div className="z-10 h-[4.5rem] md:h-28 lg:h-20 fixed bottom-0 left-0 grid grid-cols-5 md:grid-cols-4 lg:grid-cols-7 w-full backdrop-blur-sm bg-white/60 border-t border-gray-300">
-        <div className="hidden md:col-span-1 md:flex items-center ml-5">
-          <Link
-            to="/shipping"
-            aria-label="Đi đến trang nhập thông tin đặt hàng"
-            className="lowercase font-medium text-gray-700 hover:underline flex items-center"
-          >
-            <MdChevronLeft className="text-2xl mr-[-2px]" />
-            Thông tin đặt hàng.
-          </Link>
-        </div>
+      <div className="z-10 h-[4.4rem] fixed bottom-0 left-0 flex justify-end md:justify-between w-full backdrop-blur-sm bg-white/60 border-t border-gray-300">
+        <Link
+          to="/shipping"
+          aria-label="Đi đến trang nhập thông tin đặt hàng"
+          className="hidden md:flex items-center ml-5 gap-0.5 lowercase font-medium text-gray-700 hover:underline"
+        >
+          <MdArrowBackIos className="text-sm" />
+          Thông tin đặt hàng
+        </Link>
 
-        <div className="col-span-3 md:col-span-2 lg:col-span-5 flex flex-col items-end justify-center mr-4 md:mr-6 lg:mr-10">
-          <span className="lowercase text-[15px]">
-            {totalQuantity} sản phẩm.
-          </span>
-          <span className="lowercase text-lg font-semibold">
-            Tổng: {formatCurrency(totalPrice)}
-          </span>
-        </div>
+        <div className="flex justify-end w-full md:w-2/3">
+          <div className="flex flex-col items-end justify-center mr-4 md:mr-6 lg:mr-8">
+            <span className="lowercase text-[15px]">
+              {totalQuantity} sản phẩm.
+            </span>
+            <span className="lowercase text-[17px] font-medium">
+              Tổng: {formatCurrency(totalPrice)}
+            </span>
+          </div>
 
-        <div className="col-span-2 md:col-span-1 flex justify-end">
           <button
-            onClick={() => debouncedCreateOrder()}
             type="button"
-            aria-label="Đặt hàng và đi đến trang chi tiết đơn hàng đã đặt"
-            className="w-full h-full lowercase bg-black text-white text-lg hover:underline"
+            onClick={() => debouncedCreateOrder()}
+            aria-label="Cập nhật thông tin đặt hàng và đi đến trang thanh toán"
+            className="w-[42%] md:w-1/3 lg:w-1/4 flex items-center justify-center lowercase text-white bg-black hover:underline"
           >
             {loading ? "Đang đặt hàng..." : "Đặt hàng."}
           </button>

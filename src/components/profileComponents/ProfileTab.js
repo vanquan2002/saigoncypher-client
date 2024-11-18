@@ -156,7 +156,7 @@ const ProfileTab = ({ result }) => {
               type="button"
               onClick={formik.handleSubmit}
               aria-label="Cập nhật thông tin cá nhân"
-              className="w-2/5 md:w-1/5 lg:w-1/6 py-2 lowercase bg-black text-white text-sm hover:underline"
+              className="w-[44%] md:w-[23%] lg:w-[13%] py-2 lowercase bg-black text-white text-sm hover:underline"
             >
               {loadingUpdateUser ? "Đang cập nhật..." : "Cập nhật."}
             </button>

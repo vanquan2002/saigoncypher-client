@@ -53,9 +53,11 @@ const Comments = ({ product }) => {
       </div>
 
       {product.reviews.length === 0 ? (
-        <span className="text-gray-700 px-5 md:px-0 lowercase">
-          Chưa có đánh giá nào cả!
-        </span>
+        <div className="mt-3 md:mt-6 px-5 md:px-0">
+          <span className=" text-gray-700 lowercase">
+            Chưa có đánh giá nào cả!
+          </span>
+        </div>
       ) : (
         <ul className="mt-5 md:mt-10 grid grid-cols-1 lg:grid-cols-2 md:gap-5 overflow-hidden">
           {product.reviews.map((review, i) => (

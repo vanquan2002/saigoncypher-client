@@ -41,12 +41,23 @@ const Contents = () => {
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [typeModal, setTypeModal] = useState("");
+  const [errSelect, setErrSelect] = useState(null);
+
   const changeImgHandle = (e) => {
     const file = e.target.files[0];
-    if (image) {
-      setImage(null);
-    }
+    const maxSize = 10485760;
     if (file) {
+      if (!file.type.startsWith("image/")) {
+        setErrSelect("Vui lòng chọn tệp hình ảnh hợp lệ!");
+        return;
+      }
+      if (file.size > maxSize) {
+        setErrSelect("Kích thước tệp quá lớn (tối đa 10MB).");
+        return;
+      }
+      if (image) {
+        setImage(null);
+      }
       setImage(URL.createObjectURL(file));
       setImageUrl(file);
       e.target.value = null;
@@ -60,7 +71,7 @@ const Contents = () => {
         setTypeModal("update_info");
       }
       if (successType === 2) {
-        toggleIsSmallModal("Cập nhật địa chỉ đạt hàng thành công!");
+        toggleIsSmallModal("Cập nhật địa chỉ đặt hàng thành công!");
         setTypeModal("update_shipping");
       }
       if (successType === 3) {
@@ -91,6 +102,13 @@ const Contents = () => {
     }
   }, [error]);
 
+  useEffect(() => {
+    if (errSelect) {
+      toggleIsMassage(errSelect);
+      setErrSelect("");
+    }
+  }, [errSelect]);
+
   return (
     <main className="md:px-20">
       <div className="mx-5 md:mx-0 mt-32 md:mt-28">
@@ -102,12 +120,9 @@ const Contents = () => {
 
       <div className="border-t border-gray-300 mt-5 md:mt-10 pt-5 md:pt-10">
         <div className="mx-5 md:mx-0 flex gap-5 md:gap-10">
-          <form
-            aria-label="Form tải ảnh lên"
-            className="relative h-20 min-w-20 md:h-32 md:min-w-32"
-          >
+          <form aria-label="Form tải ảnh lên" className="relative">
             <label
-              className="h-full rounded-full overflow-hidden flex justify-center items-center bg-gray-100"
+              className="h-20 w-20 md:h-32 md:w-32 rounded-full overflow-hidden flex justify-center items-center bg-gray-100"
               htmlFor="file_input"
               title="Chọn ảnh đại diện"
             >
@@ -121,7 +136,7 @@ const Contents = () => {
                 <FaUser className="text-2xl md:text-4xl text-gray-400" />
               )}
 
-              <div className="absolute bottom-0 right-1 md:right-3 h-5 md:h-7 w-5 md:w-7 flex items-center justify-center bg-black rounded-full border-2 md:border-[3px] border-white">
+              <div className="absolute overflow-hidden bottom-0 right-1 md:right-3 h-5 md:h-7 w-5 md:w-7 flex items-center justify-center bg-black rounded-full border-2 md:border-[3px] border-white">
                 {userInfo.avatar ? (
                   <BiSolidEditAlt className="text-lg md:text-2xl p-0.5 text-white" />
                 ) : (
@@ -143,7 +158,7 @@ const Contents = () => {
                 onClick={() => dispatch(logout())}
                 aria-label="Đăng xuất và đi đến trang đăng nhập"
                 type="button"
-                className="underline text-[15px] lowercase"
+                className="underline text-sm lowercase"
               >
                 Đăng xuất
               </button>
@@ -153,7 +168,7 @@ const Contents = () => {
               <h1 className="text-2xl md:text-3xl font-semibold line-clamp-1">
                 {userInfo.name}
               </h1>
-              <span className="text-[13px] md:text-[15px] line-clamp-1">
+              <span className="text-sm line-clamp-1 font-light">
                 {userInfo.email}
               </span>
             </div>
@@ -170,7 +185,7 @@ const Contents = () => {
                   onClick={() => toggleNumberTabNumber(i + 1)}
                   className={`w-full text-center py-2 border-b ${
                     numberTabNumber === i + 1
-                      ? "border-black text-black"
+                      ? "border-black text-black font-medium"
                       : "border-gray-200 text-gray-400"
                   } duration-300`}
                 >
