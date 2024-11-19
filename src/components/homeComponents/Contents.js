@@ -4,7 +4,6 @@ import { formatCurrency } from "../../utils/formatCurrency";
 import { useDispatch, useSelector } from "react-redux";
 import { listProduct } from "./../../redux/actions/ProductActions";
 import { AppContext } from "../../AppContext";
-import { MdArrowOutward } from "react-icons/md";
 import Error from "../loadingError/Error";
 import ProductListSkeleton from "../skeletons/ProductListSkeleton";
 
@@ -82,10 +81,9 @@ const Contents = () => {
             <Link
               to="/products"
               aria-label="Nhấn để đi đến trang tất cả sản phẩm"
-              className="lowercase flex items-center hover:underline"
+              className="lowercase hover:underline"
             >
-              <span>Xem tất cả sản phẩm</span>
-              <MdArrowOutward />
+              [ Xem tất cả sản phẩm ]
             </Link>
           </div>
         </div>

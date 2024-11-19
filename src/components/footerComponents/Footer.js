@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { MdArrowOutward } from "react-icons/md";
 
 const Footer = () => {
   const socials = [
@@ -37,10 +38,10 @@ const Footer = () => {
 
   return (
     <footer aria-label="Chân trang của SaigonCypher">
-      <div className="mt-72 flex flex-col gap-20 md:gap-32">
+      <div className="mt-72 flex flex-col gap-20 md:gap-32 px-5">
         <nav
           aria-label="Liên kết mạng xã hội"
-          className="flex justify-center gap-5 md:gap-8"
+          className="flex justify-center gap-4 md:gap-8"
         >
           {socials.map((item, i) => (
             <a
@@ -52,6 +53,7 @@ const Footer = () => {
               className="lowercase text-[15px] hover:underline cursor-pointer flex items-center font-light"
             >
               {item.name}
+              <MdArrowOutward />
             </a>
           ))}
         </nav>
@@ -89,7 +91,7 @@ const Footer = () => {
 
         <nav
           aria-label="Liên kết khác"
-          className="flex justify-center flex-wrap gap-x-5 md:gap-x-8 gap-y-1"
+          className="flex justify-center flex-wrap gap-x-3 md:gap-x-8 gap-y-1"
         >
           {others.map((item, i) => (
             <Link
@@ -100,15 +102,16 @@ const Footer = () => {
               className="lowercase text-[15px] hover:underline cursor-pointer flex items-center font-light"
             >
               {item.name}
+              <MdArrowOutward />
             </Link>
           ))}
         </nav>
       </div>
 
       <div className="flex justify-center gap-2 mt-16 pb-2">
-        <span className="text-sm text-gray-400">@2024</span>
-        <span className="text-sm text-gray-400">-</span>
-        <span className="text-sm text-gray-400">SAIGONCYPHER</span>
+        <span className="text-sm font-bold text-gray-400">@2024</span>
+        <span className="text-sm font-bold text-gray-400">-</span>
+        <span className="text-sm font-bold text-gray-400">SAIGONCYPHER</span>
       </div>
     </footer>
   );

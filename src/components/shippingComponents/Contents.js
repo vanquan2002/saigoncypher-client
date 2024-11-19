@@ -37,6 +37,7 @@ const Contents = () => {
   const { cartItems } = cart;
   const userUpdate = useSelector((state) => state.userUpdate);
   const { loading: loadingUserUpdate, successType } = userUpdate;
+
   const provinceList = useSelector((state) => state.provinceList);
   const {
     loading: loadingProvinceList,
@@ -51,6 +52,7 @@ const Contents = () => {
   } = districtList;
   const wardList = useSelector((state) => state.wardList);
   const { loading: loadingWardList, wards, error: errorWard } = wardList;
+
   const [selectedProvince, setSelectedProvince] = useState(null);
   const [selectedDistrict, setSelectedDistrict] = useState(null);
   const total = cartItems.reduce((a, i) => a + i.qty * i.price, 0).toFixed(0);
@@ -176,8 +178,8 @@ const Contents = () => {
         formik.setFieldValue("district", "");
       }
       const provinceId =
-        provinces.find((item) => item.province_name === formik.values.province)
-          ?.province_id || null;
+        provinces.find((item) => item.name === formik.values.province)?.code ||
+        null;
       dispatch({
         type: DISTRICT_DATA_RESET,
       });
@@ -200,8 +202,8 @@ const Contents = () => {
         formik.setFieldValue("ward", "");
       }
       const districtId =
-        districts.find((item) => item.district_name === formik.values.district)
-          ?.district_id || null;
+        districts.find((item) => item.name === formik.values.district)?.code ||
+        null;
       dispatch({
         type: WARD_DATA_RESET,
       });

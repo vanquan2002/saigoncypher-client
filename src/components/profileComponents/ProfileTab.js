@@ -8,6 +8,8 @@ import { profile, updateProfile } from "../../redux/actions/UserActions";
 import { useDispatch, useSelector } from "react-redux";
 import { USER_DETAILS_RESET } from "../../redux/constants/UserConstants";
 import { AppContext } from "../../AppContext";
+import Error from "../loadingError/Error";
+import ProfileTabSkeleton from "../skeletons/ProfileTabSkeleton";
 
 const ProfileTab = ({ result }) => {
   const dispatch = useDispatch();
@@ -98,9 +100,11 @@ const ProfileTab = ({ result }) => {
       className={`mx-5 md:mx-0 mt-7 md:mt-10 ${result ? "block" : "hidden"}`}
     >
       {loadingDetailsUser ? (
-        <span>loading...</span>
+        <ProfileTabSkeleton />
       ) : errorDetailsUser ? (
-        <span>error</span>
+        <div className="mt-5 md:mt-10">
+          <Error error={errorDetailsUser} />
+        </div>
       ) : (
         <form aria-label="Form chỉnh sửa thông tin cá nhân">
           <ul className="grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10">

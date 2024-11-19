@@ -15,11 +15,8 @@ const SelectField = ({ item, formik, options }) => (
     >
       {!formik.values[item.value] && <option value="">--</option>}
       {options.map((location) => (
-        <option
-          key={location[`${item.value}_id`]}
-          value={location[`${item.value}_name`]}
-        >
-          {location[`${item.value}_name`]}
+        <option key={location.code} value={location.name}>
+          {location.name}
         </option>
       ))}
     </select>

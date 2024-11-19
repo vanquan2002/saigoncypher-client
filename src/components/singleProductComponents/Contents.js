@@ -231,16 +231,18 @@ const Contents = () => {
                         <span className="text-[15px] lowercase">
                           {item.title}
                         </span>
-                        <VscAdd
-                          className={`transform transition-transform duration-300 ${
+                        <span
+                          className={`duration-300 text-2xl font-light leading-3 ${
                             numTab === i + 1 ? "rotate-45" : "rotate-0"
                           }`}
-                        />
+                        >
+                          +
+                        </span>
                       </button>
                       <p
                         className={`text-sm font-light duration-300 ${
                           numTab === i + 1
-                            ? "max-h-[250px] pb-3"
+                            ? "max-h-[200px] pb-3"
                             : "max-h-0 overflow-hidden "
                         }`}
                       >

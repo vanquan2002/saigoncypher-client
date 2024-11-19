@@ -176,7 +176,7 @@ const Contents = () => {
         </div>
 
         <div className="w-full mt-10">
-          <ul className="grid grid-cols-3 mt-5">
+          <ul className="grid grid-cols-3">
             {nameTabs.map((item, i) => (
               <li key={i} className="col-span-1">
                 <button

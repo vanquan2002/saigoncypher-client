@@ -4,7 +4,7 @@ import { listMyOrders } from "../../redux/actions/OrderActions";
 import "moment/locale/vi";
 import { Link } from "react-router-dom";
 import { formatCurrency } from "../../utils/formatCurrency";
-import { MdArrowOutward } from "react-icons/md";
+import OrderTabSkeleton from "../skeletons/OrderTabSkeleton";
 
 const OrdersTab = ({ result }) => {
   const dispatch = useDispatch();
@@ -20,9 +20,7 @@ const OrdersTab = ({ result }) => {
   return (
     <section className={`lg:mt-10 ${result ? "block" : "hidden"}`}>
       {loading ? (
-        <div className=" mt-5 md:mt-10 lg:mt-0 mx-5 md:mx-0">
-          <span>loading...</span>
-        </div>
+        <OrderTabSkeleton />
       ) : error ? (
         <div className=" mt-5 md:mt-10 lg:mt-0 mx-5 md:mx-0">
           <span>error</span>
@@ -37,11 +35,11 @@ const OrdersTab = ({ result }) => {
             orders.map((item, i) => (
               <li
                 key={i}
-                className="col-span-1 gap-4 md:gap-4 flex border-b border-gray-300"
+                className="col-span-1 gap-4 flex border-b border-gray-300"
               >
                 <div className="w-4/5 md:w-full lg:w-4/5 flex items-center">
                   <img
-                    className="h-20 md:h-20 lg:h-16"
+                    className="h-20"
                     src={item.orderItems[0].thumbImage}
                     alt={item.orderItems[0].name}
                   />
@@ -90,10 +88,9 @@ const OrdersTab = ({ result }) => {
                   <Link
                     to={`/order/${item._id}`}
                     aria-label="Đi đến trang chi tiết đơn hàng"
-                    className="flex items-center text-sm hover:underline"
+                    className="lowercase text-sm underline"
                   >
-                    <span>Xem chi tiết</span>
-                    <MdArrowOutward />
+                    Xem chi tiết
                   </Link>
                 </div>
               </li>

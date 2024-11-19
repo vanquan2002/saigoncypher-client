@@ -128,10 +128,10 @@ const Contents = () => {
         </div>
       ) : products.length === 0 && keyword ? (
         <div className="mt-5 md:mt-10 mx-5 md:mx-0">
-          <h5 className="lowercase mb-2 text-lg py-4 px-6 border border-black">
+          <h5 className="lowercase mb-2 text-lg py-3 px-5 border font-light border-gray-300">
             Không tìm thấy sản phẩm!
           </h5>
-          <span className="lowercase text-[15px]">
+          <span className="lowercase text-[13px] text-gray-600">
             Từ khóa tìm kiếm: <span>{keyword}</span>
           </span>
         </div>

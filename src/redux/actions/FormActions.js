@@ -16,10 +16,10 @@ export const listProvince = () => async (dispatch) => {
     dispatch({
       type: PROVINCE_DATA_REQUEST,
     });
-    const { data } = await axios.get("https://vapi.vnappmob.com/api/province/");
+    const { data } = await axios.get("https://provinces.open-api.vn/api/p/");
     dispatch({
       type: PROVINCE_DATA_SUCCESS,
-      payload: data.results,
+      payload: data,
     });
   } catch (error) {
     dispatch({
@@ -35,11 +35,11 @@ export const listDistrict = (id) => async (dispatch) => {
       type: DISTRICT_DATA_REQUEST,
     });
     const { data } = await axios.get(
-      `https://vapi.vnappmob.com/api/province/district/${id}`
+      `https://provinces.open-api.vn/api/p/${id}?depth=2`
     );
     dispatch({
       type: DISTRICT_DATA_SUCCESS,
-      payload: data.results,
+      payload: data.districts,
     });
   } catch (error) {
     dispatch({
@@ -55,11 +55,11 @@ export const listWard = (id) => async (dispatch) => {
       type: WARD_DATA_REQUEST,
     });
     const { data } = await axios.get(
-      `https://vapi.vnappmob.com/api/province/ward/${id}`
+      `https://provinces.open-api.vn/api/d/${id}?depth=2`
     );
     dispatch({
       type: WARD_DATA_SUCCESS,
-      payload: data.results,
+      payload: data.wards,
     });
   } catch (error) {
     dispatch({
