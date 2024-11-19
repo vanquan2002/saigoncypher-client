@@ -5,6 +5,7 @@ import "moment/locale/vi";
 import { Link } from "react-router-dom";
 import { formatCurrency } from "../../utils/formatCurrency";
 import OrderTabSkeleton from "../skeletons/OrderTabSkeleton";
+import Error from "../loadingError/Error";
 
 const OrdersTab = ({ result }) => {
   const dispatch = useDispatch();
@@ -22,8 +23,8 @@ const OrdersTab = ({ result }) => {
       {loading ? (
         <OrderTabSkeleton />
       ) : error ? (
-        <div className=" mt-5 md:mt-10 lg:mt-0 mx-5 md:mx-0">
-          <span>error</span>
+        <div className="mt-5 md:mt-10 px-5 md:px-0">
+          <Error error={error} />
         </div>
       ) : (
         <ul className="grid grid-cols-1 lg:grid-cols-2 gap-x-20 lg:gap-y-10">

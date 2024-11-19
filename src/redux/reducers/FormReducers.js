@@ -2,6 +2,7 @@ import {
   PROVINCE_DATA_REQUEST,
   PROVINCE_DATA_SUCCESS,
   PROVINCE_DATA_FAIL,
+  PROVINCE_DATA_RESET,
   DISTRICT_DATA_REQUEST,
   DISTRICT_DATA_SUCCESS,
   DISTRICT_DATA_FAIL,
@@ -20,6 +21,8 @@ export const provincesReducer = (state = { provinces: [] }, action) => {
       return { loading: false, provinces: action.payload };
     case PROVINCE_DATA_FAIL:
       return { loading: false, error: action.payload };
+    case PROVINCE_DATA_RESET:
+      return { provinces: [] };
     default:
       return state;
   }

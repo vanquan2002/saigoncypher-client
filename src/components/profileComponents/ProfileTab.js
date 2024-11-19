@@ -6,7 +6,6 @@ import { BsEyeSlash } from "react-icons/bs";
 import debounce from "lodash.debounce";
 import { profile, updateProfile } from "../../redux/actions/UserActions";
 import { useDispatch, useSelector } from "react-redux";
-import { USER_DETAILS_RESET } from "../../redux/constants/UserConstants";
 import { AppContext } from "../../AppContext";
 import Error from "../loadingError/Error";
 import ProfileTabSkeleton from "../skeletons/ProfileTabSkeleton";

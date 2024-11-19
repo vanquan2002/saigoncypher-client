@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import debounce from "lodash.debounce";
 import { profile, updateProfile } from "../../redux/actions/UserActions";
 import {
+  PROVINCE_DATA_RESET,
   DISTRICT_DATA_RESET,
   WARD_DATA_RESET,
 } from "../../redux/constants/FormConstants";
@@ -13,13 +14,9 @@ import {
   listProvince,
   listWard,
 } from "../../redux/actions/FormActions";
-import SmallModal from "../modals/SmallModal";
 import { AppContext } from "../../AppContext";
-import {
-  USER_DETAILS_RESET,
-  USER_UPDATE_PROFILE_RESET,
-} from "../../redux/constants/UserConstants";
 import FormFields from "./../shippingComponents/FormFields";
+import ShippingTabSkeleton from "../skeletons/ShippingTabSkeleton";
 
 const ShippingTab = ({ result }) => {
   const dispatch = useDispatch();
@@ -178,8 +175,8 @@ const ShippingTab = ({ result }) => {
         formik.setFieldValue("district", "");
       }
       const provinceId =
-        provinces.find((item) => item.province_name === formik.values.province)
-          ?.province_id || null;
+        provinces.find((item) => item.name === formik.values.province)?.code ||
+        null;
       dispatch({
         type: DISTRICT_DATA_RESET,
       });
@@ -202,8 +199,8 @@ const ShippingTab = ({ result }) => {
         formik.setFieldValue("ward", "");
       }
       const districtId =
-        districts.find((item) => item.district_name === formik.values.district)
-          ?.district_id || null;
+        districts.find((item) => item.name === formik.values.district)?.code ||
+        null;
       dispatch({
         type: WARD_DATA_RESET,
       });
@@ -251,9 +248,11 @@ const ShippingTab = ({ result }) => {
       className={`mx-5 md:mx-0 mt-7 md:mt-10 ${result ? "block" : "hidden"}`}
     >
       {loadingUserDetails ? (
-        <span>loading</span>
+        <ShippingTabSkeleton />
       ) : errorUserDetails ? (
-        <span>error</span>
+        <div className="mt-5 md:mt-10">
+          <Error error={errorUserDetails} />
+        </div>
       ) : errorProvince || errorDistrict || errorWard ? (
         <div className="mt-5 md:mt-10">
           <Error error="API calling delivery location is having problems, please contact admin!" />
