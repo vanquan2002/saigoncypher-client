@@ -12,6 +12,7 @@ import {
 } from "../../redux/actions/FormActions";
 import {
   DISTRICT_DATA_RESET,
+  PROVINCE_DATA_RESET,
   WARD_DATA_RESET,
 } from "../../redux/constants/FormConstants";
 import Error from "../loadingError/Error";
@@ -229,6 +230,12 @@ const Contents = () => {
   useEffect(() => {
     window.scrollTo({ top: 0 });
     dispatch(listProvince());
+
+    return () => {
+      dispatch({ type: PROVINCE_DATA_RESET });
+      dispatch({ type: DISTRICT_DATA_RESET });
+      dispatch({ type: WARD_DATA_RESET });
+    };
   }, []);
 
   useEffect(() => {

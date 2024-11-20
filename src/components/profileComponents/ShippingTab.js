@@ -17,6 +17,7 @@ import {
 import { AppContext } from "../../AppContext";
 import FormFields from "./../shippingComponents/FormFields";
 import ShippingTabSkeleton from "../skeletons/ShippingTabSkeleton";
+import { USER_DETAILS_RESET } from "../../redux/constants/UserConstants";
 
 const ShippingTab = ({ result }) => {
   const dispatch = useDispatch();
@@ -143,6 +144,28 @@ const ShippingTab = ({ result }) => {
   });
 
   useEffect(() => {
+    if (result) {
+      dispatch(profile());
+      dispatch(listProvince());
+    }
+    return () => {
+      dispatch({
+        type: USER_DETAILS_RESET,
+      });
+      setSelectedProvince(null);
+      setSelectedDistrict(null);
+      setIsDistrict(true);
+      setIsWard(true);
+      dispatch({ type: PROVINCE_DATA_RESET });
+      dispatch({ type: DISTRICT_DATA_RESET });
+      dispatch({ type: WARD_DATA_RESET });
+      formik.setFieldValue("province", "");
+      formik.setFieldValue("district", "");
+      formik.setFieldValue("ward", "");
+    };
+  }, [result]);
+
+  useEffect(() => {
     if (
       districts.length > 0 &&
       isDistrict &&
@@ -151,6 +174,7 @@ const ShippingTab = ({ result }) => {
     ) {
       formik.setFieldValue("district", user.deliveryInformation.district ?? "");
       setIsDistrict(false);
+      console.log("object: ", user.deliveryInformation.district);
     }
   }, [districts, isDistrict, user]);
 
@@ -235,13 +259,6 @@ const ShippingTab = ({ result }) => {
       formik.setFieldValue("phone", user.deliveryInformation.phone);
     }
   }, [user]);
-
-  useEffect(() => {
-    if (result) {
-      dispatch(profile());
-      dispatch(listProvince());
-    }
-  }, [result]);
 
   return (
     <section

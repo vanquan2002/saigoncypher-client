@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Breadcrumbs from "../Breadcrumbs";
 import { useDispatch, useSelector } from "react-redux";
-import { profile } from "../../redux/actions/UserActions";
 import { FaUser } from "react-icons/fa";
 import { RiAddLine } from "react-icons/ri";
 import { BiSolidEditAlt } from "react-icons/bi";
