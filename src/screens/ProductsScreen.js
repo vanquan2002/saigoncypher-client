@@ -12,7 +12,7 @@ const ProductsScreen = () => {
 
       <Header isTypeCol={1} />
       <Contents />
-      <Footer />
+      <Footer type="" />
     </div>
   );
 };

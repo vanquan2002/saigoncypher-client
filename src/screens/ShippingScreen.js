@@ -13,7 +13,7 @@ const ShippingScreen = () => {
 
       <Header />
       <Contents />
-      <Footer />
+      <Footer type="shipping" />
     </div>
   );
 };

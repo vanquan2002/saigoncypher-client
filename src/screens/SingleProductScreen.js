@@ -23,7 +23,7 @@ const SingleProductScreen = () => {
 
       <Header isTypeCol={0} />
       <Contents />
-      <Footer />
+      <Footer type="detail_product" />
 
       <div
         className={`fixed z-20 top-0 left-0 h-screen w-screen bg-black bg-opacity-50 duration-300 ${

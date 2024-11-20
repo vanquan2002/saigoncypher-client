@@ -99,7 +99,7 @@ const Header = ({ isTypeCol }) => {
                 isDropdown
                   ? "pointer-events-auto opacity-100"
                   : "pointer-events-none opacity-0"
-              } duration-200`}
+              }`}
               role="menu"
             >
               <li>
@@ -130,8 +130,8 @@ const Header = ({ isTypeCol }) => {
               aria-label="Đi đến giỏ hàng của bạn."
               className="relative hover:underline"
             >
-              <MdOutlineShoppingBag className="text-[1.4rem] md:hidden" />
-              <span className="md:hidden absolute bottom-2 right-[-8px] flex items-center justify-center h-[16px] w-[16px] bg-black rounded-full text-white text-[12px]">
+              <MdOutlineShoppingBag className="text-[1.4rem] md:hidden mr-1" />
+              <span className="md:hidden absolute bottom-2 right-[-3px] flex items-center justify-center h-[16px] w-[16px] bg-black rounded-full text-white text-[12px]">
                 {cartItems.length}
               </span>
               <span className="lowercase hidden md:block">

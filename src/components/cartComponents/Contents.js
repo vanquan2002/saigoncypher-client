@@ -28,16 +28,6 @@ const Contents = () => {
   const { isSmallModal, toggleIsSmallModal } = useContext(AppContext);
   const [typeModal, setTypeModal] = useState("");
 
-  const removeFromCartHandle = (id, size) => {
-    if (isSmallModal) {
-      toggleIsSmallModal("");
-    }
-    if (typeModal) {
-      setTypeModal("");
-    }
-    dispatch(removeFromCart(id, size, 2));
-  };
-
   const debouncedChangeQtyProduct = useMemo(
     () =>
       debounce((slug, qty, size, type) => {
@@ -45,6 +35,24 @@ const Contents = () => {
       }, 200),
     []
   );
+
+  const debouncedRemoveProduct = useMemo(
+    () =>
+      debounce((id, size) => {
+        dispatch(removeFromCart(id, size, 2));
+      }, 200),
+    []
+  );
+
+  const removeFromCartHandle = (id, size) => {
+    if (isSmallModal) {
+      toggleIsSmallModal("");
+    }
+    if (typeModal) {
+      setTypeModal("");
+    }
+    debouncedRemoveProduct(id, size);
+  };
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -95,7 +103,7 @@ const Contents = () => {
 
               <div className="w-2/3 md:w-4/5 lg:w-3/4 flex flex-col justify-between h-full py-3 px-4 md:p-5">
                 <div className="flex flex-col gap-1">
-                  <div className="w-full flex justify-between items-start">
+                  <div className="w-full flex justify-between items-start gap-3">
                     <Link to={`/product/${item.slug}`}>
                       <h2 className="lowercase text-lg font-medium leading-6 line-clamp-2 hover:underline">
                         {item.name}

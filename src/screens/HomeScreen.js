@@ -15,7 +15,7 @@ export default function HomeScreen() {
       <Header isTypeCol={1} />
       <Banner />
       <Contents />
-      <Footer />
+      <Footer type="" />
     </div>
   );
 }

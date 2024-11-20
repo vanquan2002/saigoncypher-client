@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import moment from "moment";
@@ -11,6 +11,7 @@ import { createProductReview } from "../../redux/actions/ProductActions";
 import { detailsOrder } from "../../redux/actions/OrderActions";
 import MessageModal from "./MessageModal";
 import { MdClose } from "react-icons/md";
+import debounce from "lodash.debounce";
 
 const ReviewModal = ({ isOpen, product }) => {
   moment.locale("vi");
@@ -24,10 +25,18 @@ const ReviewModal = ({ isOpen, product }) => {
   const { isReviewModal, toggleIsReviewModal, toggleIsMassage } =
     useContext(AppContext);
 
+  const debouncedCreateReview = useMemo(
+    () =>
+      debounce((id, contents) => {
+        dispatch(createProductReview(id, contents));
+      }, 200),
+    []
+  );
+
   const submitReviewHandle = (e) => {
     e.preventDefault();
     if (comment.trim()) {
-      dispatch(createProductReview(product.product, { rating, comment }));
+      debouncedCreateReview(product.product, { rating, comment });
     } else {
       setIsComment(false);
     }
@@ -117,10 +126,7 @@ const ReviewModal = ({ isOpen, product }) => {
           </div>
         </div>
 
-        <form
-          title="Form đánh giá sản phẩm"
-          onSubmit={(e) => submitReviewHandle(e)}
-        >
+        <form title="Form đánh giá sản phẩm" onSubmit={submitReviewHandle}>
           <div className="flex flex-col md:flex-row items-start gap-1 md:gap-4 mt-2">
             <span className="lowercase text-sm text-nowrap">Nội dung:</span>
             <div className="w-full flex flex-col gap-1.5">

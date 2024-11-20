@@ -186,7 +186,7 @@ const Contents = () => {
                     numberTabNumber === i + 1
                       ? "border-black text-black font-medium"
                       : "border-gray-200 text-gray-400"
-                  } duration-300`}
+                  }`}
                 >
                   <span className="lowercase text-[15px] hidden lg:block">
                     {item.title}

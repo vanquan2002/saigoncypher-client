@@ -19,15 +19,15 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
       const existingItemIndex = state.cartItems.findIndex(
         (item) => item.product === newItem.product && item.size === newItem.size
       );
-
       if (existingItemIndex !== -1) {
         const updatedCartItems = [...state.cartItems];
         const existingItem = updatedCartItems[existingItemIndex];
         const updatedQty = existingItem.qty + newItem.qty;
+
         if (updatedQty > 0) {
           updatedCartItems[existingItemIndex] = {
             ...existingItem,
-            qty: updatedQty > 10 ? 10 : updatedQty,
+            qty: Math.min(updatedQty, 10),
           };
           return {
             ...state,
@@ -35,18 +35,18 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
             successType: newItem.type,
             cartItems: updatedCartItems,
           };
-        } else {
-          return {
-            ...state,
-            successType: 2,
-            cartItems: updatedCartItems.filter(
-              (item) =>
-                item.product !== existingItem.product ||
-                item.size !== existingItem.size
-            ),
-          };
         }
-      } else {
+        return {
+          ...state,
+          successType: 2,
+          cartItems: updatedCartItems.filter(
+            (item) =>
+              item.product !== existingItem.product ||
+              item.size !== existingItem.size
+          ),
+        };
+      }
+      if (newItem.qty > 0) {
         return {
           ...state,
           loading: false,
@@ -54,6 +54,7 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
           cartItems: [...state.cartItems, newItem],
         };
       }
+      return state;
 
     case CART_ADD_ITEM_RESET:
       return { ...state, successType: 0 };

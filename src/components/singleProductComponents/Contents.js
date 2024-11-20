@@ -169,7 +169,7 @@ const Contents = () => {
                             item.size === size
                               ? "bg-black text-white"
                               : "text-black hover:bg-gray-100"
-                          } duration-200`}
+                          }`}
                         >
                           {item.size}
                         </button>
@@ -202,7 +202,7 @@ const Contents = () => {
                   <button
                     type="button"
                     aria-label="Nhấn thêm vào giỏ hàng"
-                    className={`w-full h-12 mt-5 md:mt-10 duration-300 flex justify-center items-center border border-black hover:underline ${
+                    className={`w-full h-12 mt-5 md:mt-10 duration-300 flex justify-center items-center border border-black ${
                       size ? "bg-black text-white" : "text-black"
                     }`}
                     onClick={() => addToCartHandle()}

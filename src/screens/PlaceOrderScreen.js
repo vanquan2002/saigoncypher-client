@@ -13,7 +13,7 @@ const PlaceOrderScreen = () => {
 
       <Header isTypeCol={0} />
       <Contents />
-      <Footer />
+      <Footer type="place_order" />
     </div>
   );
 };

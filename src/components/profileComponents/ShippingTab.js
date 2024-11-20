@@ -174,7 +174,6 @@ const ShippingTab = ({ result }) => {
     ) {
       formik.setFieldValue("district", user.deliveryInformation.district ?? "");
       setIsDistrict(false);
-      console.log("object: ", user.deliveryInformation.district);
     }
   }, [districts, isDistrict, user]);
 

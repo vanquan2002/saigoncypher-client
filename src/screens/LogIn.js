@@ -13,7 +13,7 @@ const Login = () => {
 
       <Header isTypeCol={0} />
       <Contents />
-      <Footer />
+      <Footer type="" />
     </div>
   );
 };

@@ -12,7 +12,7 @@ const SmallModal = ({ result, type }) => {
         result && isSmallModal
           ? "opacity-100 pointer-events-auto"
           : "opacity-0 pointer-events-none"
-      } duration-300`}
+      }`}
     >
       <div className="bg-black flex items-center gap-4 px-4 py-[11px]">
         <span className="text-white text-center text-sm lowercase">
@@ -24,7 +24,7 @@ const SmallModal = ({ result, type }) => {
             aria-label="Đi đến trang giỏ hàng"
             className="hidden md:block text-white lowercase underline text-sm"
           >
-            Xem danh sách
+            Xem giỏ hàng
           </Link>
         )}
         <button

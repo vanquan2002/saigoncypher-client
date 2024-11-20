@@ -13,7 +13,7 @@ const CartScreen = () => {
 
       <Header isTypeCol={0} />
       <Contents />
-      <Footer />
+      <Footer type="cart" />
     </div>
   );
 };

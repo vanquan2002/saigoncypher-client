@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { MdArrowOutward } from "react-icons/md";
 
-const Footer = () => {
+const Footer = ({ type }) => {
   const socials = [
     {
       name: "Facebook",
@@ -37,7 +37,16 @@ const Footer = () => {
   ];
 
   return (
-    <footer aria-label="Chân trang của SaigonCypher">
+    <footer
+      className={`${
+        type === "detail_product"
+          ? "mb-14 md:mb-0"
+          : ["cart", "shipping", "place_order"].includes(type)
+          ? "mb-[4.4rem]"
+          : "md:mb-0"
+      }`}
+      aria-label="Chân trang của SaigonCypher"
+    >
       <div className="mt-72 flex flex-col gap-20 md:gap-32 px-5">
         <nav
           aria-label="Liên kết mạng xã hội"
