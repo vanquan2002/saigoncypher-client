@@ -294,7 +294,7 @@ const Contents = () => {
                 type="button"
                 onClick={formik.handleSubmit}
                 aria-label="Cập nhật thông tin đặt hàng và đi đến trang thanh toán"
-                className="w-[42%] md:w-1/3 lg:w-1/4 flex items-center justify-center gap-0.5 lowercase text-white bg-black hover:underline"
+                className="w-[42%] md:w-1/3 lg:w-1/4 flex items-center justify-center gap-0.5 lowercase text-white bg-black hover:opacity-80"
               >
                 {loadingUserUpdate ? "Đang tiếp tục" : "Tiếp tục"}
                 <MdArrowForwardIos className="text-sm" />

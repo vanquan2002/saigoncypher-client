@@ -19,6 +19,8 @@ const Contents = () => {
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, userInfo, error } = userRegister;
   const { toggleIsMassage } = useContext(AppContext);
+  const [isRegister, setIsRegister] = useState(false);
+
   const validate = (values) => {
     const errors = {};
     if (!values.name) {
@@ -49,6 +51,22 @@ const Contents = () => {
   });
 
   useEffect(() => {
+    const { name, email, password } = formik.values;
+    const {
+      name: nameError,
+      email: emailError,
+      password: passwordError,
+    } = formik.errors;
+    if (
+      (name, email && password && !nameError && !emailError && !passwordError)
+    ) {
+      setIsRegister(true);
+    } else {
+      setIsRegister(false);
+    }
+  }, [formik.values, formik.errors]);
+
+  useEffect(() => {
     if (error) {
       toggleIsMassage(error);
       dispatch({
@@ -71,8 +89,9 @@ const Contents = () => {
           Nhập thông tin cá nhân.
         </h2>
         <form
+          onSubmit={formik.handleSubmit}
           aria-label="Form đăng kí tài khoản"
-          className="w-ful flex flex-col gap-12 mt-6"
+          className="w-ful flex flex-col gap-12 mt-10"
         >
           <div className="relative h-11 w-full">
             <input
@@ -170,8 +189,12 @@ const Contents = () => {
 
           <button
             type="submit"
-            onClick={formik.handleSubmit}
-            className="mt-6 py-2.5 lowercase hover:underline border border-black"
+            aria-label="Đăng ký tài khoản"
+            className={`mt-6 py-2.5 lowercase border border-black ${
+              isRegister
+                ? "bg-black text-white hover:opacity-80 "
+                : "hover:bg-gray-100"
+            } duration-300`}
           >
             {loading ? "Đang tạo tài khoản..." : "Tạo tài khoản."}
           </button>
@@ -182,12 +205,12 @@ const Contents = () => {
 
       <section className="w-full">
         <h2 className="lowercase text-center text-lg md:text-xl lg:text-2xl">
-          Quý khách đã có tài khoản?
+          Bạn đã có tài khoản?
         </h2>
         <Link
           to={redirect ? `/login?redirect=${redirect}` : "/login"}
           type="submit"
-          className="w-full mt-8 py-2.5 text-center lowercase hover:underline border border-black"
+          className="w-full mt-10 py-2.5 text-center lowercase hover:bg-gray-100 border border-black"
         >
           Đăng nhập.
         </Link>

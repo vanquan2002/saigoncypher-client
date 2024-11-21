@@ -285,7 +285,7 @@ const Contents = () => {
             type="button"
             onClick={() => debouncedCreateOrder()}
             aria-label="Cập nhật thông tin đặt hàng và đi đến trang thanh toán"
-            className="w-[42%] md:w-1/3 lg:w-1/4 flex items-center justify-center lowercase text-white bg-black hover:underline"
+            className="w-[42%] md:w-1/3 lg:w-1/4 flex items-center justify-center lowercase text-white bg-black hover:opacity-80"
           >
             {loading ? "Đang đặt hàng..." : "Đặt hàng."}
           </button>

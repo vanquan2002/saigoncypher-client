@@ -191,7 +191,7 @@ const Contents = () => {
           <Link
             to="/shipping"
             aria-label="Đi đến trang nhập địa chỉ đặt hàng"
-            className="w-[42%] md:w-1/3 lg:w-1/4 flex items-center justify-center gap-0.5 lowercase text-white bg-black hover:underline"
+            className="w-[42%] md:w-1/3 lg:w-1/4 flex items-center justify-center gap-0.5 lowercase text-white bg-black hover:opacity-80"
           >
             Thanh toán
             <MdArrowForwardIos className="text-sm" />

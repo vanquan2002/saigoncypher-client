@@ -203,7 +203,9 @@ const Contents = () => {
                     type="button"
                     aria-label="Nhấn thêm vào giỏ hàng"
                     className={`w-full h-12 mt-5 md:mt-10 duration-300 flex justify-center items-center border border-black ${
-                      size ? "bg-black text-white" : "text-black"
+                      size
+                        ? "bg-black text-white hover:opacity-80"
+                        : "text-black hover:bg-gray-100"
                     }`}
                     onClick={() => addToCartHandle()}
                   >

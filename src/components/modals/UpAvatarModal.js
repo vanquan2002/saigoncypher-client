@@ -76,7 +76,7 @@ const UpAvatarModal = ({ image, imageUrl, altImage }) => {
             type="button"
             aria-label="Đóng form tải ảnh"
             onClick={() => closeModalUpImgHandle()}
-            className={`lowercase w-full text-sm border border-black py-2 hover:underline ${
+            className={`lowercase w-full text-sm border border-black py-2 hover:bg-gray-100 ${
               loading && "opacity-30 pointer-events-none"
             }`}
           >
@@ -86,7 +86,7 @@ const UpAvatarModal = ({ image, imageUrl, altImage }) => {
             type="button"
             aria-label="Tải ảnh lên"
             onClick={() => debouncedUpdateProfile()}
-            className="lowercase w-full text-sm bg-black text-white py-2 hover:underline"
+            className="lowercase w-full text-sm bg-black text-white py-2 hover:opacity-80"
           >
             {loading ? "Đang tải lên..." : "Tải lên."}
           </button>

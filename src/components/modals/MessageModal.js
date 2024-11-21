@@ -49,7 +49,7 @@ const MessageModal = ({ type }) => {
         </div>
         <button
           onClick={() => toggleIsMassage("")}
-          className="flex justify-center items-center w-full min-h-1 py-2 md:py-[10px] text-center hover:underline"
+          className="flex justify-center items-center w-full min-h-1 py-2 text-center hover:bg-gray-100"
         >
           <span className="lowercase text-[15px]">Đóng.</span>
         </button>

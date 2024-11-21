@@ -19,6 +19,7 @@ const Contents = () => {
   const { loading, userInfo, error } = userLogin;
   const redirect = useLocation().search.split("=")[1] || "";
   const { toggleIsMassage } = useContext(AppContext);
+  const [isLogin, setIsLogin] = useState(false);
   const validate = (values) => {
     const errors = {};
     if (!values.email) {
@@ -49,6 +50,16 @@ const Contents = () => {
   }, []);
 
   useEffect(() => {
+    const { email, password } = formik.values;
+    const { email: emailError, password: passwordError } = formik.errors;
+    if (email && password && !emailError && !passwordError) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, [formik.values, formik.errors]);
+
+  useEffect(() => {
     if (error) {
       toggleIsMassage(error);
       dispatch({
@@ -70,8 +81,9 @@ const Contents = () => {
           Truy cập vào tài khoản của bạn.
         </h2>
         <form
+          onSubmit={formik.handleSubmit}
           aria-label="Form đăng nhập tài khoản"
-          className="w-ful flex flex-col gap-12 mt-6"
+          className="w-ful flex flex-col gap-10 mt-10"
         >
           <div className="relative h-11 w-full">
             <input
@@ -142,8 +154,12 @@ const Contents = () => {
 
           <button
             type="submit"
-            onClick={formik.handleSubmit}
-            className="mt-6 py-2.5 lowercase hover:underline border border-black"
+            aria-label="Đăng nhập vào tài khoản"
+            className={`mt-6 py-2.5 lowercase border border-black ${
+              isLogin
+                ? "bg-black text-white hover:opacity-80 "
+                : "hover:bg-gray-100"
+            } duration-300`}
           >
             {loading ? "Đang đăng nhập..." : "Đăng nhập."}
           </button>
@@ -157,17 +173,16 @@ const Contents = () => {
 
       <section className="w-full">
         <h2 className="lowercase text-center text-lg md:text-xl lg:text-2xl">
-          Quý khách cần một tài khoản?
+          Bạn chưa có tài khoản?
         </h2>
         <Link
           to={redirect ? `/register?redirect=${redirect}` : "/register"}
           type="submit"
-          className="w-full mt-8 py-2.5 text-center lowercase hover:underline border border-black"
+          className="w-full mt-10 py-2.5 text-center lowercase hover:bg-gray-100 border border-black"
         >
           Đăng Ký.
         </Link>
       </section>
-
       <MessageModal type="" />
     </main>
   );

@@ -184,27 +184,10 @@ const Contents = () => {
                         : "opacity-30"
                     }`}
                   >
-                    <span className="lowercase text-[15px]">Đã giao</span>
+                    <span className="lowercase text-[15px]">Đã nhận</span>
                     {order.orderStatus.receivedAt && (
                       <span className="lowercase text-[15px] text-gray-800">
                         ({moment(order.orderStatus.receivedAt).calendar()})
-                      </span>
-                    )}
-                  </li>
-
-                  <li className="flex items-center">
-                    <div className="w-7 border-t border-gray-300"></div>
-                  </li>
-
-                  <li
-                    className={`flex items-center gap-1 ${
-                      order.orderStatus.isPaid ? "opacity-100" : "opacity-30"
-                    }`}
-                  >
-                    <span className="lowercase text-[15px]">Đã thanh toán</span>
-                    {order.orderStatus.paidAt && (
-                      <span className="lowercase text-[15px] text-gray-800">
-                        ({moment(order.orderStatus.paidAt).calendar()})
                       </span>
                     )}
                   </li>
@@ -267,7 +250,7 @@ const Contents = () => {
                         type="button"
                         aria-label="Mở ô đánh giá sản phẩm"
                         onClick={() => openReviewModalHandle(i)}
-                        className={`w-full px-4 py-2 lowercase text-sm hover:underline ${
+                        className={`w-full px-4 py-2 lowercase text-sm hover:bg-opacity-80 ${
                           order.orderStatus.isReceived && !item.isReview
                             ? "bg-black text-white"
                             : "text-black border border-black pointer-events-none opacity-30"

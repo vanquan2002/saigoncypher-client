@@ -22,6 +22,7 @@ const Header = ({ isTypeCol }) => {
   const [isDropdown, setIsDropdown] = useState(false);
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
+  const inputRef = useRef(null);
 
   const submitHandle = (e) => {
     e.preventDefault();
@@ -38,6 +39,11 @@ const Header = ({ isTypeCol }) => {
     } else {
       navigate(`/login`);
     }
+  };
+
+  const removeKeySearchHandle = () => {
+    setKeyword("");
+    inputRef.current?.focus();
   };
 
   const handleClickOutside = (e) => {
@@ -160,12 +166,13 @@ const Header = ({ isTypeCol }) => {
           placeholder="tìm kiếm sản phẩm..."
           aria-label="Ô tìm kiếm sản phẩm"
           value={keyword}
+          ref={inputRef}
         />
         <div className="flex items-center">
           {keyword && (
             <button
               type="button"
-              onClick={() => setKeyword("")}
+              onClick={() => removeKeySearchHandle()}
               aria-label="Xóa nội dung tìm kiếm"
               className="px-1"
             >
@@ -177,7 +184,7 @@ const Header = ({ isTypeCol }) => {
             aria-label={`Tìm kiếm sản phẩm với từ khóa ${keyword}`}
             className="lowercase text-nowrap px-2 hover:underline border-l border-black text-[15px]"
           >
-            Tìm kiếm.
+            Tìm kiếm
           </button>
         </div>
       </form>

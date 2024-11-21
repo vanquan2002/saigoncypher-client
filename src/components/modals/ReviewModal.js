@@ -8,10 +8,10 @@ import RatingIconChange from "../singleProductComponents/RatingIconChange";
 import { AppContext } from "../../AppContext";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { createProductReview } from "../../redux/actions/ProductActions";
-import { detailsOrder } from "../../redux/actions/OrderActions";
 import MessageModal from "./MessageModal";
 import { MdClose } from "react-icons/md";
 import debounce from "lodash.debounce";
+import { PiWarningCircleLight } from "react-icons/pi";
 
 const ReviewModal = ({ isOpen, product }) => {
   moment.locale("vi");
@@ -141,9 +141,12 @@ const ReviewModal = ({ isOpen, product }) => {
                 rows="3"
               ></textarea>
               {!isComment && (
-                <span className="lowercase text-red-600 text-sm">
-                  Chưa nhập nội dung đánh giá!
-                </span>
+                <div className="flex items-center gap-1">
+                  <PiWarningCircleLight className="text-red-500" />
+                  <span className="text-xs text-red-500">
+                    Chưa nhập nội dung đánh giá
+                  </span>
+                </div>
               )}
             </div>
           </div>
@@ -153,14 +156,14 @@ const ReviewModal = ({ isOpen, product }) => {
               type="reset"
               aria-label="Làm mới form đánh giá"
               onClick={() => resetReviewHandle()}
-              className="lowercase text-[13px] hover:underline text-center w-1/3 md:w-1/4 lg:w-1/5 py-1.5 border border-black"
+              className="lowercase text-[13px] hover:bg-gray-100 text-center w-1/3 md:w-1/4 lg:w-1/5 py-1.5 border border-black"
             >
               làm mới.
             </button>
             <button
               type="submit"
               aria-label="Gửi đánh giá"
-              className="lowercase text-[13px] hover:underline text-center w-1/3 md:w-1/4 lg:w-1/5 py-1.5 bg-black text-white"
+              className="lowercase text-[13px] hover:opacity-80 text-center w-1/3 md:w-1/4 lg:w-1/5 py-1.5 bg-black text-white"
             >
               {loading ? "Đang đăng." : "Đăng."}
             </button>

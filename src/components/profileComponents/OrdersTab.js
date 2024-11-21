@@ -68,10 +68,6 @@ const OrdersTab = ({ result }) => {
                     <span className="lowercase font-medium text-sm line-clamp-1 bg-red-100">
                       Đã hủy
                     </span>
-                  ) : item.orderStatus.isPaid ? (
-                    <span className="lowercase font-medium text-sm line-clamp-1 bg-green-100">
-                      Đã thanh toán
-                    </span>
                   ) : item.orderStatus.isReceived ? (
                     <span className="lowercase font-medium text-sm line-clamp-1 bg-green-100">
                       Đã nhận
