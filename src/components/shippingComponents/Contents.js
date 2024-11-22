@@ -219,7 +219,7 @@ const Contents = () => {
   }, [selectedDistrict]);
 
   useEffect(() => {
-    if (provinces.length > 0) {
+    if (provinces?.length > 0) {
       formik.setFieldValue(
         "province",
         userInfo.deliveryInformation.province ?? ""
@@ -230,7 +230,6 @@ const Contents = () => {
   useEffect(() => {
     window.scrollTo({ top: 0 });
     dispatch(listProvince());
-
     return () => {
       dispatch({ type: PROVINCE_DATA_RESET });
       dispatch({ type: DISTRICT_DATA_RESET });
@@ -257,7 +256,7 @@ const Contents = () => {
       </h3>
       {errorProvince || errorDistrict || errorWard ? (
         <div className="mt-5 md:mt-10">
-          <Error error="API calling delivery location is having problems, please contact admin!" />
+          <Error error="API calling delivery location is having problems!" />
         </div>
       ) : (
         <div className="mt-5 md:mt-10">

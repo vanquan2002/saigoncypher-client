@@ -80,10 +80,10 @@ const ProfileTab = ({ result }) => {
   });
 
   useEffect(() => {
-    if (user.name) {
+    if (user?.name) {
       formik.setFieldValue("name", user.name);
     }
-    if (user.email) {
+    if (user?.email) {
       formik.setFieldValue("email", user.email);
     }
   }, [user]);

@@ -5,6 +5,7 @@ import Banner from "../components/homeComponents/Banner";
 import Header from "../components/headerComponents/Header";
 import Footer from "../components/footerComponents/Footer";
 import Marquees from "../components/Marquees";
+import Introduction from "../components/homeComponents/Introduction";
 
 export default function HomeScreen() {
   return (
@@ -16,6 +17,7 @@ export default function HomeScreen() {
       <Header isTypeCol={1} />
       <Banner />
       <Marquees />
+      <Introduction />
       <Contents />
       <Footer type="" />
     </div>

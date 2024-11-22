@@ -169,8 +169,7 @@ const ShippingTab = ({ result }) => {
     if (
       districts.length > 0 &&
       isDistrict &&
-      user.deliveryInformation &&
-      user.deliveryInformation.district
+      user?.deliveryInformation?.district
     ) {
       formik.setFieldValue("district", user.deliveryInformation.district ?? "");
       setIsDistrict(false);
@@ -178,12 +177,7 @@ const ShippingTab = ({ result }) => {
   }, [districts, isDistrict, user]);
 
   useEffect(() => {
-    if (
-      wards.length > 0 &&
-      isWard &&
-      user.deliveryInformation &&
-      user.deliveryInformation.ward
-    ) {
+    if (wards.length > 0 && isWard && user?.deliveryInformation?.ward) {
       formik.setFieldValue("ward", user.deliveryInformation.ward ?? "");
       setIsWard(false);
     }
@@ -238,24 +232,18 @@ const ShippingTab = ({ result }) => {
   }, [selectedDistrict]);
 
   useEffect(() => {
-    if (
-      provinces.length > 0 &&
-      user.deliveryInformation &&
-      user.deliveryInformation.province
-    ) {
+    if (provinces.length > 0 && user?.deliveryInformation?.province) {
       formik.setFieldValue("province", user.deliveryInformation.province ?? "");
     }
   }, [provinces, user]);
 
   useEffect(() => {
-    if (user.deliveryInformation && user.deliveryInformation.fullName) {
-      formik.setFieldValue("fullName", user.deliveryInformation.fullName);
-    }
-    if (user.deliveryInformation && user.deliveryInformation.address) {
-      formik.setFieldValue("address", user.deliveryInformation.address);
-    }
-    if (user.deliveryInformation && user.deliveryInformation.phone) {
-      formik.setFieldValue("phone", user.deliveryInformation.phone);
+    const { deliveryInformation } = user || {};
+    if (deliveryInformation) {
+      const { fullName, address, phone } = deliveryInformation;
+      if (fullName) formik.setFieldValue("fullName", fullName);
+      if (address) formik.setFieldValue("address", address);
+      if (phone) formik.setFieldValue("phone", phone);
     }
   }, [user]);
 

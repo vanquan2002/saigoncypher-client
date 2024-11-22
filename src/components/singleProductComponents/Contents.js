@@ -266,7 +266,7 @@ const Contents = () => {
             <Comments product={product} />
           </div>
         )}
-        <RelatedProducts productId={product._id} />
+        <RelatedProducts productId={product?._id} />
       </article>
 
       <SizeModal />
