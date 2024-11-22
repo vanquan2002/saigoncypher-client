@@ -59,11 +59,11 @@ const Comments = ({ product }) => {
           </span>
         </div>
       ) : (
-        <ul className="mt-5 md:mt-10 grid grid-cols-1 lg:grid-cols-2 md:gap-5 overflow-hidden">
+        <ul className="mt-5 md:mt-10 flex flex-col md:gap-5">
           {product.reviews.map((review, i) => (
             <li
               key={i}
-              className={`flex gap-3 ${
+              className={`flex gap-3 min-h-24 ${
                 product.reviews.length - 1 !== i && "border-b-0 md:border-b"
               } border border-gray-300 p-4`}
             >
@@ -92,7 +92,7 @@ const Comments = ({ product }) => {
                   </span>
                 </div>
                 <RatingIconReadonly rating={review.rating} />
-                <div className="flex flex-col items-start col-span-2 mt-1">
+                <div className="flex flex-col items-start mt-1">
                   <p
                     ref={(el) => (commentRefs.current[i] = el)}
                     className={`text-sm font-light italic ${

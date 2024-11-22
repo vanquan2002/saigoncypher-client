@@ -26,7 +26,7 @@ const SizeModal = () => {
         className="bg-white border border-gray-300 md:mx-20"
       >
         <div className="flex justify-between items-start">
-          <h4 className="lowercase text-2xl font-bold mt-8 md:mt-20 mx-3 md:mx-14">
+          <h4 className="lowercase text-2xl font-bold mt-8 md:mt-14 mx-3 md:mx-14">
             Hướng dẫn chọn cỡ.
           </h4>
           <button
@@ -39,7 +39,7 @@ const SizeModal = () => {
           </button>
         </div>
 
-        <table className="mt-5 border-collapse border border-gray-300 text-sm text-left mx-3 md:mx-14 mb-8 md:mb-20">
+        <table className="mt-5 border-collapse border border-gray-300 text-sm text-left mx-3 md:mx-14 mb-8 md:mb-14">
           <thead className="bg-gray-200">
             <tr className="md:hidden">
               <th className="border border-gray-300 px-4 py-2">Thông số</th>

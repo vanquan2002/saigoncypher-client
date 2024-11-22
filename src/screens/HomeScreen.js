@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import Banner from "../components/homeComponents/Banner";
 import Header from "../components/headerComponents/Header";
 import Footer from "../components/footerComponents/Footer";
+import Marquees from "../components/Marquees";
 
 export default function HomeScreen() {
   return (
@@ -14,6 +15,7 @@ export default function HomeScreen() {
 
       <Header isTypeCol={1} />
       <Banner />
+      <Marquees />
       <Contents />
       <Footer type="" />
     </div>

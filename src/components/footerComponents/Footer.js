@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { MdArrowOutward } from "react-icons/md";
+import Marquees from "../Marquees";
 
 const Footer = ({ type }) => {
   const socials = [
@@ -47,7 +48,7 @@ const Footer = ({ type }) => {
       }`}
       aria-label="Chân trang của SaigonCypher"
     >
-      <div className="mt-72 flex flex-col gap-20 md:gap-32 px-5">
+      <div className="mt-72 mb-16 flex flex-col gap-20 md:gap-32 px-5">
         <nav
           aria-label="Liên kết mạng xã hội"
           className="flex justify-center gap-4 md:gap-8"
@@ -116,8 +117,8 @@ const Footer = ({ type }) => {
           ))}
         </nav>
       </div>
-
-      <div className="flex justify-center gap-2 mt-16 pb-2">
+      <Marquees />
+      <div className="flex justify-center gap-2 py-2">
         <span className="text-sm font-bold text-gray-400">@2024</span>
         <span className="text-sm font-bold text-gray-400">-</span>
         <span className="text-sm font-bold text-gray-400">SAIGONCYPHER</span>
