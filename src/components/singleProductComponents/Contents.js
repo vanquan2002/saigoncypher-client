@@ -17,6 +17,7 @@ import SmallModal from "../modals/SmallModal";
 import debounce from "lodash.debounce";
 import Comments from "./Comments";
 import { VscAdd } from "react-icons/vsc";
+import SizeModal from "../modals/SizeModal";
 
 const Contents = () => {
   const { slug } = useParams();
@@ -35,6 +36,7 @@ const Contents = () => {
     toggleIsCartModal,
     isSmallModal,
     toggleIsSmallModal,
+    toggleIsSizeGuideModal,
   } = useContext(AppContext);
   const namePages = [
     { name: "Trang chủ", url: "/" },
@@ -79,6 +81,11 @@ const Contents = () => {
     } else {
       setNumTab(num);
     }
+  };
+
+  const isSizeGuideHandle = () => {
+    toggleIsCartModal(false);
+    toggleIsSizeGuideModal(true);
   };
 
   useEffect(() => {
@@ -157,7 +164,7 @@ const Contents = () => {
                     isCartModal ? "block z-30 p-4" : "hidden"
                   } md:block md:mt-8 bg-white fixed left-0 bottom-0 md:static`}
                 >
-                  <span className="lowercase">Chọn kích cỡ</span>
+                  <span className="lowercase">Chọn cỡ</span>
                   <ul className="mt-2 grid grid-cols-2 gap-3">
                     {product.sizes.map((item, i) => (
                       <li key={i}>
@@ -187,9 +194,10 @@ const Contents = () => {
                   <div className="flex flex-col md:flex-row items-start md:items-center gap-x-2 gap-y-0.5 mt-2">
                     <button
                       type="button"
+                      onClick={() => isSizeGuideHandle()}
                       className="lowercase underline text-[13px] font-light"
                     >
-                      Hướng dẫn chọn kích cỡ.
+                      Hướng dẫn chọn cỡ.
                     </button>
                     <span className="lowercase text-[13px] text-gray-500 font-light">
                       (Số đo người mẫu: cỡ
@@ -261,6 +269,7 @@ const Contents = () => {
         <RelatedProducts productId={product._id} />
       </article>
 
+      <SizeModal />
       <MessageModal type="" />
       <SmallModal result={typeModal === "add_item_cart"} type={typeModal} />
     </main>

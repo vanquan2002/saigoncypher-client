@@ -10,6 +10,7 @@ export const AppProvider = ({ children }) => {
   const [numberTabNumber, setNumberTabNumber] = useState(1);
   const [isReviewModal, setIsReviewModal] = useState(false);
   const [isUpAvatarModal, setIsUpAvatarModal] = useState(false);
+  const [isSizeGuideModal, setIsSizeGuideModal] = useState(false);
 
   const toggleIsMassage = (text) => setIsMassage(text);
   const toggleIsSmallModal = (text) => setIsSmallModal(text);
@@ -18,6 +19,7 @@ export const AppProvider = ({ children }) => {
   const toggleNumberTabNumber = (num) => setNumberTabNumber(num);
   const toggleIsReviewModal = (bol) => setIsReviewModal(bol);
   const toggleIsUpAvatarModal = (bol) => setIsUpAvatarModal(bol);
+  const toggleIsSizeGuideModal = (bol) => setIsSizeGuideModal(bol);
 
   useEffect(() => {
     if (isSmallModal) {
@@ -53,6 +55,8 @@ export const AppProvider = ({ children }) => {
         toggleIsReviewModal,
         isUpAvatarModal,
         toggleIsUpAvatarModal,
+        isSizeGuideModal,
+        toggleIsSizeGuideModal,
       }}
     >
       {children}
