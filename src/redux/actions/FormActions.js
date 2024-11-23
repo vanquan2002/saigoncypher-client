@@ -24,7 +24,7 @@ export const listProvince = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PROVINCE_DATA_FAIL,
-      payload: "API is having problems, please contact admin!",
+      payload: "API is having problems!",
     });
   }
 };
@@ -44,7 +44,7 @@ export const listDistrict = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DISTRICT_DATA_FAIL,
-      payload: "API is having problems, please contact admin!",
+      payload: "API is having problems!",
     });
   }
 };
@@ -64,7 +64,7 @@ export const listWard = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: WARD_DATA_FAIL,
-      payload: "API is having problems, please contact admin!",
+      payload: "API is having problems!",
     });
   }
 };

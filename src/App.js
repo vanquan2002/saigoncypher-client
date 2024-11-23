@@ -11,6 +11,7 @@ import OrderScreen from "./screens/OrderScreen";
 import NotFound from "./screens/NotFound";
 import PrivateRouter from "./PrivateRouter";
 import ProductsScreen from "./screens/ProductsScreen";
+import AboutUs from "./screens/AboutUs";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/login" element={<LogIn />} />
         <Route path="/register" element={<Register />} />
         <Route path="/cart" element={<CartScreen />} />
+        <Route path="/aboutus" element={<AboutUs />} />
 
         <Route
           path="/shipping"

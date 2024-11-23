@@ -119,22 +119,24 @@ const Contents = () => {
   }, [errorCancelOrder]);
 
   return (
-    <main className="md:px-20">
-      <div className="px-5 md:px-0 mt-32 md:mt-28">
+    <main>
+      <div className="px-5 mt-32 md:mt-28">
         <Breadcrumbs namePages={namePages} />
       </div>
-      <h3 className="border-t border-gray-300 pt-5 md:pt-10 mt-3 md:mt-6 text-center lowercase text-2xl md:text-3xl">
+      <h3 className="mx-0 md:mx-5 border-t border-gray-300 pt-5 md:pt-10 mt-3 md:mt-6 text-center lowercase text-2xl md:text-3xl">
         Chi tiết đơn hàng.
       </h3>
 
       {loadingDetailsOrder ? (
-        <OrderDetailSkeleton />
+        <div className="px-0 md:px-5 mt-5 md:mt-10">
+          <OrderDetailSkeleton />
+        </div>
       ) : errorDetailsOrder ? (
         <div className="mx-5 md:mx-0 mt-5 md:mt-10">
           <Error error={errorDetailsOrder} />
         </div>
       ) : (
-        <div className="mt-5 md:mt-10">
+        <div className="px-0 md:px-5 mt-5 md:mt-10">
           <div className="bg-gray-50 border border-gray-300 px-4 py-3">
             <h4 className="lowercase font-medium">Trạng thái đơn hàng.</h4>
             <ul className="flex flex-wrap gap-x-3 mt-1">

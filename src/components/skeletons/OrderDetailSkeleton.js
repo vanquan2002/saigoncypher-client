@@ -2,12 +2,12 @@ import React from "react";
 
 const OrderDetailSkeleton = () => {
   return (
-    <div className="w-full mt-5 md:mt-10 animate-pulse">
+    <div className="w-full animate-pulse">
       <div className="bg-gray-100 h-28 md:h-[4.5rem] w-full"></div>
 
       <div className="flex flex-col lg:flex-row gap-x-20 gap-y-9 mt-8 md:mt-10">
         <div className="w-full">
-          <div className="bg-gray-100 h-[18px] w-1/4"></div>
+          <div className="bg-gray-100 h-[18px] w-1/3 mx-5 md:mx-0"></div>
           <ul className="mt-3 flex flex-col md:gap-5">
             {[1, 2].map((item, i) => (
               <li

@@ -69,7 +69,7 @@ const Contents = () => {
   }, [successType]);
 
   return (
-    <main className="md:px-20">
+    <main className="md:px-5">
       <div className="mx-5 md:mx-0 mt-32 md:mt-28">
         <Breadcrumbs namePages={namePages} />
       </div>

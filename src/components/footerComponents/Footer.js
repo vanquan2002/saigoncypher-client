@@ -21,14 +21,14 @@ const Footer = ({ type }) => {
   const others = [
     {
       name: "Giới thiệu về chúng tôi",
-      link: "/",
+      link: "/aboutus",
     },
     {
       name: "Điều khoản dịch vụ",
       link: "/",
     },
     {
-      name: "Chính sách đổi, trả hàng",
+      name: "Chính sách bảo mật",
       link: "/",
     },
     {
