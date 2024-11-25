@@ -4,14 +4,14 @@ const Marquees = () => {
 
   return (
     <div className="bg-black relative flex overflow-x-hidden">
-      <div className="animate-marquee py-0.5">
-        <span className="text-sm text-white mx-8 whitespace-nowrap">
+      <div className="animate-marquee ">
+        <span className="text-sm leading-7 text-white mx-8 whitespace-nowrap">
           {contentText}
         </span>
       </div>
 
-      <div className="absolute top-0 animate-marquee2 py-0.5">
-        <span className="text-sm text-white mx-8 whitespace-nowrap">
+      <div className="absolute top-0 animate-marquee2 ">
+        <span className="text-sm leading-7 text-white mx-8 whitespace-nowrap">
           {contentText}
         </span>
       </div>

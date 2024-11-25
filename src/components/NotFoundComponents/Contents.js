@@ -1,34 +1,36 @@
 import React from "react";
 import { useNavigate } from "react-router";
+import { IoIosSettings } from "react-icons/io";
 
 const Contents = () => {
   const navigate = useNavigate();
 
   return (
-    <main className="pt-56 pb-40 px-5 flex justify-center">
-      <div className="w-full">
-        <div className="flex items-center justify-between bg-neutral-800 px-4 py-1.5">
-          <span className="font-mono text-red-500">lỗi 404</span>
-          <div className="flex gap-2">
-            <div className="h-2.5 w-2.5 rounded-full bg-red-600"></div>
-            <div className="h-2.5 w-2.5 rounded-full bg-yellow-400"></div>
-            <div className="h-2.5 w-2.5 rounded-full bg-green-600"></div>
-          </div>
-        </div>
+    <main className="pt-52 px-5">
+      <div className="flex flex-col items-center">
+        <span className="mt-4 text-9xl text-neutral-200 font-black flex">
+          4<IoIosSettings className="animate-spin [animation-duration:8s]" />4
+        </span>
 
-        <div className="bg-neutral-700 px-4 pt-3 pb-8 text-green-500 flex flex-col">
-          <span className="font-mono">Trang không tồn tại!</span>
-          <button
-            type="button"
-            aria-label="Quay về trang trước"
-            onClick={() =>
-              window.history.length > 1 ? navigate(-1) : navigate("/")
-            }
-            className="font-mono text-xs text-right mt-5"
-          >
-            [ Quay về ]
-          </button>
-        </div>
+        <p className="mt-4 text-xl text-neutral-600 font-bold">
+          Hmm, không tìm thấy trang
+        </p>
+
+        <span className="mt-2 text-sm font-light text-center">
+          Trang bạn đang tìm kiếm có thể đã bị xóa, chuyển đi, thay đổi link
+          hoặc chưa bao giờ tồn tại.
+        </span>
+
+        <button
+          type="button"
+          aria-label="Quay về trang trước"
+          onClick={() =>
+            window.history.length > 1 ? navigate(-1) : navigate("/")
+          }
+          className="mt-10 lowercase text-sm border border-neutral-300 px-4 py-1 hover:bg-neutral-100"
+        >
+          Quay về
+        </button>
       </div>
     </main>
   );

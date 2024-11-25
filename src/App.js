@@ -12,6 +12,7 @@ import NotFound from "./screens/NotFound";
 import PrivateRouter from "./PrivateRouter";
 import ProductsScreen from "./screens/ProductsScreen";
 import AboutUs from "./screens/AboutUs";
+import TermsOfService from "./screens/TermsOfService";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/cart" element={<CartScreen />} />
         <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/termsofservice" element={<TermsOfService />} />
 
         <Route
           path="/shipping"

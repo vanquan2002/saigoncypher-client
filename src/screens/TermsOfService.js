@@ -2,13 +2,13 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import Header from "../components/headerComponents/Header";
 import Footer from "../components/footerComponents/Footer";
-import Contents from "../components/NotFoundComponents/Contents";
+import Contents from "../components/termsOfServiceComponents/Contents";
 
-const NotFound = () => {
+const TermsOfService = () => {
   return (
     <div>
       <Helmet>
-        <title>SaigonCypher | T-Shirt Store VietNam</title>
+        <title>SaigonCypher | Điều khoản dịch vụ</title>
       </Helmet>
 
       <Header isTypeCol={0} />
@@ -18,4 +18,4 @@ const NotFound = () => {
   );
 };
 
-export default NotFound;
+export default TermsOfService;
