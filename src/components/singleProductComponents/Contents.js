@@ -74,7 +74,6 @@ const Contents = () => {
       }
     }
   };
-
   const openTabHandle = (num) => {
     if (numTab === num) {
       setNumTab(null);
@@ -82,7 +81,6 @@ const Contents = () => {
       setNumTab(num);
     }
   };
-
   const isSizeGuideHandle = () => {
     toggleIsCartModal(false);
     toggleIsSizeGuideModal(true);
@@ -94,7 +92,6 @@ const Contents = () => {
     setIsSelectSize(false);
     dispatch(detailsProduct(slug));
   }, [slug]);
-
   useEffect(() => {
     if (successType === 1) {
       setSize("");
@@ -108,7 +105,6 @@ const Contents = () => {
       }
     }
   }, [successType]);
-
   useEffect(() => {
     const handleResize = () => {
       toggleIsCartModal(false);
@@ -118,7 +114,6 @@ const Contents = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [product]);
-
   useEffect(() => {
     if (size && window.innerWidth < 768) {
       setIsSelectSize(false);
@@ -133,15 +128,15 @@ const Contents = () => {
 
       <article>
         {loading ? (
-          <div className="md:px-20 mt-5 md:mt-10">
+          <div className="md:px-20 mt-4 md:mt-8">
             <ProductDetailSkeleton />
           </div>
         ) : error ? (
-          <div className="px-5 mt-5 md:mt-10">
+          <div className="px-5 mt-4 md:mt-8">
             <Error error={error} />
           </div>
         ) : (
-          <div className="md:px-20 mt-5 md:mt-10">
+          <div className="md:px-20 mt-4 md:mt-8">
             <div className="flex flex-col lg:flex-row gap-4 md:gap-10 lg:gap-20">
               <section className="w-full lg:w-2/5">
                 <ImageList images={product.images} />
@@ -175,7 +170,7 @@ const Contents = () => {
                           className={`text-sm border border-black flex w-full items-center justify-center h-10 uppercase ${
                             item.size === size
                               ? "bg-black text-white"
-                              : "text-black hover:bg-gray-100"
+                              : "text-black hover:bg-neutral-100"
                           }`}
                         >
                           {item.size}
@@ -199,7 +194,7 @@ const Contents = () => {
                     >
                       Hướng dẫn chọn cỡ.
                     </button>
-                    <span className="lowercase text-[13px] text-gray-500 font-light">
+                    <span className="lowercase text-[13px] text-neutral-500 font-light">
                       (Số đo người mẫu: cỡ
                       <span className="uppercase ml-1">
                         {product.model.size}
@@ -213,7 +208,7 @@ const Contents = () => {
                     className={`w-full h-12 mt-5 md:mt-10 duration-300 flex justify-center items-center border border-black ${
                       size
                         ? "bg-black text-white hover:opacity-80"
-                        : "text-black hover:bg-gray-100"
+                        : "text-black hover:bg-neutral-100"
                     }`}
                     onClick={() => addToCartHandle()}
                   >
@@ -229,9 +224,9 @@ const Contents = () => {
                   </button>
                 </div>
 
-                <ul className="mt-10 border-t border-gray-300">
+                <ul className="mt-10 border-t border-neutral-300">
                   {informationTab.map((item, i) => (
-                    <li key={i} className="border-b border-gray-300">
+                    <li key={i} className="border-b border-neutral-300">
                       <button
                         type="button"
                         aria-label="Hiển thị nội dung của mô tả sản phẩm"

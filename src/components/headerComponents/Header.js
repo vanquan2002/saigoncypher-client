@@ -32,7 +32,6 @@ const Header = ({ isTypeCol }) => {
       navigate(`/products`);
     }
   };
-
   const openDropdownHandle = () => {
     if (userInfo) {
       setIsDropdown(!isDropdown);
@@ -40,12 +39,10 @@ const Header = ({ isTypeCol }) => {
       navigate(`/login`);
     }
   };
-
   const removeKeySearchHandle = () => {
     setKeyword("");
     inputRef.current?.focus();
   };
-
   const handleClickOutside = (e) => {
     if (
       dropdownRef.current &&
@@ -56,7 +53,6 @@ const Header = ({ isTypeCol }) => {
       setIsDropdown(false);
     }
   };
-
   const logoutHandle = () => {
     dispatch(logout());
     setIsDropdown(false);
@@ -101,28 +97,28 @@ const Header = ({ isTypeCol }) => {
 
             <ul
               ref={dropdownRef}
-              className={`bg-white flex flex-col border border-black absolute top-7 right-0 py-1.5 px-3 ${
+              className={`bg-white flex flex-col gap-1.5 border border-black absolute top-7 right-0 py-2 px-3 ${
                 isDropdown
                   ? "pointer-events-auto opacity-100"
                   : "pointer-events-none opacity-0"
               }`}
               role="menu"
             >
-              <li>
+              <li className="leading-4">
                 <Link
                   to="/profile"
                   aria-label="Đi đến trang thông tin cá nhân"
-                  className="hover:underline lowercase text-nowrap text-sm"
+                  className="hover:underline lowercase text-nowrap text-[15px]"
                 >
                   Thông tin cá nhân
                 </Link>
               </li>
-              <li>
+              <li className="leading-4">
                 <button
                   type="button"
                   aria-label="Đăng xuất"
                   onClick={() => logoutHandle()}
-                  className="hover:underline lowercase text-sm"
+                  className="hover:underline lowercase text-[15px]"
                 >
                   Đăng xuất.
                 </button>
@@ -150,7 +146,7 @@ const Header = ({ isTypeCol }) => {
 
       <form
         role="search"
-        title="Ô tìm kiếm sản phẩm"
+        aria-label="Tìm kiếm sản phẩm"
         className="mt-4 md:mt-0 py-[6px] w-full md:w-[36%] lg:w-[28%] flex items-center border border-black"
         onSubmit={(e) => submitHandle(e)}
       >

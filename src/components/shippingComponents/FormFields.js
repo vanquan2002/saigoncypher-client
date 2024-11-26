@@ -10,7 +10,7 @@ const FormFields = ({
   districts,
   wards,
 }) => (
-  <form aria-label="Form chỉnh sửa địa chỉ đặt hàng">
+  <form aria-label="Biểu mẫu chỉnh sửa địa chỉ đặt hàng">
     <ul className="grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-10">
       {itemInputForm.slice(0, 2).map((item, i) => (
         <InputField key={i} item={item} formik={formik} />

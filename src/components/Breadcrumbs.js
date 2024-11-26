@@ -12,7 +12,7 @@ const Breadcrumbs = ({ namePages }) => {
             <span
               className={`text-sm pr-1 md:pr-2 ${
                 namePages.length - 1 !== i
-                  ? "text-gray-500"
+                  ? "text-neutral-500"
                   : "font-semibold text-black"
               }`}
             >
@@ -23,7 +23,7 @@ const Breadcrumbs = ({ namePages }) => {
             onClick={() => namePages.length - 1 !== i && navigate(item.url)}
             className={`text-sm ${
               namePages.length - 1 !== i
-                ? "text-gray-500 cursor-pointer hover:underline"
+                ? "text-neutral-500 cursor-pointer hover:underline"
                 : "font-medium text-black line-clamp-1"
             }`}
           >

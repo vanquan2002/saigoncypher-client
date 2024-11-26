@@ -65,7 +65,7 @@ const Contents = () => {
       <div className="px-5 md:px-0 mt-40 md:mt-28">
         <Breadcrumbs namePages={updatedPages} />
       </div>
-      <h3 className="border-t border-gray-300 pt-5 md:pt-10 mt-3 md:mt-6 text-center lowercase text-2xl md:text-3xl">
+      <h3 className="border-t border-neutral-300 pt-5 md:pt-10 mt-3 md:mt-6 text-center lowercase text-2xl md:text-3xl">
         Tất cả sản phẩm.
       </h3>
       {loading ? (
@@ -122,21 +122,23 @@ const Contents = () => {
               ))}
             </ul>
           </section>
-          <div className="border-t border-gray-300 pt-5 md:pt-10 mt-5 md:mt-10 flex items-center justify-center">
-            <Pagination page={page} pages={pages} keyword={keyword} />
-          </div>
+          {pages > 1 && (
+            <div className="border-t border-neutral-300 pt-5 md:pt-10 mt-5 md:mt-10 flex items-center justify-center">
+              <Pagination page={page} pages={pages} keyword={keyword} />
+            </div>
+          )}
         </div>
       ) : products.length === 0 && keyword ? (
         <div className="mt-5 md:mt-10 mx-5 md:mx-0">
-          <h5 className="lowercase mb-2 text-lg py-3 px-5 border font-light border-gray-300">
+          <h5 className="lowercase mb-2 text-lg py-3 px-5 border font-light border-neutral-300">
             Không tìm thấy sản phẩm!
           </h5>
-          <span className="lowercase text-[13px] text-gray-600">
+          <span className="lowercase text-[13px] text-neutral-600">
             Từ khóa tìm kiếm: <span>{keyword}</span>
           </span>
         </div>
       ) : (
-        <h5 className="lowercase text-gray-600 mt-5 md:mt-10 px-5 md:px-0">
+        <h5 className="lowercase text-neutral-600 mt-5 md:mt-10 px-5 md:px-0">
           Chưa có sản phẩm nào cả!
         </h5>
       )}

@@ -20,7 +20,7 @@ const Contents = () => {
 
   return (
     <main className="md:px-5">
-      <h3 className="border-t border-gray-300 pt-5 md:pt-10 text-center lowercase text-2xl md:text-3xl">
+      <h3 className="pt-5 md:pt-10 text-center lowercase text-2xl md:text-3xl">
         Sản phẩm mới nhất.
       </h3>
       {loading ? (
@@ -77,7 +77,7 @@ const Contents = () => {
               ))}
             </ul>
           </section>
-          <div className="border-t border-gray-300 pt-5 md:pt-10 mt-5 md:mt-10 w-full flex justify-center">
+          <div className="border-t border-neutral-300 pt-5 md:pt-10 mt-5 md:mt-10 w-full flex justify-center">
             <Link
               to="/products"
               aria-label="Nhấn để đi đến trang tất cả sản phẩm"
@@ -88,7 +88,7 @@ const Contents = () => {
           </div>
         </div>
       ) : (
-        <h5 className="lowercase text-gray-600 mt-5 md:mt-10 px-5 md:px-0">
+        <h5 className="lowercase text-neutral-600 mt-5 md:mt-10 px-5 md:px-0">
           Chưa có sản phẩm nào cả!
         </h5>
       )}

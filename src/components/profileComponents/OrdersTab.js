@@ -29,14 +29,14 @@ const OrdersTab = ({ result }) => {
       ) : (
         <ul className="grid grid-cols-1 lg:grid-cols-2 gap-x-20 lg:gap-y-10">
           {orders.length === 0 ? (
-            <span className="lowercase mt-5 md:mt-7 lg:mt-0 mx-5 md:mx-0 text-gray-500">
+            <span className="lowercase mt-5 md:mt-7 lg:mt-0 mx-5 md:mx-0 text-neutral-500">
               Bạn chưa có đơn hàng nào!
             </span>
           ) : (
             orders.map((item, i) => (
               <li
                 key={i}
-                className="col-span-1 gap-4 flex border-b border-gray-300"
+                className="col-span-1 gap-4 flex border-b border-neutral-300"
               >
                 <div className="w-4/5 md:w-full lg:w-4/5 flex items-center">
                   <img

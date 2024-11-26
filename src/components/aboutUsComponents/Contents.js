@@ -12,7 +12,7 @@ const Contents = () => {
       <div className="px-5 mt-32 md:mt-28">
         <Breadcrumbs namePages={namePages} />
       </div>
-      <h1 className="mx-0 md:mx-5 border-t border-gray-300 pt-5 md:pt-10 mt-3 md:mt-6 text-center lowercase text-2xl md:text-3xl">
+      <h1 className="mx-0 md:mx-5 border-t border-neutral-300 pt-5 md:pt-10 mt-3 md:mt-6 text-center lowercase text-2xl md:text-3xl">
         Giới thiệu về chúng tôi.
       </h1>
 

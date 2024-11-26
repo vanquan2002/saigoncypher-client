@@ -3,14 +3,12 @@ import Breadcrumbs from "../Breadcrumbs";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { formatCurrency } from "../../utils/formatCurrency";
-import { MdChevronLeft } from "react-icons/md";
 import MessageModal from "../modals/MessageModal";
 import { AppContext } from "../../AppContext";
 import { createOrder } from "./../../redux/actions/OrderActions";
 import { ORDER_CREATE_RESET } from "../../redux/constants/OrderConstants";
 import debounce from "lodash.debounce";
 import { MdArrowBackIos } from "react-icons/md";
-import { MdArrowForwardIos } from "react-icons/md";
 
 const Contents = () => {
   const namePages = [
@@ -97,12 +95,12 @@ const Contents = () => {
       <div className="px-5 mt-32 md:mt-28">
         <Breadcrumbs namePages={namePages} />
       </div>
-      <h3 className="mx-0 md:mx-5 border-t border-gray-300 pt-5 md:pt-10 mt-3 md:mt-6 text-center lowercase text-2xl md:text-3xl">
+      <h3 className="mx-0 md:mx-5 border-t border-neutral-300 pt-5 md:pt-10 mt-3 md:mt-6 text-center lowercase text-2xl md:text-3xl">
         Thanh toán.
       </h3>
 
       <div className="px-0 md:px-5 mt-5 md:mt-10">
-        <div className="bg-gray-50 border border-gray-300 px-4 py-2">
+        <div className="bg-neutral-100 border border-neutral-300 px-4 py-2">
           <div className="flex justify-between ">
             <h4 className="lowercase font-medium">Địa chỉ nhận hàng.</h4>
             <Link
@@ -142,12 +140,13 @@ const Contents = () => {
             <span className="px-5 md:px-0 lowercase font-medium">
               Sản phẩm({totalQuantity})
             </span>
-            <ul className="mt-2 border-l border-t border-gray-300">
+            <ul className="mt-2 border-l border-t border-neutral-300">
               {cartItems.map((item, i) => (
                 <li
                   key={i}
                   className={`flex ${
-                    cartItems.length > i && "border-r border-b border-gray-300"
+                    cartItems.length > i &&
+                    "border-r border-b border-neutral-300"
                   }`}
                 >
                   <Link to={`/product/${item.slug}`} className="w-1/4 md:w-1/6">
@@ -196,7 +195,7 @@ const Contents = () => {
                 <span className="lowercase font-medium">
                   Phương thức vận chuyển.
                 </span>
-                <div className="flex justify-between mt-2 px-4 py-2 border border-gray-300">
+                <div className="flex justify-between mt-2 px-4 py-2 border border-neutral-300">
                   <span className="lowercase text-[15px]">
                     Giao hàng tận nơi.
                   </span>
@@ -210,7 +209,7 @@ const Contents = () => {
                 <span className="lowercase font-medium">
                   Phương thức thanh toán.
                 </span>
-                <span className="lowercase text-[15px] mt-2 px-4 py-2 border border-gray-300">
+                <span className="lowercase text-[15px] mt-2 px-4 py-2 border border-neutral-300">
                   Thanh toán khi nhận hàng{" "}
                   <span className="uppercase">(COD)</span>.
                 </span>
@@ -223,12 +222,12 @@ const Contents = () => {
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
                   placeholder="Nhập lời nhắn"
-                  className="mt-2 resize-none w-full px-3 py-2 border border-gray-300 bg-transparent text-sm outline-none placeholder:lowercase scrollbar-thin"
+                  className="mt-2 resize-none w-full px-3 py-2 border border-neutral-300 bg-transparent text-sm outline-none placeholder:lowercase scrollbar-thin"
                   maxLength={200}
                   cols="30"
                   rows="3"
                 ></textarea>
-                <p className="text-xs text-gray-500 text-right">
+                <p className="text-xs text-neutral-500 text-right">
                   {note.length}/200 ký tự
                 </p>
               </li>
@@ -249,7 +248,7 @@ const Contents = () => {
                     {formatCurrency(shippingPrice)}
                   </span>
                 </div>
-                <div className="flex justify-between pt-2 mt-1 border-t border-gray-300">
+                <div className="flex justify-between pt-2 mt-1 border-t border-neutral-300">
                   <span className="lowercase text-[15px]">Tổng cộng</span>
                   <span className="lowercase text-[15px]">
                     {formatCurrency(totalPrice)}
@@ -261,11 +260,11 @@ const Contents = () => {
         </div>
       </div>
 
-      <div className="z-10 h-[4.4rem] fixed bottom-0 left-0 flex justify-end md:justify-between w-full backdrop-blur-sm bg-white/60 border-t border-gray-300">
+      <div className="z-10 h-[4.4rem] fixed bottom-0 left-0 flex justify-end md:justify-between w-full backdrop-blur-sm bg-white/60 border-t border-neutral-300">
         <Link
           to="/shipping"
           aria-label="Đi đến trang nhập thông tin đặt hàng"
-          className="hidden md:flex items-center ml-5 gap-0.5 lowercase font-medium text-gray-700 hover:underline"
+          className="hidden md:flex items-center ml-5 gap-0.5 lowercase font-medium text-neutral-700 hover:underline"
         >
           <MdArrowBackIos className="text-sm" />
           Thông tin đặt hàng

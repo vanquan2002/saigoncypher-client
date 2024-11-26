@@ -13,6 +13,7 @@ import UpAvatarModal from "../modals/UpAvatarModal";
 import MessageModal from "../modals/MessageModal";
 import { USER_UPDATE_PROFILE_RESET } from "../../redux/constants/UserConstants";
 import SmallModal from "../modals/SmallModal";
+import moment from "moment";
 
 const Contents = () => {
   const namePages = [
@@ -113,15 +114,12 @@ const Contents = () => {
       <div className="mx-5 md:mx-0 mt-32 md:mt-28">
         <Breadcrumbs namePages={namePages} />
       </div>
-      <h3 className="border-t border-gray-300 pt-5 md:pt-10 mt-3 md:mt-6 text-center lowercase text-2xl md:text-3xl">
-        Thông tin cá nhân.
-      </h3>
 
-      <div className="border-t border-gray-300 mt-5 md:mt-10 pt-5 md:pt-10">
+      <div className="border-t border-neutral-300 mt-3 md:mt-6 pt-8 md:pt-10">
         <div className="mx-5 md:mx-0 flex gap-5 md:gap-10">
-          <form aria-label="Form tải ảnh lên" className="relative">
+          <form aria-label="Biểu mẫu tải ảnh lên" className="relative">
             <label
-              className="h-20 w-20 md:h-32 md:w-32 rounded-full overflow-hidden flex justify-center items-center bg-gray-100"
+              className="h-32 w-32 rounded-full overflow-hidden flex justify-center items-center bg-neutral-100"
               htmlFor="file_input"
               title="Chọn ảnh đại diện"
             >
@@ -132,14 +130,14 @@ const Contents = () => {
                   alt={`Ảnh đại diện của ${userInfo.name}`}
                 />
               ) : (
-                <FaUser className="text-2xl md:text-4xl text-gray-400" />
+                <FaUser className="text-4xl text-neutral-400" />
               )}
 
-              <div className="absolute overflow-hidden bottom-0 right-1 md:right-3 h-5 md:h-7 w-5 md:w-7 flex items-center justify-center bg-black rounded-full border-2 md:border-[3px] border-white">
+              <div className="absolute overflow-hidden bottom-0 right-3 h-7 w-7 flex items-center justify-center bg-black rounded-full border-[3px] border-white">
                 {userInfo.avatar ? (
-                  <BiSolidEditAlt className="text-lg md:text-2xl p-0.5 text-white" />
+                  <BiSolidEditAlt className="text-2xl p-0.5 text-white" />
                 ) : (
-                  <RiAddLine className="text-xl md:text-3xl p-0.5 text-white" />
+                  <RiAddLine className="text-3xl p-0.5 text-white" />
                 )}
               </div>
             </label>
@@ -151,25 +149,26 @@ const Contents = () => {
             />
           </form>
 
-          <div className="w-full overflow-hidden">
-            <div className="flex justify-end">
+          <div className="flex flex-col justify-center w-full overflow-hidden">
+            <div>
+              <h1 className="text-2xl md:text-3xl font-semibold line-clamp-1 leading-8">
+                {userInfo.name}
+              </h1>
+              <span className="text-sm line-clamp-1">{userInfo.email}</span>
+            </div>
+
+            <div className="mt-1 md:mt-2 flex flex-col md:flex-row items-start justify-between">
+              <span className="lowercase text-sm line-clamp-1 font-light bg-neutral-100">
+                Ngày tạo: {moment(userInfo.createdAt).calendar()}
+              </span>
               <button
                 onClick={() => dispatch(logout())}
                 aria-label="Đăng xuất và đi đến trang đăng nhập"
                 type="button"
-                className="underline text-sm lowercase"
+                className="mt-2 md:mt-0 underline lowercase hover:opacity-80"
               >
                 Đăng xuất
               </button>
-            </div>
-
-            <div className="mt-1.5">
-              <h1 className="text-2xl md:text-3xl font-semibold line-clamp-1">
-                {userInfo.name}
-              </h1>
-              <span className="text-sm line-clamp-1 font-light">
-                {userInfo.email}
-              </span>
             </div>
           </div>
         </div>
@@ -185,7 +184,7 @@ const Contents = () => {
                   className={`w-full text-center py-2 border-b ${
                     numberTabNumber === i + 1
                       ? "border-black text-black font-medium"
-                      : "border-gray-200 text-gray-400"
+                      : "border-neutral-200 text-neutral-400"
                   }`}
                 >
                   <span className="lowercase text-[15px] hidden lg:block">

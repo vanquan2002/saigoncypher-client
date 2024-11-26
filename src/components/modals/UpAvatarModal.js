@@ -50,7 +50,7 @@ const UpAvatarModal = ({ image, imageUrl, altImage }) => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className=" bg-white border border-gray-300 w-full md:w-2/3 lg:w-1/2 mx-3 md:mx-0 pt-3 pb-5 px-5"
+        className=" bg-white border border-neutral-300 w-full md:w-2/3 lg:w-1/2 mx-3 md:mx-0 pt-3 pb-5 px-5"
       >
         <div className="flex items-center justify-between">
           <h4 className="lowercase text-lg font-medium">Chọn ảnh đại diện.</h4>
@@ -76,7 +76,7 @@ const UpAvatarModal = ({ image, imageUrl, altImage }) => {
             type="button"
             aria-label="Đóng form tải ảnh"
             onClick={() => closeModalUpImgHandle()}
-            className={`lowercase w-full text-sm border border-black py-2 hover:bg-gray-100 ${
+            className={`lowercase w-full text-sm border border-black py-2 hover:bg-neutral-100 ${
               loading && "opacity-30 pointer-events-none"
             }`}
           >

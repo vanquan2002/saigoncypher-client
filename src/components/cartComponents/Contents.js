@@ -73,7 +73,7 @@ const Contents = () => {
       <div className="mx-5 md:mx-0 mt-32 md:mt-28">
         <Breadcrumbs namePages={namePages} />
       </div>
-      <h3 className="border-t border-gray-300 pt-5 md:pt-10 mt-3 md:mt-6 text-center lowercase text-2xl md:text-3xl">
+      <h3 className="border-t border-neutral-300 pt-5 md:pt-10 mt-3 md:mt-6 text-center lowercase text-2xl md:text-3xl">
         Giỏ hàng của bạn.
       </h3>
       {cartItems.length === 0 ? (
@@ -81,12 +81,13 @@ const Contents = () => {
           <span className="ml-5 md:ml-0">Giỏ hàng của bạn đang trống!</span>
         </h4>
       ) : (
-        <ul className="grid grid-cols-1 lg:grid-cols-2 mt-5 md:mt-10 md:border-l border-t border-gray-300">
+        <ul className="grid grid-cols-1 lg:grid-cols-2 mt-5 md:mt-10 md:border-l border-t border-neutral-300">
           {cartItems.map((item, i) => (
             <li
               key={i}
               className={`flex items-center ${
-                cartItems.length > i && "md:border-r border-b border-gray-300"
+                cartItems.length > i &&
+                "md:border-r border-b border-neutral-300"
               }`}
             >
               <Link
@@ -116,7 +117,7 @@ const Contents = () => {
                         removeFromCartHandle(item.product, item.size)
                       }
                     >
-                      <MdClose className="text-2xl text-gray-500" />
+                      <MdClose className="text-2xl text-neutral-500" />
                     </button>
                   </div>
 
@@ -135,7 +136,7 @@ const Contents = () => {
                   <button
                     type="button"
                     aria-label="Nhấn giảm số lượng đặt sản phẩm"
-                    className={`flex w-9 h-8 justify-center items-center border-l border-t border-b border-black hover:bg-gray-100`}
+                    className={`flex w-9 h-8 justify-center items-center border-l border-t border-b border-black hover:bg-neutral-100`}
                     onClick={() =>
                       debouncedChangeQtyProduct(item.slug, -1, item.size, 3)
                     }
@@ -152,7 +153,7 @@ const Contents = () => {
                   <button
                     type="button"
                     aria-label="Nhấn tăng số lượng đặt sản phẩm"
-                    className={`flex w-9 h-8 justify-center items-center border-r border-t border-b border-black hover:bg-gray-100 ${
+                    className={`flex w-9 h-8 justify-center items-center border-r border-t border-b border-black hover:bg-neutral-100 ${
                       item.qty === 10
                         ? "opacity-30 pointer-events-none"
                         : "opacity-100 pointer-events-auto"
@@ -170,11 +171,11 @@ const Contents = () => {
         </ul>
       )}
 
-      <div className="z-10 h-[4.4rem] fixed bottom-0 left-0 flex justify-end md:justify-between w-full backdrop-blur-sm bg-white/60 border-t border-gray-300">
+      <div className="z-10 h-[4.4rem] fixed bottom-0 left-0 flex justify-end md:justify-between w-full backdrop-blur-sm bg-white/60 border-t border-neutral-300">
         <Link
           to="/products"
           aria-label="Đi đến trang tất cả sản phẩm"
-          className="hidden md:flex items-center ml-5 gap-0.5 lowercase font-medium text-gray-700 hover:underline"
+          className="hidden md:flex items-center ml-5 gap-0.5 lowercase font-medium text-neutral-700 hover:underline"
         >
           <MdArrowBackIos className="text-sm" />
           Tiếp thục mua

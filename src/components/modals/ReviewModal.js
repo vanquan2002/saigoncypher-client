@@ -88,7 +88,7 @@ const ReviewModal = ({ isOpen, product }) => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className=" bg-white border border-gray-300 w-full md:w-2/3 lg:w-1/2 mx-3 md:mx-0 pt-3 pb-5 px-5"
+        className=" bg-white border border-neutral-300 w-full md:w-2/3 lg:w-1/2 mx-3 md:mx-0 pt-3 pb-5 px-5"
       >
         <div className="flex items-center justify-between">
           <h4 className="lowercase text-lg font-medium">Đánh giá sản phẩm.</h4>
@@ -120,13 +120,13 @@ const ReviewModal = ({ isOpen, product }) => {
           <span className="lowercase text-sm mr-1">Xếp hạng:</span>
           <div className="flex items-center gap-2">
             <RatingIconChange rating={rating} setRating={setRating} />
-            <span className="lowercase text-xs text-gray-600">
+            <span className="lowercase text-xs text-neutral-600">
               ({desc[rating - 1]})
             </span>
           </div>
         </div>
 
-        <form title="Form đánh giá sản phẩm" onSubmit={submitReviewHandle}>
+        <form title="Biểu mẫu đánh giá sản phẩm" onSubmit={submitReviewHandle}>
           <div className="flex flex-col md:flex-row items-start gap-1 md:gap-4 mt-2">
             <span className="lowercase text-sm text-nowrap">Nội dung:</span>
             <div className="w-full flex flex-col gap-1.5">
@@ -156,7 +156,7 @@ const ReviewModal = ({ isOpen, product }) => {
               type="reset"
               aria-label="Làm mới form đánh giá"
               onClick={() => resetReviewHandle()}
-              className="lowercase text-[13px] hover:bg-gray-100 text-center w-1/3 md:w-1/4 lg:w-1/5 py-1.5 border border-black"
+              className="lowercase text-[13px] hover:bg-neutral-100 text-center w-1/3 md:w-1/4 lg:w-1/5 py-1.5 border border-black"
             >
               làm mới.
             </button>

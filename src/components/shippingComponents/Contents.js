@@ -251,7 +251,7 @@ const Contents = () => {
       <div className="px-5 mt-32 md:mt-28">
         <Breadcrumbs namePages={namePages} />
       </div>
-      <h3 className="mx-0 md:mx-5 border-t border-gray-300 pt-5 md:pt-10 mt-3 md:mt-6 text-center lowercase text-2xl md:text-3xl">
+      <h3 className="mx-0 md:mx-5 border-t border-neutral-300 pt-5 md:pt-10 mt-3 md:mt-6 text-center lowercase text-2xl md:text-3xl">
         Nhập thông tin cá nhân của bạn.
       </h3>
       {errorProvince || errorDistrict || errorWard ? (
@@ -269,11 +269,11 @@ const Contents = () => {
             wards={wards}
           />
 
-          <div className="z-10 h-[4.4rem] fixed bottom-0 left-0 flex justify-end md:justify-between w-full backdrop-blur-sm bg-white/60 border-t border-gray-300">
+          <div className="z-10 h-[4.4rem] fixed bottom-0 left-0 flex justify-end md:justify-between w-full backdrop-blur-sm bg-white/60 border-t border-neutral-300">
             <Link
               to="/cart"
               aria-label="Đi đến trang giỏ hàng"
-              className="hidden md:flex items-center ml-5 gap-0.5 lowercase font-medium text-gray-700 hover:underline"
+              className="hidden md:flex items-center ml-5 gap-0.5 lowercase font-medium text-neutral-700 hover:underline"
             >
               <MdArrowBackIos className="text-sm" />
               Giỏ hàng

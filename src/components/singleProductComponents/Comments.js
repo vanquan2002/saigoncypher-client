@@ -34,7 +34,7 @@ const Comments = ({ product }) => {
   }, [product]);
 
   return (
-    <section className="mt-40">
+    <section className="mt-20">
       <div className="mx-5 md:mx-0 flex">
         <h3 className="lowercase text-xl font-medium pr-1">
           {product.numReviews !== 0 && (
@@ -54,7 +54,7 @@ const Comments = ({ product }) => {
 
       {product.reviews.length === 0 ? (
         <div className="mt-3 md:mt-6 px-5 md:px-0">
-          <span className=" text-gray-700 lowercase">
+          <span className=" text-neutral-700 lowercase">
             Chưa có đánh giá nào cả!
           </span>
         </div>
@@ -65,7 +65,7 @@ const Comments = ({ product }) => {
               key={i}
               className={`flex gap-3 min-h-24 ${
                 product.reviews.length - 1 !== i && "border-b-0 md:border-b"
-              } border border-gray-300 p-4`}
+              } border border-neutral-300 p-4`}
             >
               {review.user.avatar ? (
                 <img
@@ -87,7 +87,7 @@ const Comments = ({ product }) => {
                   <h2 className="line-clamp-1 overflow-hidden">
                     {review.user.name}
                   </h2>
-                  <span className="text-xs text-nowrap lowercase text-gray-500">
+                  <span className="text-xs text-nowrap lowercase text-neutral-500">
                     {moment(review.createdAt).calendar()}
                   </span>
                 </div>

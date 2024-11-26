@@ -18,7 +18,7 @@ const RelatedProducts = ({ productId }) => {
   }, [productId]);
 
   return (
-    <section className="md:px-5 mt-40">
+    <section className="md:px-5 mt-20">
       <h3 className="px-5 md:px-0 lowercase text-xl font-medium">
         Có thể bạn cũng thích.
       </h3>
@@ -58,7 +58,7 @@ const RelatedProducts = ({ productId }) => {
           </ul>
         </div>
       ) : (
-        <h5 className="lowercase text-gray-600 mt-5 md:mt-10 px-5 md:px-0">
+        <h5 className="lowercase text-neutral-600 mt-5 md:mt-10 px-5 md:px-0">
           Không có sản phẩm liên quan!
         </h5>
       )}

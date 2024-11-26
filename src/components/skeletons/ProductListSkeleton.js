@@ -30,14 +30,14 @@ const ProductListSkeleton = ({ numberColList }) => {
       >
         {Array.from({ length: itemCount }).map((_, index) => (
           <li key={index} aria-hidden="true" className="col-span-1">
-            <div className="bg-gray-100 aspect-[2/3]"></div>
+            <div className="bg-neutral-100 aspect-[2/3]"></div>
             <div
               className={`flex flex-col ${
                 numberColList === 2 ? "mt-3 px-2 gap-2" : "mt-3 px-3 gap-3.5"
               } mb-1 md:mb-0 md:mt-3 md:px-0 md:gap-3`}
             >
-              <div className="bg-gray-100 w-full h-3.5"></div>
-              <div className="bg-gray-100 w-2/5 h-3.5"></div>
+              <div className="bg-neutral-100 w-full h-3.5"></div>
+              <div className="bg-neutral-100 w-2/5 h-3.5"></div>
             </div>
           </li>
         ))}

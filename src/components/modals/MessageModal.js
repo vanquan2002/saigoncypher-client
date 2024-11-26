@@ -29,9 +29,9 @@ const MessageModal = ({ type }) => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white border border-gray-300 w-64 md:w-72"
+        className="bg-white border border-neutral-300 w-64 md:w-72"
       >
-        <div className="flex flex-col gap-1 justify-center w-full min-h-1 p-3 md:p-4 border-b border-gray-300">
+        <div className="flex flex-col gap-1 justify-center w-full min-h-1 p-3 md:p-4 border-b border-neutral-300">
           <span className="lowercase text-lg font-medium">Thông báo.</span>
           <span className="lowercase text-[15px]">
             {isMassage}
@@ -49,7 +49,7 @@ const MessageModal = ({ type }) => {
         </div>
         <button
           onClick={() => toggleIsMassage("")}
-          className="flex justify-center items-center w-full min-h-1 py-2 text-center hover:bg-gray-100"
+          className="flex justify-center items-center w-full min-h-1 py-2 text-center hover:bg-neutral-100"
         >
           <span className="lowercase text-[15px]">Đóng.</span>
         </button>

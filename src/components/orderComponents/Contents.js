@@ -123,7 +123,7 @@ const Contents = () => {
       <div className="px-5 mt-32 md:mt-28">
         <Breadcrumbs namePages={namePages} />
       </div>
-      <h3 className="mx-0 md:mx-5 border-t border-gray-300 pt-5 md:pt-10 mt-3 md:mt-6 text-center lowercase text-2xl md:text-3xl">
+      <h3 className="mx-0 md:mx-5 border-t border-neutral-300 pt-5 md:pt-10 mt-3 md:mt-6 text-center lowercase text-2xl md:text-3xl">
         Chi tiết đơn hàng.
       </h3>
 
@@ -137,24 +137,24 @@ const Contents = () => {
         </div>
       ) : (
         <div className="px-0 md:px-5 mt-5 md:mt-10">
-          <div className="bg-gray-50 border border-gray-300 px-4 py-3">
+          <div className="bg-neutral-100 border border-neutral-300 px-4 py-3">
             <h4 className="lowercase font-medium">Trạng thái đơn hàng.</h4>
             <ul className="flex flex-wrap gap-x-3 mt-1">
               <li className="flex items-center gap-1">
                 <span className="lowercase text-[15px]">Đang chuẩn bị</span>
-                <span className="lowercase text-[15px] text-gray-800">
+                <span className="lowercase text-[15px] text-neutral-800">
                   ({moment(order.orderStatus.preparedAt).calendar()})
                 </span>
               </li>
 
               <li className="flex items-center">
-                <div className="w-7 border-t border-gray-300"></div>
+                <div className="w-7 border-t border-neutral-300"></div>
               </li>
 
               {order.orderStatus.isCancelled ? (
                 <li className="flex items-center gap-1">
                   <span className="lowercase text-[15px]">Đã hủy</span>
-                  <span className="lowercase text-[15px] text-gray-800">
+                  <span className="lowercase text-[15px] text-neutral-800">
                     ({moment(order.orderStatus.cancelledAt).calendar()})
                   </span>
                 </li>
@@ -169,14 +169,14 @@ const Contents = () => {
                   >
                     <span className="lowercase text-[15px]">Đang giao</span>
                     {order.orderStatus.deliveredAt && (
-                      <span className="lowercase text-[15px] text-gray-800">
+                      <span className="lowercase text-[15px] text-neutral-800">
                         ({moment(order.orderStatus.deliveredAt).calendar()})
                       </span>
                     )}
                   </li>
 
                   <li className="flex items-center">
-                    <div className="w-7 border-t border-gray-300"></div>
+                    <div className="w-7 border-t border-neutral-300"></div>
                   </li>
 
                   <li
@@ -188,7 +188,7 @@ const Contents = () => {
                   >
                     <span className="lowercase text-[15px]">Đã nhận</span>
                     {order.orderStatus.receivedAt && (
-                      <span className="lowercase text-[15px] text-gray-800">
+                      <span className="lowercase text-[15px] text-neutral-800">
                         ({moment(order.orderStatus.receivedAt).calendar()})
                       </span>
                     )}
@@ -209,7 +209,7 @@ const Contents = () => {
                     key={i}
                     className={`flex border-x ${
                       i !== 0 ? "border-b md:border-y" : "border-y"
-                    } border-gray-300`}
+                    } border-neutral-300`}
                   >
                     <Link
                       to={`/product/${item.slug}`}
@@ -324,7 +324,7 @@ const Contents = () => {
                       aria-label="Nhập lời nhắn của bạn"
                       value={order.note}
                       placeholder="Nhập lời nhắn"
-                      className="px-4 py-2 bg-gray-50 italic resize-none w-full text-sm outline-none placeholder:lowercase scrollbar-thin"
+                      className="px-4 py-2 bg-neutral-50 italic resize-none w-full text-sm outline-none placeholder:lowercase scrollbar-thin"
                       maxLength={200}
                       cols="30"
                       rows="3"
@@ -351,7 +351,7 @@ const Contents = () => {
                       {formatCurrency(order.shippingPrice)}
                     </span>
                   </div>
-                  <div className="flex justify-between pt-2 mt-1 border-t border-gray-300">
+                  <div className="flex justify-between pt-2 mt-1 border-t border-neutral-300">
                     <span className="lowercase text-[15px]">Tổng cộng</span>
                     <span className="lowercase text-[15px]">
                       {formatCurrency(order.totalPrice)}
