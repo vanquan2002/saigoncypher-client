@@ -63,7 +63,7 @@ const RelatedProducts = ({ productId }) => {
             className={`absolute z-[5] left-4 md:left-0 top-1/2 -translate-y-1/2 flex justify-center items-center h-8 md:h-10 w-8 md:w-10 rounded-full bg-white border border-neutral-200 ${
               currentIndex <= 0
                 ? "opacity-30 cursor-default"
-                : "opacity-100 hover:bg-neutral-200"
+                : "hover:bg-neutral-200"
             } duration-300`}
           >
             <MdOutlineKeyboardArrowLeft className="text-2xl md:text-3xl" />
@@ -111,7 +111,7 @@ const RelatedProducts = ({ productId }) => {
             className={`absolute z-[5] right-4 md:right-0 top-1/2 -translate-y-1/2 flex justify-center items-center h-8 md:h-10 w-8 md:w-10 rounded-full bg-white border border-neutral-200 ${
               currentIndex + numPerSlide >= products.length
                 ? "opacity-30 cursor-default"
-                : "opacity-100 hover:bg-neutral-200"
+                : "hover:bg-neutral-200"
             } duration-300`}
           >
             <MdOutlineKeyboardArrowRight className="text-2xl md:text-3xl" />

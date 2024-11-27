@@ -35,10 +35,31 @@ const Contents = () => {
   const { toggleIsMassage } = useContext(AppContext);
   const [note, setNote] = useState("");
   const [typeMessage, setTypeMessage] = useState("");
+  const [payment, setPayment] = useState("cod");
   const hasDeliveryInformation =
     userInfo.deliveryInformation &&
     Object.values(userInfo.deliveryInformation).every((value) => value);
-
+  const payments = [
+    {
+      value: "cod",
+      ariaLabel: "Chọn nếu bạn muốn thanh toán khi nhận hàng",
+      contents: "Thanh toán khi nhận hàng (COD)",
+      active: true,
+    },
+    {
+      value: "bank",
+      ariaLabel: "Chọn nếu bạn muốn thanh toán qua thẻ ngân hàng",
+      contents: "Thanh toán qua thẻ ngân hàng",
+      active: false,
+    },
+    {
+      value: "momo",
+      ariaLabel:
+        "Chọn nếu bạn muốn thanh toán qua cổng thanh toán trực tuyến Momo",
+      contents: "Thanh toán qua cổng thanh toán trực tuyến (Momo)",
+      active: false,
+    },
+  ];
   const debouncedCreateOrder = useMemo(
     () =>
       debounce(() => {
@@ -193,26 +214,66 @@ const Contents = () => {
             <ul className="flex flex-col gap-6">
               <li>
                 <span className="lowercase font-medium">
-                  Phương thức vận chuyển.
+                  Phương thức vận chuyển
                 </span>
                 <div className="flex justify-between mt-2 px-4 py-2 border border-neutral-300">
-                  <span className="lowercase text-[15px]">
-                    Giao hàng tận nơi.
-                  </span>
-                  <span className="lowercase text-[15px]">
+                  <span className="text-[15px]">Giao hàng tận nơi.</span>
+                  <span className="text-[15px]">
                     {formatCurrency(shippingPrice)}
                   </span>
                 </div>
               </li>
 
               <li className="flex flex-col">
-                <span className="lowercase font-medium">
-                  Phương thức thanh toán.
-                </span>
-                <span className="lowercase text-[15px] mt-2 px-4 py-2 border border-neutral-300">
-                  Thanh toán khi nhận hàng{" "}
-                  <span className="uppercase">(COD)</span>.
-                </span>
+                <fieldset>
+                  <legend className="lowercase font-medium">
+                    Phương thức thanh toán
+                  </legend>
+                  <div className="mt-2 border border-neutral-300">
+                    {payments.map((item, i) => (
+                      <div
+                        key={i}
+                        className={`flex items-center ${
+                          payment === item.value ? "bg-neutral-100" : "bg-white"
+                        } duration-300`}
+                      >
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          id={item.value}
+                          value={item.value}
+                          aria-label={item.ariaLabel}
+                          onChange={(e) =>
+                            item.active && setPayment(e.target.value)
+                          }
+                          hidden
+                        />
+                        <label
+                          htmlFor={item.value}
+                          className={`w-full flex items-center gap-3 text-[15px] px-3 py-2 ${
+                            !item.active ? "opacity-30" : "cursor-pointer"
+                          }`}
+                        >
+                          <div
+                            className={`h-3 min-w-3 rounded-full ${
+                              payment === item.value
+                                ? "bg-green-600"
+                                : "bg-neutral-300"
+                            } duration-300`}
+                          ></div>
+                          <p>
+                            {item.contents}
+                            {!item.active && (
+                              <span className="ml-1 lowercase text-[13px] font-light italic">
+                                * Chưa khả dụng
+                              </span>
+                            )}
+                          </p>
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </fieldset>
               </li>
 
               <li className="relative">
