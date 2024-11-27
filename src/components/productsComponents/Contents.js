@@ -82,7 +82,7 @@ const Contents = () => {
             <ul
               className={`grid grid-cols-${numberColList} md:grid-cols-2 lg:grid-cols-4 ${
                 numberColList === 2
-                  ? "gap-x-[2px] gap-y-5 border-x-2 border-white"
+                  ? "gap-x-[2px] gap-y-5 border-x-2 border-white md:border-none"
                   : "gap-5"
               } md:gap-x-4 md:gap-y-8`}
             >

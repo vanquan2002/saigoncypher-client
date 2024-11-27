@@ -189,7 +189,7 @@ const Footer = ({ type }) => {
                 </a>
               </li>
               <li>
-                <p className="ml-1.5 mt-2 text-[13px] text-neutral-400 font-light">
+                <p className="ml-1.5 mt-0.5 text-[13px] text-neutral-400 font-light">
                   Hoạt động từ thứ 2 - thứ 7, 8am - 10pm
                 </p>
               </li>
