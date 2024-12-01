@@ -28,7 +28,6 @@ const Contents = () => {
   const {
     numberTabNumber,
     toggleNumberTabNumber,
-    isUpAvatarModal,
     toggleIsUpAvatarModal,
     toggleIsMassage,
     toggleIsSmallModal,
@@ -55,9 +54,6 @@ const Contents = () => {
         setErrSelect("Kích thước tệp quá lớn (tối đa 10MB).");
         return;
       }
-      if (image) {
-        setImage(null);
-      }
       setImage(URL.createObjectURL(file));
       setImageUrl(file);
       e.target.value = null;
@@ -75,9 +71,7 @@ const Contents = () => {
         setTypeModal("update_shipping");
       }
       if (successType === 3) {
-        if (isUpAvatarModal) {
-          toggleIsUpAvatarModal(false);
-        }
+        toggleIsUpAvatarModal(false);
         toggleIsSmallModal("Cập nhật ảnh đại diện thành công!");
         setTypeModal("update_avatar");
       }
