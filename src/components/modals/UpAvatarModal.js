@@ -86,7 +86,9 @@ const UpAvatarModal = ({ image, imageUrl, altImage }) => {
             type="button"
             aria-label="Tải ảnh lên"
             onClick={() => debouncedUpdateProfile()}
-            className="lowercase w-full text-sm bg-black text-white py-2 hover:opacity-80"
+            className={`lowercase w-full text-sm bg-black text-white py-2 hover:opacity-80 ${
+              loading && "opacity-30 pointer-events-none"
+            }`}
           >
             {loading ? "Đang tải lên..." : "Tải lên."}
           </button>
